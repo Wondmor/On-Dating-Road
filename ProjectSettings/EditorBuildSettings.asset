@@ -5,13 +5,13 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
+  - enabled: 0
+    path: Assets/Scenes/SampleScene.unity
+    guid: 8c9cfa26abfee488c85f1582747f6a02
   - enabled: 1
-    path: Assets/Scenes/StartScene.unity
-    guid: 2cda990e2423bbf4892e6590ba056729
+    path: Assets/Scenes/TestMain.unity
+    guid: 449f7ec605b3c46489f2df7e1638c391
   - enabled: 1
-    path: Assets/Scenes/BusGame.unity
-    guid: 09704ef31ad4dc04899f2cd07b306f1b
-  - enabled: 1
-    path: Assets/Scenes/BusGame_1.unity
-    guid: a2378b89ffd23eb4faa53cb4abc1d251
+    path: Assets/Scenes/TrashShootingTest.unity
+    guid: 8534ec6d5bad6d7489822e3537e9e974
   m_configObjects: {}
