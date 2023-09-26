@@ -12,6 +12,18 @@ public class RacingPlayerControl : MonoBehaviour
         WATER
     }
 
+    static public bool WinByType(BIKE_TYPE myType, BIKE_TYPE otherType)
+    {
+        if(myType == BIKE_TYPE.FIRE && otherType == BIKE_TYPE.GRASS)
+            return true;
+        if(myType == BIKE_TYPE.WATER && otherType == BIKE_TYPE.FIRE)
+            return true;
+        if(myType == BIKE_TYPE.GRASS && otherType == BIKE_TYPE.WATER)
+            return true;
+
+        return false;
+    }
+
     [SerializeField]
     GameObject gameControl;
 
@@ -29,10 +41,15 @@ public class RacingPlayerControl : MonoBehaviour
     float MIN_X = -3, MAX_X = 3; // This is the width of the road
     float GRASS_POS = 1.8f;
 
+    bool stun = false;
+
     // controllers
     RacingMoney moneyControl;
     RacingProgressDot progressControl;
     RacingTimer timerControl;
+    RacingMapControl mapControl;
+    RacingHealth healthControl;
+    Timer timer;
 
     // bike type
     BIKE_TYPE bikeType;
@@ -42,6 +59,7 @@ public class RacingPlayerControl : MonoBehaviour
     GameObject[] bikePrefabs;
 
     public float VerticalSpeed { get => verticalSpeed; set => verticalSpeed = value; }
+    public bool Stun { get => stun; set => stun = value; }
 
     // Start is called before the first frame update
     void Start()
@@ -49,6 +67,9 @@ public class RacingPlayerControl : MonoBehaviour
         moneyControl = gameControl.GetComponent<RacingMoney>();
         progressControl = gameControl.GetComponent<RacingProgressDot>();
         timerControl = gameControl.GetComponent<RacingTimer>();
+        mapControl = gameControl.GetComponent<RacingMapControl>();
+        healthControl = gameControl.GetComponent<RacingHealth>();
+        timer = gameControl.GetComponent<Timer>();
     }
 
     // Update is called once per frame
@@ -60,9 +81,24 @@ public class RacingPlayerControl : MonoBehaviour
         SetSpeed();
         // get direction and speed
         Vector3 currentPos = transform.localPosition;
-        currentPos.x += Input.GetAxis("Horizontal") * horizontalSpeed * Time.deltaTime;
+        float axis = Input.GetAxis("Horizontal");
+        currentPos.x += axis * horizontalSpeed * Time.deltaTime;
         currentPos.x = Mathf.Clamp(currentPos.x, MIN_X, MAX_X);
         transform.localPosition = currentPos;
+
+        // tilt?
+        if(axis > 0)
+        {
+            bike.transform.rotation = Quaternion.AngleAxis(-5.0f, Vector3.forward);
+        }
+        else if(axis < 0)
+        {
+            bike.transform.rotation = Quaternion.AngleAxis(5.0f, Vector3.forward);
+        }
+        else
+        {
+            bike.transform.rotation = Quaternion.identity;
+        }
     }
 
     public void SetUpBikeType(int type)
@@ -80,12 +116,25 @@ public class RacingPlayerControl : MonoBehaviour
     public void ResetBike()
     {
         transform.localPosition = new Vector3(0, transform.localPosition.y, transform.localPosition.z);
+        Stun = false;
     }
 
     void SetSpeed()
     {
         verticalSpeed = baseVerticalSpeed;
         // TODO! check if dead
+
+        if(Stun)
+        {
+            verticalSpeed = 0;
+            return;
+        }
+
+        if(healthControl.IsDead())
+        {
+            verticalSpeed = 0;
+            return;
+        }
         // check if pause
         // check if on grass
         bool onGrass = OnGrass();
@@ -104,5 +153,27 @@ public class RacingPlayerControl : MonoBehaviour
             return true;
         }
         return false;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        Debug.Log("HIT!");
+        RacingEnemy enemy = collision.GetComponent<RacingEnemy>();
+        if(enemy != null)
+        {
+            enemy.Hit();
+            mapControl.ShowHitEffectAt(enemy.transform);
+            Stun = true;
+
+            if(!WinByType(bikeType, enemy.BikeType))
+            {
+                healthControl.AddHealth(-1);
+            }
+        }
+
+        if(Stun)
+        {
+            timer.Add(() => { Stun = false; }, 0.2f);
+        }
     }
 }

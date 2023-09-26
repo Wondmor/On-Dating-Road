@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.EditorTools;
 using UnityEngine;
 
 public class RacingFlowControl : MonoBehaviour
@@ -34,8 +35,6 @@ public class RacingFlowControl : MonoBehaviour
         timerControl = GetComponent<RacingTimer>();
         mapControl = GetComponent<RacingMapControl>();
         timer = GetComponent<Timer>();
-
-        SetGameStatus(GAME_STATUS.CHOOSE);
     }
 
     private void ResetEverything()
@@ -74,5 +73,10 @@ public class RacingFlowControl : MonoBehaviour
                 timer.Add(() => { SetGameStatus(GAME_STATUS.INIT); }, 1);
                 break;
         }
+    }
+
+    public void Test()
+    {
+        SetGameStatus(GAME_STATUS.CHOOSE);
     }
 }

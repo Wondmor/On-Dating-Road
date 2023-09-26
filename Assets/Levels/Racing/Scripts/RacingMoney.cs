@@ -22,7 +22,6 @@ public class RacingMoney : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log(amount.ToString() + ":" + currentAmount.ToString());
         if(Mathf.Abs(amount - currentAmount) < 0.1f)
         {
             currentAmount = amount;

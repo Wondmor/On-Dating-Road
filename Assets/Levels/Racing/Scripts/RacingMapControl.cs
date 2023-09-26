@@ -5,7 +5,10 @@ using UnityEngine;
 public class RacingMapControl : MonoBehaviour
 {
     [SerializeField]
-    GameObject roadPrefab, playGround, pondPrefab, lefPondPrefab, grassPrefab, singleGrassPrefab, catPrefab, stumpPrefab, enemyPrefab, hitEffectPrefab;
+    GameObject roadPrefab, playGround, pondPrefab, lefPondPrefab, grassPrefab, singleGrassPrefab, catPrefab, stumpPrefab, hitEffectPrefab;
+
+    [SerializeField]
+    GameObject[] enemyPrefab;
 
     bool pause = false;
     float distanceCover = 0;
@@ -13,6 +16,8 @@ public class RacingMapControl : MonoBehaviour
     GameObject[] roads;
     GameObject[] normalGrasses;
     Animator[] hitEffects; // very simple effect, just one playback
+
+    List<RacingEnemy>[] enemies;
 
     [SerializeField]
     float roadHeight = 10.7f; // basiclly the road height
@@ -55,15 +60,37 @@ public class RacingMapControl : MonoBehaviour
             hitEffects[i].gameObject.SetActive(false);
         }
 
+        // create list
+        enemies = new List<RacingEnemy>[3];
+        for(int i = 0; i < enemies.Length; i++)
+        {
+            enemies[i] = new List<RacingEnemy>();
+        }
+
         // stop rolling
         pause = true;
     }
 
     // Update is called once per frame
+    static float updateItemsTime = 0;
     void Update()
     {
         if (pause)
             return;
+
+        // Create other things
+        if (updateItemsTime > 1.5f)
+        {
+            if (Random.value < 0.5)
+            {
+                CreateEnemy();
+            }
+            updateItemsTime = 0;
+        }
+        else
+        {
+            updateItemsTime += Time.deltaTime;
+        }
 
         float distance = playerControl.VerticalSpeed * Time.deltaTime;
         // add cover distance
@@ -72,6 +99,8 @@ public class RacingMapControl : MonoBehaviour
         progressDot.SetPercent(distanceCover / totalDistance);
 
         MoveLoopThings(distance);
+        MoveEnemy(distance);
+
     }
 
     void MoveLoopThings(float distance)
@@ -103,6 +132,30 @@ public class RacingMapControl : MonoBehaviour
         }
     }
 
+    void MoveEnemy(float distance)
+    {
+        for (int bikeType = 0; bikeType < 3; bikeType++)
+        {
+            for (int i = 0; i < enemies[bikeType].Count; i++)
+            {
+                if (!enemies[bikeType][i].isActiveAndEnabled)
+                {
+                    continue;
+                }
+                // move bike
+                var bike = enemies[bikeType][i];
+                float newY = bike.transform.localPosition.y;
+                newY -= distance;
+                bike.transform.localPosition = new Vector3(bike.transform.localPosition.x, newY, bike.transform.localPosition.z);
+
+                if(newY < -8)
+                {
+                    bike.gameObject.SetActive(false);
+                }
+            }
+        }
+    }
+
     public void ResetMap()
     {
         for (int i = 0; i < roads.Length; i++)
@@ -112,7 +165,7 @@ public class RacingMapControl : MonoBehaviour
 
         for (int i = 0; i < normalGrasses.Length; i++)
         {
-            normalGrasses[i].transform.localPosition = new Vector3(2.7f, i * normalGrassHeight, 0.1f);
+            normalGrasses[i].transform.localPosition = new Vector3(2.7f, i * normalGrassHeight - 8.0f, 0.1f);
         }
 
         pause = true;
@@ -142,5 +195,32 @@ public class RacingMapControl : MonoBehaviour
             currentEffect.transform.parent = transform;
         }, 0.8f);
         currentEffectIndex = (currentEffectIndex + 1) % hitEffects.Length;
+    }
+
+    public void CreateEnemy()
+    {
+        int bikeType = Random.Range(0, 3);
+        RacingEnemy enemy = null;
+
+        // grab used ones
+        for(int i = 0; i < enemies[bikeType].Count; i++)
+        {
+            if (!enemies[bikeType][i].isActiveAndEnabled)
+            {
+                enemy = enemies[bikeType][i];
+                enemy.ResetTransforms();
+                break;
+            }
+        }
+
+        // no? create one
+        if(enemy == null)
+        {
+            enemy = Instantiate(enemyPrefab[bikeType], playGround.transform).GetComponent<RacingEnemy>();
+            enemies[bikeType].Add(enemy);
+        }
+
+        enemy.transform.localPosition = new Vector3(Random.value * 3 - 3, 12, -0.9f);
+        enemy.gameObject.SetActive(true);
     }
 }
