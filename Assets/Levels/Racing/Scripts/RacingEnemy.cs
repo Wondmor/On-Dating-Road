@@ -63,7 +63,7 @@ public class RacingEnemy : MonoBehaviour
 
         Vector3[] path = new Vector3[3];
         path[0] = bike.transform.position; // start
-        path[2] = bike.transform.position + Vector3.right * 4.0f - Vector3.up * 3.0f; // end
+        path[2] = bike.transform.position + Vector3.right * 4.0f + Vector3.up * 3.0f; // end
         path[1] = bike.transform.position + Vector3.right * 1.5f + Vector3.up * 4.0f; // peek
 
 
@@ -76,7 +76,7 @@ public class RacingEnemy : MonoBehaviour
 
         Vector3[] path2 = new Vector3[3];
         path2[0] = rider.transform.position; // start
-        path2[2] = rider.transform.position - Vector3.right * 4.0f - Vector3.up * 3.0f; // end
+        path2[2] = rider.transform.position - Vector3.right * 4.0f + Vector3.up * 3.0f; // end
         path2[1] = rider.transform.position - Vector3.right * 1.5f + Vector3.up * 4.0f; // peek
 
 

@@ -69,7 +69,7 @@ public class RacingFlowControl : MonoBehaviour
             case GAME_STATUS.CHOOSE:
                 ResetEverything();
                 // TODO: choose!
-                bikeType = Random.Range(0, 2);
+                bikeType = Random.Range(0, 3);
                 timer.Add(() => { SetGameStatus(GAME_STATUS.INIT); }, 1);
                 break;
         }

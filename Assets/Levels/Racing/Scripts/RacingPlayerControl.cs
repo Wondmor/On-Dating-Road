@@ -2,23 +2,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using static Unity.Collections.AllocatorManager;
 
 public class RacingPlayerControl : MonoBehaviour
 {
     public enum BIKE_TYPE
     {
-        FIRE, 
+        FIRE,
         GRASS,
         WATER
     }
 
     static public bool WinByType(BIKE_TYPE myType, BIKE_TYPE otherType)
     {
-        if(myType == BIKE_TYPE.FIRE && otherType == BIKE_TYPE.GRASS)
+        if (myType == BIKE_TYPE.FIRE && otherType == BIKE_TYPE.GRASS)
             return true;
-        if(myType == BIKE_TYPE.WATER && otherType == BIKE_TYPE.FIRE)
+        if (myType == BIKE_TYPE.WATER && otherType == BIKE_TYPE.FIRE)
             return true;
-        if(myType == BIKE_TYPE.GRASS && otherType == BIKE_TYPE.WATER)
+        if (myType == BIKE_TYPE.GRASS && otherType == BIKE_TYPE.WATER)
             return true;
 
         return false;
@@ -42,6 +43,7 @@ public class RacingPlayerControl : MonoBehaviour
     float GRASS_POS = 1.8f;
 
     bool stun = false;
+    bool recovering = false;
 
     // controllers
     RacingMoney moneyControl;
@@ -79,32 +81,53 @@ public class RacingPlayerControl : MonoBehaviour
             return;
 
         SetSpeed();
-        // get direction and speed
-        Vector3 currentPos = transform.localPosition;
-        float axis = Input.GetAxis("Horizontal");
-        currentPos.x += axis * horizontalSpeed * Time.deltaTime;
-        currentPos.x = Mathf.Clamp(currentPos.x, MIN_X, MAX_X);
-        transform.localPosition = currentPos;
 
-        // tilt?
-        if(axis > 0)
+        if (!Stun && !recovering)
         {
-            bike.transform.rotation = Quaternion.AngleAxis(-5.0f, Vector3.forward);
+            // get direction and speed
+            Vector3 currentPos = transform.localPosition;
+            float axis = Input.GetAxis("Horizontal");
+            currentPos.x += axis * horizontalSpeed * Time.deltaTime;
+            currentPos.x = Mathf.Clamp(currentPos.x, MIN_X, MAX_X);
+            transform.localPosition = currentPos;
+
+            // tilt?
+            if (axis > 0)
+            {
+                bike.transform.rotation = Quaternion.AngleAxis(-5.0f, Vector3.forward);
+            }
+            else if (axis < 0)
+            {
+                bike.transform.rotation = Quaternion.AngleAxis(5.0f, Vector3.forward);
+            }
+            else
+            {
+                bike.transform.rotation = Quaternion.identity;
+            }
         }
-        else if(axis < 0)
+
+        if(recovering)
         {
-            bike.transform.rotation = Quaternion.AngleAxis(5.0f, Vector3.forward);
+            // show recovering blink
+            if (Time.fixedTime % .5 < .2)
+            {
+                bike.GetComponent<Renderer>().enabled = false;
+            }
+            else
+            {
+                bike.GetComponent<Renderer>().enabled = true;
+            }
         }
         else
         {
-            bike.transform.rotation = Quaternion.identity;
+            bike.GetComponent<Renderer>().enabled = true;
         }
     }
 
     public void SetUpBikeType(int type)
     {
         bikeType = (BIKE_TYPE)type;
-        if(bike != null)
+        if (bike != null)
         {
             Destroy(bike);
         }
@@ -116,7 +139,7 @@ public class RacingPlayerControl : MonoBehaviour
     public void ResetBike()
     {
         transform.localPosition = new Vector3(0, transform.localPosition.y, transform.localPosition.z);
-        Stun = false;
+        bike.transform.localRotation = Quaternion.identity;
     }
 
     void SetSpeed()
@@ -124,13 +147,13 @@ public class RacingPlayerControl : MonoBehaviour
         verticalSpeed = baseVerticalSpeed;
         // TODO! check if dead
 
-        if(Stun)
+        if (Stun)
         {
             verticalSpeed = 0;
             return;
         }
 
-        if(healthControl.IsDead())
+        if (healthControl.IsDead())
         {
             verticalSpeed = 0;
             return;
@@ -138,7 +161,7 @@ public class RacingPlayerControl : MonoBehaviour
         // check if pause
         // check if on grass
         bool onGrass = OnGrass();
-        if(onGrass && bikeType != BIKE_TYPE.GRASS)
+        if (onGrass && bikeType != BIKE_TYPE.GRASS)
         {
             verticalSpeed = verticalSpeed * grassSpeedDownRatio;
         }
@@ -148,7 +171,7 @@ public class RacingPlayerControl : MonoBehaviour
     {
         // There are two ways we on grass
         // 1. we on looping grass
-        if(transform.localPosition.x >= GRASS_POS)
+        if (transform.localPosition.x >= GRASS_POS)
         {
             return true;
         }
@@ -159,21 +182,52 @@ public class RacingPlayerControl : MonoBehaviour
     {
         Debug.Log("HIT!");
         RacingEnemy enemy = collision.GetComponent<RacingEnemy>();
-        if(enemy != null)
+        if (enemy != null)
         {
             enemy.Hit();
             mapControl.ShowHitEffectAt(enemy.transform);
             Stun = true;
 
-            if(!WinByType(bikeType, enemy.BikeType))
+            if (!WinByType(bikeType, enemy.BikeType))
             {
                 healthControl.AddHealth(-1);
+                Rotate();
+                // Reset
+                ResetIn(0.5f, 2f);
+            }
+            else
+            {
+                // reset stun
+                timer.Add(() => { Stun = false; }, 0.1f);
             }
         }
-
-        if(Stun)
-        {
-            timer.Add(() => { Stun = false; }, 0.2f);
-        }
     }
+
+    private void ResetIn(float time, float recoverTime)
+    {
+        if (recovering)
+        {
+            return;
+        }
+        timer.Add(() =>
+        {
+            recovering = true;
+            ResetBike();
+            GetComponent<BoxCollider2D>().enabled = false;
+            // reset status in time
+            timer.Add(() =>
+            {
+                Stun = false; recovering = false;
+                GetComponent<BoxCollider2D>().enabled = true;
+            }, recoverTime);
+        }, time );
+    }
+
+    private void Rotate()
+    {
+        Animator animator = bike.GetComponent<Animator>();
+        animator.SetTrigger("rotate");
+    }
+
+
 }
