@@ -200,6 +200,14 @@ public class RacingPlayerControl : MonoBehaviour
                 // reset stun
                 timer.Add(() => { Stun = false; }, 0.1f);
             }
+
+            return;
+        }
+
+        RacingCoin coin = collision.GetComponent<RacingCoin>();
+        if(coin != null)
+        {
+            coin.Hit();
         }
     }
 

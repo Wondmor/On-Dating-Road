@@ -1,11 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class RacingMapControl : MonoBehaviour
 {
     [SerializeField]
-    GameObject roadPrefab, playGround, pondPrefab, lefPondPrefab, grassPrefab, singleGrassPrefab, catPrefab, stumpPrefab, hitEffectPrefab;
+    GameObject roadPrefab, playGround, pondPrefab, lefPondPrefab, grassPrefab, singleGrassPrefab, catPrefab, stumpPrefab, hitEffectPrefab, coinPrefab;
 
     [SerializeField]
     GameObject[] enemyPrefab;
@@ -18,6 +19,7 @@ public class RacingMapControl : MonoBehaviour
     Animator[] hitEffects; // very simple effect, just one playback
 
     List<RacingEnemy>[] enemies;
+    List<RacingCoin> coins;
 
     [SerializeField]
     float roadHeight = 10.7f; // basiclly the road height
@@ -25,8 +27,11 @@ public class RacingMapControl : MonoBehaviour
     float normalGrassHeight = 5.36f; 
     [SerializeField]
     float totalDistance = 200f; // basiclly the road height
+    [SerializeField, Range(0.1f, 1)]
+    float itemUpdateFrequency = 10f; // min distance we update items
 
     RacingPlayerControl playerControl;
+    RacingMoney moneyController;
     RacingProgressDot progressDot;
 
     Timer timer;
@@ -35,6 +40,7 @@ public class RacingMapControl : MonoBehaviour
     {
         progressDot = GetComponent<RacingProgressDot>();
         timer = GetComponent<Timer>();
+        moneyController = GetComponent<RacingMoney>();
         playerControl = playGround.GetComponentInChildren<RacingPlayerControl>();
         // create all the roads
         roads = new GameObject[4];
@@ -67,30 +73,19 @@ public class RacingMapControl : MonoBehaviour
             enemies[i] = new List<RacingEnemy>();
         }
 
+        coins = new List<RacingCoin>();
+
         // stop rolling
         pause = true;
     }
 
     // Update is called once per frame
-    static float updateItemsTime = 0;
+    static float updateItemsDistance = 0;
     void Update()
     {
         if (pause)
             return;
 
-        // Create other things
-        if (updateItemsTime > 1.5f)
-        {
-            if (Random.value < 0.5)
-            {
-                CreateEnemy();
-            }
-            updateItemsTime = 0;
-        }
-        else
-        {
-            updateItemsTime += Time.deltaTime;
-        }
 
         float distance = playerControl.VerticalSpeed * Time.deltaTime;
         // add cover distance
@@ -98,8 +93,27 @@ public class RacingMapControl : MonoBehaviour
         // set up distance marker
         progressDot.SetPercent(distanceCover / totalDistance);
 
+        // Create other things
+        // Creation should be based on distance rather than time
+        if (updateItemsDistance > itemUpdateFrequency)
+        {
+            //if (Random.value < 0.5)
+            {
+                //CreateEnemy();
+            }
+
+            CreateCoin();
+            updateItemsDistance = 0;
+        }
+        else
+        {
+            updateItemsDistance += Time.deltaTime;
+        }
+
+
         MoveLoopThings(distance);
         MoveEnemy(distance);
+        MoveCoin(distance);
 
     }
 
@@ -152,6 +166,27 @@ public class RacingMapControl : MonoBehaviour
                 {
                     bike.gameObject.SetActive(false);
                 }
+            }
+        }
+    }
+
+    void MoveCoin(float distance)
+    {
+        foreach(RacingCoin coin in coins)
+        {
+            if(!coin.isActiveAndEnabled)
+            {
+                continue;
+            }
+
+            // move bike
+            float newY = coin.transform.localPosition.y;
+            newY -= distance;
+            coin.transform.localPosition = new Vector3(coin.transform.localPosition.x, newY, coin.transform.localPosition.z);
+
+            if (newY < -8)
+            {
+                coin.gameObject.SetActive(false);
             }
         }
     }
@@ -222,5 +257,28 @@ public class RacingMapControl : MonoBehaviour
 
         enemy.transform.localPosition = new Vector3(Random.value * 3 - 3, 12, -0.9f);
         enemy.gameObject.SetActive(true);
+    }
+
+    public void CreateCoin()
+    {
+        RacingCoin coin = null;
+        for(int i = 0;i < coins.Count; i++)
+        {
+            if (!coins[i].isActiveAndEnabled)
+            {
+                coin = coins[i];
+                break;
+            }
+        }
+
+        if(coin == null)
+        {
+            coin = Instantiate(coinPrefab, playGround.transform).GetComponent<RacingCoin>();
+            coins.Add(coin);
+        }
+
+        coin.transform.localPosition = new Vector3(Random.value * 4 - 4, 12, -0.9f);
+        coin.SetupCoin(moneyController);
+        coin.gameObject.SetActive(true);
     }
 }
