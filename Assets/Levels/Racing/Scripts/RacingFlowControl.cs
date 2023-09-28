@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.EditorTools;
 using UnityEngine;
 
 public class RacingFlowControl : MonoBehaviour
@@ -20,6 +19,7 @@ public class RacingFlowControl : MonoBehaviour
     RacingProgressDot progressControl;
     RacingTimer timerControl;
     RacingMapControl mapControl;
+    RacingHealth healthControl;
     Timer timer;
 
     int bikeType = 0;
@@ -35,6 +35,7 @@ public class RacingFlowControl : MonoBehaviour
         timerControl = GetComponent<RacingTimer>();
         mapControl = GetComponent<RacingMapControl>();
         timer = GetComponent<Timer>();
+        healthControl = GetComponent<RacingHealth>();
     }
 
     private void ResetEverything()
@@ -44,6 +45,7 @@ public class RacingFlowControl : MonoBehaviour
         // pause count
         timerControl.PauseCount();
         mapControl.ResetMap();
+        healthControl.ResetHealth();
     }
 
     public void SetGameStatus(GAME_STATUS status)

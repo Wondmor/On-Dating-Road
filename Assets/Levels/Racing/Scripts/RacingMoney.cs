@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.Collections.LowLevel.Unsafe;
 using Unity.VisualScripting;
 using UnityEditor.Rendering;
 using UnityEngine;
@@ -13,37 +14,46 @@ public class RacingMoney : MonoBehaviour
     float speed;
 
     int amount;
-    float currentAmount;
+    int currentAmount;
     // Start is called before the first frame update
     void Start()
     {
-        Reset();
+        ResetMoney();
+        ShowMoney();
     }
 
-    private void Update()
+    static float time = 0;
+    private void FixedUpdate()
     {
-        if(Mathf.Abs(amount - currentAmount) < 0.1f)
+        if(time < 0.05)
         {
-            currentAmount = amount;
+            time += Time.deltaTime;
+            return;
         }
-        else if(amount > currentAmount)
+        else
         {
-            currentAmount += Time.deltaTime * speed;
+            time = 0;
+        }
+        if(amount > currentAmount)
+        {
+            currentAmount++;
+            ShowMoney();
         }
         else if(amount < currentAmount)
         {
-            currentAmount -= Time.deltaTime * speed;
+            currentAmount--;
+            ShowMoney();
         }
-        ShowMoney();
     }
 
     void ShowMoney()
     {
-        text.text = "";
+        string text = "";
         foreach(var c in ((int)currentAmount).ToString())
         {
-            text.text += string.Format("<sprite={0}>", c);
+            text += string.Format("<sprite={0}>", c);
         }
+        this.text.text = text;
     }
 
     public void AddMoney(int extra)
@@ -51,9 +61,14 @@ public class RacingMoney : MonoBehaviour
         amount += extra;
     }
 
-    public void Reset()
+    public void ResetMoney()
     {
         amount = 0;
         currentAmount = 0;
+    }
+
+    public void Test()
+    {
+        AddMoney(500);
     }
 }
