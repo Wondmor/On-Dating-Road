@@ -176,12 +176,21 @@ public class RacingPlayerControl : MonoBehaviour
         {
             return true;
         }
+        else 
+        {
+            Vector2 worldPoint = transform.position;
+            RaycastHit2D hit = Physics2D.Raycast(worldPoint, Vector2.zero, 30, 1 << 7);
+            if(hit.collider != null)
+            {
+                return true;
+            }
+        }
         return false;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("HIT!");
+        Debug.Log("HIT! : " + collision.gameObject.name);
         RacingEnemy enemy = collision.GetComponent<RacingEnemy>();
         if (enemy != null)
         {
@@ -241,6 +250,15 @@ public class RacingPlayerControl : MonoBehaviour
             ResetIn(0.9f, 2f);
 
             return;
+        }
+
+        if(bikeType != BIKE_TYPE.WATER && collision.GetComponent<RacingPond>() != null)
+        {
+            Stun = true;
+            healthControl.AddHealth(-1);
+            Rotate();
+            // Reset
+            ResetIn(0.9f, 2f);
         }
     }
 

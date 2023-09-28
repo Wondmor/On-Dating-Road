@@ -57,6 +57,6 @@ public class RacingCat : MonoBehaviour
         startDistance = Random.Range(MIN_DISTANCE, MAX_DISTANCE);
         triggered = false;
         hit = false;
-        boxCollider.enabled = true;
+        GetComponent<BoxCollider2D>().enabled = true;
     }
 }
