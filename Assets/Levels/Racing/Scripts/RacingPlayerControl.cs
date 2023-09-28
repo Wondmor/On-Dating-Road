@@ -62,6 +62,7 @@ public class RacingPlayerControl : MonoBehaviour
 
     public float VerticalSpeed { get => verticalSpeed; set => verticalSpeed = value; }
     public bool Stun { get => stun; set => stun = value; }
+    public bool Recovering { get => recovering; private set => recovering = value; }
 
     // Start is called before the first frame update
     void Start()
@@ -82,7 +83,7 @@ public class RacingPlayerControl : MonoBehaviour
 
         SetSpeed();
 
-        if (!Stun && !recovering)
+        if (!Stun)
         {
             // get direction and speed
             Vector3 currentPos = transform.localPosition;
@@ -106,7 +107,7 @@ public class RacingPlayerControl : MonoBehaviour
             }
         }
 
-        if(recovering)
+        if(Recovering)
         {
             // show recovering blink
             if (Time.fixedTime % .5 < .2)
@@ -193,7 +194,7 @@ public class RacingPlayerControl : MonoBehaviour
                 healthControl.AddHealth(-1);
                 Rotate();
                 // Reset
-                ResetIn(0.5f, 2f);
+                ResetIn(0.9f, 2f);
             }
             else
             {
@@ -208,24 +209,57 @@ public class RacingPlayerControl : MonoBehaviour
         if(coin != null)
         {
             coin.Hit();
+
+            return;
+        }
+
+        RacingShit shit = collision.GetComponent<RacingShit>();
+        if (shit != null)
+        {
+            mapControl.ShowHitEffectAt(shit.transform.position);
+            shit.Hit();
+
+            Stun = true;
+
+            healthControl.AddHealth(-1);
+            Rotate();
+            // Reset
+            ResetIn(0.9f, 2f);
+
+            return;
+        }
+
+        RacingCat cat = collision.GetComponent<RacingCat>();
+        if(cat != null)
+        {
+            cat.Hit();
+
+            Stun = true;
+            healthControl.AddHealth(-1);
+            Rotate();
+            // Reset
+            ResetIn(0.9f, 2f);
+
+            return;
         }
     }
 
     private void ResetIn(float time, float recoverTime)
     {
-        if (recovering)
+        if (Recovering)
         {
             return;
         }
         timer.Add(() =>
         {
-            recovering = true;
+            Recovering = true;
+            Stun = false;
             ResetBike();
             GetComponent<BoxCollider2D>().enabled = false;
             // reset status in time
             timer.Add(() =>
             {
-                Stun = false; recovering = false;
+                Recovering = false;
                 GetComponent<BoxCollider2D>().enabled = true;
             }, recoverTime);
         }, time );

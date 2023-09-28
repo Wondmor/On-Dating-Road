@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class RacingMapControl : MonoBehaviour
 {
     [SerializeField]
-    GameObject roadPrefab, playGround, pondPrefab, lefPondPrefab, grassPrefab, singleGrassPrefab, catPrefab, stumpPrefab, hitEffectPrefab, coinPrefab;
+    GameObject roadPrefab, playGround, pondPrefab, lefPondPrefab, grassPrefab, singleGrassPrefab, catPrefab, stumpPrefab, hitEffectPrefab, coinPrefab, shitPrefab;
 
     [SerializeField]
     GameObject[] enemyPrefab;
@@ -20,15 +22,19 @@ public class RacingMapControl : MonoBehaviour
 
     List<RacingEnemy>[] enemies;
     List<RacingCoin> coins;
+    List<GameObject> shits;
+    List<RacingCat> cats;
 
     [SerializeField]
     float roadHeight = 10.7f; // basiclly the road height
     [SerializeField]
-    float normalGrassHeight = 5.36f; 
+    float normalGrassHeight = 5.36f;
     [SerializeField]
     float totalDistance = 200f; // basiclly the road height
-    [SerializeField, Range(0.1f, 1)]
+    [SerializeField, Range(1, 10)]
     float itemUpdateFrequency = 10f; // min distance we update items
+
+    float lastCatDistance = 0;
 
     RacingPlayerControl playerControl;
     RacingMoney moneyController;
@@ -68,12 +74,14 @@ public class RacingMapControl : MonoBehaviour
 
         // create list
         enemies = new List<RacingEnemy>[3];
-        for(int i = 0; i < enemies.Length; i++)
+        for (int i = 0; i < enemies.Length; i++)
         {
             enemies[i] = new List<RacingEnemy>();
         }
 
         coins = new List<RacingCoin>();
+        shits = new List<GameObject>();
+        cats = new List<RacingCat>();
 
         // stop rolling
         pause = true;
@@ -97,33 +105,31 @@ public class RacingMapControl : MonoBehaviour
         // Creation should be based on distance rather than time
         if (updateItemsDistance > itemUpdateFrequency)
         {
-            //if (Random.value < 0.5)
-            {
-                //CreateEnemy();
-            }
-
-            CreateCoin();
+            CreateGround();
+            CreateItems();
             updateItemsDistance = 0;
         }
         else
         {
-            updateItemsDistance += Time.deltaTime;
+            updateItemsDistance += distance;
         }
 
 
         MoveLoopThings(distance);
         MoveEnemy(distance);
         MoveCoin(distance);
+        MoveShit(distance);
+        MoveCat(distance);
 
     }
 
     void MoveLoopThings(float distance)
     {
-        for(int i = 0; i < roads.Length; i++)
+        for (int i = 0; i < roads.Length; i++)
         {
             float newY = roads[i].transform.localPosition.y;
             newY -= distance;
-            if(newY < -10)
+            if (newY < -10)
             {
                 int previous = (roads.Length + i - 1) % roads.Length;
                 newY = roads[previous].transform.localPosition.y + roadHeight;
@@ -162,7 +168,7 @@ public class RacingMapControl : MonoBehaviour
                 newY -= distance;
                 bike.transform.localPosition = new Vector3(bike.transform.localPosition.x, newY, bike.transform.localPosition.z);
 
-                if(newY < -8)
+                if (newY < -8)
                 {
                     bike.gameObject.SetActive(false);
                 }
@@ -172,9 +178,9 @@ public class RacingMapControl : MonoBehaviour
 
     void MoveCoin(float distance)
     {
-        foreach(RacingCoin coin in coins)
+        foreach (RacingCoin coin in coins)
         {
-            if(!coin.isActiveAndEnabled)
+            if (!coin.isActiveAndEnabled)
             {
                 continue;
             }
@@ -191,6 +197,49 @@ public class RacingMapControl : MonoBehaviour
         }
     }
 
+    void MoveShit(float distance)
+    {
+        foreach (GameObject shit in shits)
+        {
+            if (!shit.activeSelf)
+            {
+                continue;
+            }
+
+            // move bike
+            float newY = shit.transform.localPosition.y;
+            newY -= distance;
+            shit.transform.localPosition = new Vector3(shit.transform.localPosition.x, newY, shit.transform.localPosition.z);
+
+            if (newY < -8)
+            {
+                shit.gameObject.SetActive(false);
+            }
+        }
+    }
+
+    void MoveCat(float distance)
+    {
+        foreach (RacingCat cat in cats)
+        {
+            if (!cat.isActiveAndEnabled)
+            {
+                continue;
+            }
+
+            // move bike
+            float newY = cat.transform.localPosition.y;
+            newY -= distance;
+            cat.transform.localPosition = new Vector3(cat.transform.localPosition.x, newY, cat.transform.localPosition.z);
+
+            if (newY < -8)
+            {
+                cat.gameObject.SetActive(false);
+            }
+        }
+
+    }
+
     public void ResetMap()
     {
         for (int i = 0; i < roads.Length; i++)
@@ -203,6 +252,7 @@ public class RacingMapControl : MonoBehaviour
             normalGrasses[i].transform.localPosition = new Vector3(2.7f, i * normalGrassHeight - 8.0f, 0.1f);
         }
 
+        lastCatDistance = 0;
         pause = true;
     }
 
@@ -225,20 +275,168 @@ public class RacingMapControl : MonoBehaviour
         currentEffect.gameObject.SetActive(true);
         currentEffect.Play("hit");
         // take the easy way out
-        timer.Add(() => { 
+        timer.Add(() =>
+        {
+            currentEffect.gameObject.SetActive(false);
+            currentEffect.transform.parent = this.transform;
+        }, 0.8f);
+        currentEffectIndex = (currentEffectIndex + 1) % hitEffects.Length;
+    }
+
+    public void ShowHitEffectAt(Vector3 position)
+    {
+        Animator currentEffect = hitEffects[currentEffectIndex];
+        currentEffect.transform.position = position;
+        currentEffect.gameObject.SetActive(true);
+        currentEffect.Play("hit");
+        // take the easy way out
+        timer.Add(() =>
+        {
             currentEffect.gameObject.SetActive(false);
             currentEffect.transform.parent = transform;
         }, 0.8f);
         currentEffectIndex = (currentEffectIndex + 1) % hitEffects.Length;
     }
 
-    public void CreateEnemy()
+    // We are trying to create grassland/pond here
+    public void CreateGround()
+    {
+        // 
+    }
+
+    public void CreateItems()
+    {
+        // This is the most important algo we are having in this game I think
+        /* The Idea here is just to devide a road into 4 slots, and the 5th slot is constant grassland
+           So we can put things into these slots, just to make sure they never touch each other.
+
+           Another very important thing here is just to keep all the items amount "PROPER!"
+           I came up with this very simple idea, we got a desired number, and we buff the chance of getting such
+           item when amount is low, and nerf it when high.
+         */
+        const int desireEnemies = 3;
+        const int desireCoins = 20;
+        const int desireShits = 1;
+
+        bool[] slots = { false, false, false, false, false };
+        int usedSlots = 0;
+
+        // cat is different
+        if(distanceCover - lastCatDistance > 8)
+        {
+            if(Random.value < 0.5)
+            {
+                lastCatDistance = distanceCover;
+                CreateCat(GetPositionBasedOnSlot(0) + Vector3.right * 6);
+                usedSlots = slots.Length;
+            }
+        }
+
+        // Create Enemy
+        // Count first, this is super super bad, but I just don't want to write something more complecated
+        int enemyCount = 0;
+        for (int bikeType = 0; bikeType < 3; bikeType++)
+        {
+            for (int i = 0; i < enemies[bikeType].Count; i++)
+            {
+                if (enemies[bikeType][i].isActiveAndEnabled)
+                {
+                    enemyCount++;
+                }
+            }
+        }
+
+        while (usedSlots < 4 /* we can only use first four slots */ && RandBasedOnDesireNumber(desireEnemies, enemyCount))
+        {
+            enemyCount += 3;
+            int slot = ChooseSlot(slots, 0, 4);
+            usedSlots++;
+            slots[slot] = true;
+            CreateEnemy(GetPositionBasedOnSlot(slot));
+        }
+
+        // Create Coin, we let coin took all the left places if possible
+        int shitCount = 0;
+        for (int i = 0; i < shits.Count; i++)
+        {
+            if (shits[i].activeSelf)
+            {
+                shitCount++;
+            }
+        }
+
+        // one shit per line
+        if (usedSlots < 5 && RandBasedOnDesireNumber(desireShits, shitCount))
+        {
+            int slot = ChooseSlot(slots, 0, slots.Length);
+            usedSlots++;
+            slots[slot] = true;
+            CreateShit(GetPositionBasedOnSlot(slot));
+        }
+
+        // Create Coin, we let coin took all the left places if possible
+        int coinCount = 0;
+        for (int i = 0; i < coins.Count; i++)
+        {
+            if (coins[i].isActiveAndEnabled)
+            {
+                coinCount++;
+            }
+        }
+
+        // one coin per line
+        if (usedSlots < 5 && RandBasedOnDesireNumber(desireCoins, coinCount))
+        {
+            int slot = ChooseSlot(slots, 0, slots.Length);
+            usedSlots++;
+            slots[slot] = true;
+            CreateCoin(GetPositionBasedOnSlot(slot));
+        }
+    }
+
+    static Vector3 GetPositionBasedOnSlot(int slot)
+    {
+        return new Vector3(-3.5f + 7.0f / 5.0f * (slot + 0.5f), 10f + Random.value, -3f);
+    }
+
+    private int ChooseSlot(bool[] slots, int start, int end)
+    {
+        int[] choices = new int[slots.Length];
+        int index = 0;
+        for (int i = start; i < end && i < slots.Length; i++)
+        {
+            if (!slots[i])
+            {
+                choices[index] = i;
+                index++;
+            }
+        }
+
+        return choices[Random.Range(0, index)];
+    }
+
+    private bool RandBasedOnDesireNumber(float desireNumber, float currentNumber)
+    {
+        float ratio = (currentNumber - desireNumber) / desireNumber + 0.8f; // this is to move the function graph left
+        float chance = -ratio / Mathf.Sqrt(1 + ratio * ratio) + 1.0f;
+
+        if (Random.value * 2 < chance)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public void CreateEnemy(Vector3 position)
     {
         int bikeType = Random.Range(0, 3);
         RacingEnemy enemy = null;
 
         // grab used ones
-        for(int i = 0; i < enemies[bikeType].Count; i++)
+        for (int i = 0; i < enemies[bikeType].Count; i++)
         {
             if (!enemies[bikeType][i].isActiveAndEnabled)
             {
@@ -249,20 +447,20 @@ public class RacingMapControl : MonoBehaviour
         }
 
         // no? create one
-        if(enemy == null)
+        if (enemy == null)
         {
             enemy = Instantiate(enemyPrefab[bikeType], playGround.transform).GetComponent<RacingEnemy>();
             enemies[bikeType].Add(enemy);
         }
 
-        enemy.transform.localPosition = new Vector3(Random.value * 3 - 3, 12, -0.9f);
+        enemy.transform.localPosition = position;
         enemy.gameObject.SetActive(true);
     }
 
-    public void CreateCoin()
+    public void CreateCoin(Vector3 position)
     {
         RacingCoin coin = null;
-        for(int i = 0;i < coins.Count; i++)
+        for (int i = 0; i < coins.Count; i++)
         {
             if (!coins[i].isActiveAndEnabled)
             {
@@ -271,14 +469,64 @@ public class RacingMapControl : MonoBehaviour
             }
         }
 
-        if(coin == null)
+        if (coin == null)
         {
             coin = Instantiate(coinPrefab, playGround.transform).GetComponent<RacingCoin>();
             coins.Add(coin);
         }
 
-        coin.transform.localPosition = new Vector3(Random.value * 4 - 4, 12, -0.9f);
+        coin.transform.localPosition = position;
         coin.SetupCoin(moneyController);
         coin.gameObject.SetActive(true);
+    }
+
+    public void CreateShit(Vector3 position)
+    {
+        GameObject shit = null;
+        for (int i = 0; i < shits.Count; i++)
+        {
+            if (!shits[i].activeSelf)
+            {
+                shit = shits[i];
+                break;
+            }
+        }
+
+        if (shit == null)
+        {
+            shit = Instantiate(shitPrefab, playGround.transform);
+            shits.Add(shit);
+        }
+
+        shit.transform.localPosition = position;
+        shit.gameObject.SetActive(true);
+    }
+
+    public void CreateCat(Vector3 position)
+    {
+        RacingCat cat = null;
+        for (int i = 0; i < cats.Count; i++)
+        {
+            if (!cats[i].isActiveAndEnabled)
+            {
+                cat = cats[i];
+                break;
+            }
+        }
+
+        if (cat == null)
+        {
+            cat = Instantiate(catPrefab, playGround.transform).GetComponent<RacingCat>();
+            cats.Add(cat);
+        }
+
+        cat.transform.localPosition = position;
+        cat.SetupCat();
+        cat.gameObject.SetActive(true);
+    }
+
+    public void Test(int a)
+    {
+        RandBasedOnDesireNumber(8, a);
     }
 }
