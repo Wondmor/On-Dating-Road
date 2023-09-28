@@ -166,12 +166,28 @@ public class RacingPlayerControl : MonoBehaviour
         {
             verticalSpeed = verticalSpeed * grassSpeedDownRatio;
         }
+
+        if(SpeedUpOn())
+        {
+            verticalSpeed *= 2;
+        }
+        
+    }
+
+    bool SpeedUpOn()
+    {
+        if(bikeType == BIKE_TYPE.FIRE && (Input.GetKey(KeyCode.Joystick1Button0) || Input.GetKey(KeyCode.C)))
+        {
+            return true;
+        }
+        return false;
     }
 
     bool OnGrass()
     {
         // There are two ways we on grass
         // 1. we on looping grass
+        // 2. we on single grass
         if (transform.localPosition.x >= GRASS_POS)
         {
             return true;

@@ -133,7 +133,7 @@ public class RacingMapControl : MonoBehaviour
         if (updateItemsDistance > itemUpdateFrequency)
         {
             bool hasGround = CreateGround();
-            if(!hasGround)
+            if (!hasGround)
             {
                 CreateItems();
             }
@@ -187,17 +187,17 @@ public class RacingMapControl : MonoBehaviour
 
     void MoveGround(float distance)
     {
-        if(singleGrass.activeSelf)
+        if (singleGrass.activeSelf)
         {
-            MoveSingleItem(distance, singleGrass.transform);
+            MoveSingleItem(distance, singleGrass.transform, 13);
         }
 
-        if(pond.activeSelf)
+        if (pond.activeSelf)
         {
             MoveSingleItem(distance, pond.transform);
         }
 
-        if(leftPond.activeSelf)
+        if (leftPond.activeSelf)
         {
             MoveSingleItem(distance, leftPond.transform);
         }
@@ -257,13 +257,13 @@ public class RacingMapControl : MonoBehaviour
         }
     }
 
-    void MoveSingleItem(float distance, Transform item)
+    void MoveSingleItem(float distance, Transform item, float deactiveY = 8)
     {
         float newY = item.transform.localPosition.y;
         newY -= distance;
         item.transform.localPosition = new Vector3(item.transform.localPosition.x, newY, item.transform.localPosition.z);
 
-        if (newY < -8)
+        if (deactiveY < -8)
         {
             item.gameObject.SetActive(false);
         }
@@ -281,12 +281,40 @@ public class RacingMapControl : MonoBehaviour
             normalGrasses[i].transform.localPosition = new Vector3(2.7f, i * normalGrassHeight - 8.0f, 0.1f);
         }
 
+        foreach (var coin in coins)
+        {
+            coin.gameObject.SetActive(false);
+        }
+
+        foreach (var shit in shits)
+        {
+            shit.gameObject.SetActive(false);
+        }
+
+        foreach (var cat in cats)
+        {
+            cat.gameObject.SetActive(false);
+        }
+
+        for (int bikeType = 0; bikeType < 3; bikeType++)
+        {
+            foreach(var bike in enemies[bikeType])
+            {
+                bike.gameObject.SetActive(false);
+            }
+        }
+
+        pond.SetActive(false);
+        singleGrass.SetActive(false);
+        leftPond.SetActive(false);
+
         distanceCover = 0;
         lastCatDistance = 0;
-        foreach(var itemQ in ItemQueues)
+        foreach (var itemQ in ItemQueues)
         {
             itemQ.Value.Clear();
         }
+
         pause = true;
     }
 
@@ -335,21 +363,21 @@ public class RacingMapControl : MonoBehaviour
     // We are trying to create grassland/pond here
     public bool CreateGround()
     {
-        if(singleGrass.activeSelf || pond.activeSelf || leftPond.activeSelf)
+        if (singleGrass.activeSelf || pond.activeSelf || leftPond.activeSelf)
         {
             return false;
         }
-        if(Random.value > 0.1f)
+        if (Random.value > 0.1f)
         {
             return false;
         }
 
         float randomChoice = Random.value;
         // create grass
-        if(!singleGrass.activeSelf && randomChoice < 0.5f)
+        if (!singleGrass.activeSelf && randomChoice < 0.5f)
         {
             singleGrass.SetActive(true);
-            if(Random.value < 0.3f)
+            if (Random.value < 0.3f)
             {
                 stumpAtGrass.SetActive(true);
             }
@@ -361,13 +389,13 @@ public class RacingMapControl : MonoBehaviour
 
             return true;
         }
-        else if(!leftPond.activeSelf && randomChoice < 0.75f)
+        else if (!leftPond.activeSelf && randomChoice < 0.75f)
         {
             leftPond.SetActive(true);
             leftPond.transform.localPosition = new Vector3(-2.25f, 10f, -0.2f);
             return true;
         }
-        else if(!pond.activeSelf)
+        else if (!pond.activeSelf)
         {
             pond.SetActive(true);
             pond.transform.localPosition = new Vector3(Random.Range(-1.9f, 0.3f), 10f, -0.2f);
@@ -392,9 +420,9 @@ public class RacingMapControl : MonoBehaviour
         const int desireShits = 1;
 
         // update item queue
-        foreach(var itemQ in ItemQueues)
+        foreach (var itemQ in ItemQueues)
         {
-            while(itemQ.Value.First != null && distanceCover - itemQ.Value.First.Value > vanishDistance)
+            while (itemQ.Value.First != null && distanceCover - itemQ.Value.First.Value > vanishDistance)
             {
                 itemQ.Value.RemoveFirst();
             }

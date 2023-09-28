@@ -970,6 +970,7 @@ MonoBehaviour:
   normalGrassHeight: 5.1
   totalDistance: 800
   itemUpdateFrequency: 5
+  vanishDistance: 10
 --- !u!114 &735353094
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -983,7 +984,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   text: {fileID: 2086790199}
-  MAX_HEALTH: 8
+  MAX_HEALTH: 3
 --- !u!1 &1505513611
 GameObject:
   m_ObjectHideFlags: 0
