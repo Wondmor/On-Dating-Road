@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using Unity.Burst.Intrinsics;
+using Unity.Collections.LowLevel.Unsafe;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -23,9 +24,9 @@ public class FadeInOutScene : MonoBehaviour
     private string sceneName = "";
     public void FadeOut(string sceneName)
     {
-        blackScreen.gameObject.SetActive(true);
+        GetBlackScreen().gameObject.SetActive(true);
         this.sceneName = sceneName;
-        iTween.ValueTo(blackScreen.gameObject, iTween.Hash(
+        iTween.ValueTo(GetBlackScreen().gameObject, iTween.Hash(
             "from", 0.0f,
             "to", 1.0f,
             "time", lastInSecond,
@@ -39,8 +40,8 @@ public class FadeInOutScene : MonoBehaviour
 
     void FadeIn()
     {
-        blackScreen.gameObject.SetActive(true);
-        iTween.ValueTo(blackScreen.gameObject, iTween.Hash(
+        GetBlackScreen().gameObject.SetActive(true);
+        iTween.ValueTo(GetBlackScreen().gameObject, iTween.Hash(
             "from", 1.0f,
             "to", 0.0f,
             "onupdate", "UpdateValue",
@@ -54,15 +55,22 @@ public class FadeInOutScene : MonoBehaviour
 
     void UpdateValue(float newValue)
     {
-        var col = blackScreen.color;
+        var col = GetBlackScreen().color;
         col.a = newValue;
-        blackScreen.color = col;
+        GetBlackScreen().color = col;
     }
 
     void OnComplete()
     {
         SceneManager.LoadScene(sceneName);
         Destroy(gameObject);
+    }
+
+    Image GetBlackScreen()
+    { 
+        if (blackScreen == null)
+            blackScreen = transform.Find("BlackScreen").GetComponent<Image>();
+        return blackScreen;
     }
 
     // Start is called before the first frame update
@@ -72,6 +80,10 @@ public class FadeInOutScene : MonoBehaviour
         if (fadeType == EType.FadeIn)
         {
             FadeIn();
+        }
+        else if(fadeType == EType.FadeOut)
+        {
+            UpdateValue(0.0f);
         }
     }
 

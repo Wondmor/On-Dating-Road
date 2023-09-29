@@ -7,8 +7,8 @@ using UnityEngine.Timeline;
 public class TimelineEndPlayable : BasicPlayableBehaviour
 {
     [Header("主控件")]
-    public ExposedReference<PreludeLogic> preludeLogic;
-    private PreludeLogic _preludeLogic;
+    public ExposedReference<TimelineLogic> preludeLogic;
+    private TimelineLogic _preludeLogic;
 
     public override void OnGraphStart(Playable playable)
     {
