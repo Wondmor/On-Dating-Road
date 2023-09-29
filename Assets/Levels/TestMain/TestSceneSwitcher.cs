@@ -5,12 +5,12 @@ using UnityEngine.UI;
 
 public class TestSceneSwitcher : MonoBehaviour
 {
-    private Button button;
-
     private void Start()
     {
-        button = GetComponent<Button>();
-        button.onClick.AddListener(OnButtonClick);  // 添加监听器
+        foreach(var button in GetComponents<Button>())
+        {
+            button.onClick.AddListener(OnButtonClick);  // 添加监听器
+        }
     }
 
     public void OnButtonClick()
