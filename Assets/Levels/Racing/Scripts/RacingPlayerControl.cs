@@ -44,6 +44,7 @@ public class RacingPlayerControl : MonoBehaviour
 
     bool stun = false;
     bool recovering = false;
+    bool speedup = false;
 
     // controllers
     RacingMoney moneyControl;
@@ -63,6 +64,7 @@ public class RacingPlayerControl : MonoBehaviour
     public float VerticalSpeed { get => verticalSpeed; set => verticalSpeed = value; }
     public bool Stun { get => stun; set => stun = value; }
     public bool Recovering { get => recovering; private set => recovering = value; }
+    public bool Speedup { get => speedup; private set => speedup = value; }
 
     // Start is called before the first frame update
     void Start()
@@ -91,6 +93,12 @@ public class RacingPlayerControl : MonoBehaviour
             currentPos.x += axis * horizontalSpeed * Time.deltaTime;
             currentPos.x = Mathf.Clamp(currentPos.x, MIN_X, MAX_X);
             transform.localPosition = currentPos;
+
+            // skill trigger?
+            if(Input.GetKeyDown(KeyCode.C) || Input.GetKeyDown(KeyCode.JoystickButton0))
+            {
+                TriggerSpeedUp();
+            }
 
             // tilt?
             if (axis > 0)
@@ -159,6 +167,11 @@ public class RacingPlayerControl : MonoBehaviour
             verticalSpeed = 0;
             return;
         }
+
+        if(recovering)
+        {
+            verticalSpeed *= 0.5f;
+        }
         // check if pause
         // check if on grass
         bool onGrass = OnGrass();
@@ -167,20 +180,25 @@ public class RacingPlayerControl : MonoBehaviour
             verticalSpeed = verticalSpeed * grassSpeedDownRatio;
         }
 
-        if(SpeedUpOn())
+        if(Speedup)
         {
             verticalSpeed *= 2;
         }
         
     }
 
-    bool SpeedUpOn()
+    public void TriggerSpeedUp()
     {
-        if(bikeType == BIKE_TYPE.FIRE && (Input.GetKey(KeyCode.Joystick1Button0) || Input.GetKey(KeyCode.C)))
+        if(Speedup || recovering || bikeType != BIKE_TYPE.FIRE)
         {
-            return true;
+            return;
         }
-        return false;
+
+        Speedup = true;
+        timer.Add(() =>
+        {
+            Speedup = false;
+        }, 10f);
     }
 
     bool OnGrass()
@@ -211,7 +229,7 @@ public class RacingPlayerControl : MonoBehaviour
         if (enemy != null)
         {
             enemy.Hit();
-            mapControl.ShowHitEffectAt(enemy.transform);
+            mapControl.ShowHitEffectAt(enemy.transform.position);
             Stun = true;
 
             if (!WinByType(bikeType, enemy.BikeType))
@@ -284,12 +302,13 @@ public class RacingPlayerControl : MonoBehaviour
         {
             return;
         }
+        GetComponent<BoxCollider2D>().enabled = false;
+        Speedup = false;
         timer.Add(() =>
         {
             Recovering = true;
             Stun = false;
             ResetBike();
-            GetComponent<BoxCollider2D>().enabled = false;
             // reset status in time
             timer.Add(() =>
             {

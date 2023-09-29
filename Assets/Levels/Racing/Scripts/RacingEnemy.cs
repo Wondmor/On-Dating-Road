@@ -45,6 +45,7 @@ public class RacingEnemy : MonoBehaviour
         enemy.gameObject.SetActive(true);
 
         dying = false;
+        GetComponent<Collider2D>().enabled = true;
     }
 
     public void Hit()
@@ -54,6 +55,8 @@ public class RacingEnemy : MonoBehaviour
             return;
         }
         dying = true;
+
+        GetComponent<Collider2D>().enabled = false;
 
         enemy.gameObject.SetActive(false);
         bike.gameObject.SetActive(true);

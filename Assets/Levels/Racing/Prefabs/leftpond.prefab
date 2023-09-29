@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 3783268169248809022}
   - component: {fileID: 2721907448584799862}
-  - component: {fileID: 766594000482968468}
   - component: {fileID: 2059683405364435818}
+  - component: {fileID: 4149558645059715459}
   m_Layer: 0
   m_Name: leftpond
   m_TagString: Untagged
@@ -86,8 +86,20 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!60 &766594000482968468
-PolygonCollider2D:
+--- !u!114 &2059683405364435818
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7649123755337796155}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0f0751506aea534688d36ab36d9958c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!58 &4149558645059715459
+CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -118,43 +130,6 @@ PolygonCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 5.33, y: 6.93}
-    newSize: {x: 5.33, y: 6.93}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Points:
-    m_Paths:
-    - - {x: -0.005, y: -3.3149998}
-      - {x: 0.73499995, y: -2.7949998}
-      - {x: 1.2049999, y: -1.485}
-      - {x: 2.445, y: 0.095}
-      - {x: 2.485, y: 1.345}
-      - {x: 2.2849998, y: 1.8349999}
-      - {x: 1.605, y: 2.375}
-      - {x: 0.475, y: 2.565}
-      - {x: -0.285, y: 3.245}
-      - {x: -0.91499996, y: 3.465}
-      - {x: -1.885, y: 3.3149998}
-      - {x: -2.425, y: 2.855}
-      - {x: -2.5149999, y: -2.895}
-      - {x: -1.035, y: -3.465}
-      - {x: -0.055, y: -3.2849998}
-  m_UseDelaunayMesh: 0
---- !u!114 &2059683405364435818
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7649123755337796155}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f0f0751506aea534688d36ab36d9958c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Offset: {x: -0.3612525, y: 0.04982865}
+  serializedVersion: 2
+  m_Radius: 1.9825977

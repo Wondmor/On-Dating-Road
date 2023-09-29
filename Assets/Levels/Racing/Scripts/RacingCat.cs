@@ -15,6 +15,7 @@ public class RacingCat : MonoBehaviour
     float startDistance = 0;
     bool triggered = false;
     bool hit = false;
+    bool flipped = false;
     BoxCollider2D boxCollider;
     Animator animator;
 
@@ -35,12 +36,21 @@ public class RacingCat : MonoBehaviour
             if (startPosition.y - transform.localPosition.y > startDistance)
             {
                 triggered = true;
+                if(flipped)
+                {
+                    transform.localPosition = new Vector3(-transform.localPosition.x, transform.localPosition.y, transform.localPosition.z);
+                    transform.localScale = new Vector3(-1, 1, 1);
+                }
+                else
+                {
+                    transform.localScale = Vector3.one;
+                }
             }
         }
 
         if(triggered && !hit)
         {
-            transform.localPosition = transform.localPosition + Vector3.left * Time.deltaTime * speed;
+            transform.localPosition = transform.localPosition + Vector3.left * Time.deltaTime * speed * (flipped ? -1f : 1f);
         }
     }
 
@@ -57,6 +67,10 @@ public class RacingCat : MonoBehaviour
         startDistance = Random.Range(MIN_DISTANCE, MAX_DISTANCE);
         triggered = false;
         hit = false;
+
+        //flipped = Random.value < 0.5f ? true : false;
+        flipped = true;
         GetComponent<BoxCollider2D>().enabled = true;
+
     }
 }
