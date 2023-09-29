@@ -189,7 +189,7 @@ public class RacingMapControl : MonoBehaviour
     {
         if (singleGrass.activeSelf)
         {
-            MoveSingleItem(distance, singleGrass.transform, 13);
+            MoveSingleItem(distance, singleGrass.transform, -13);
         }
 
         if (pond.activeSelf)
@@ -213,7 +213,7 @@ public class RacingMapControl : MonoBehaviour
                 {
                     continue;
                 }
-                MoveSingleItem(distance, enemies[bikeType][i].transform);
+                MoveSingleItem(distance, enemies[bikeType][i].transform, -8, 2 + Random.value * 1.5f);
             }
         }
     }
@@ -257,13 +257,13 @@ public class RacingMapControl : MonoBehaviour
         }
     }
 
-    void MoveSingleItem(float distance, Transform item, float deactiveY = 8)
+    void MoveSingleItem(float distance, Transform item, float deactiveY = -8, float speed = 0)
     {
         float newY = item.transform.localPosition.y;
-        newY -= distance;
+        newY -= distance - speed * Time.deltaTime;
         item.transform.localPosition = new Vector3(item.transform.localPosition.x, newY, item.transform.localPosition.z);
 
-        if (deactiveY < -8)
+        if (newY < deactiveY)
         {
             item.gameObject.SetActive(false);
         }
@@ -542,7 +542,7 @@ public class RacingMapControl : MonoBehaviour
             enemies[bikeType].Add(enemy);
         }
 
-        enemy.transform.localPosition = position;
+        enemy.transform.localPosition = position + Vector3.back;
         enemy.gameObject.SetActive(true);
     }
 

@@ -24,6 +24,6 @@ EditorBuildSettings:
     path: Assets/Levels/BusGame/BusGame_1.unity
     guid: a2378b89ffd23eb4faa53cb4abc1d251
   - enabled: 1
-    path: Assets/Scenes/Prelude.unity
-    guid: 3d0d9f62ec1b10a499f275c3630edc47
+    path: Assets/Scenes/Racing.unity
+    guid: b5ceb2c591573b942b5e0a0149b34f97
   m_configObjects: {}

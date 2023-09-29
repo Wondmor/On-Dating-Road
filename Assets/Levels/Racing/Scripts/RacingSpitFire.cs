@@ -20,7 +20,7 @@ public class RacingSpitFire : MonoBehaviour
     {
         if(playerControl != null)
         {
-            if(playerControl.VerticalSpeed < 8)
+            if(!playerControl.Speedup)
             {
                 spriteRender.enabled = false;
             }
