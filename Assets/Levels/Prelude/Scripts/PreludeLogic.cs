@@ -16,7 +16,10 @@ public class PreludeLogic : MonoBehaviour
     internal void OnTimelineLastFrame()
     {
         GetComponent<PlayableDirector>().Pause();
-        SceneManager.LoadScene(sceneName);
+        if (transform.Find("CanvasFade") && transform.Find("CanvasFade").GetComponent<FadeInOutScene>())
+            transform.Find("CanvasFade").GetComponent<FadeInOutScene>().FadeOut(sceneName);
+        else
+            SceneManager.LoadScene(sceneName);
     }
 
     bool bWaitingInput = false;
