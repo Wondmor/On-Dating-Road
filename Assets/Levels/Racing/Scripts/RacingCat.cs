@@ -68,8 +68,7 @@ public class RacingCat : MonoBehaviour
         triggered = false;
         hit = false;
 
-        //flipped = Random.value < 0.5f ? true : false;
-        flipped = true;
+        flipped = Random.value < 0.5f ? true : false;
         GetComponent<BoxCollider2D>().enabled = true;
 
     }

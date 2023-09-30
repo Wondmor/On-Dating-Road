@@ -94,7 +94,7 @@ public class RacingFlowControl : MonoBehaviour
                 GameManager.Instance.RacingData.RaceTime++;
                 timer.Add(() =>
                 {
-                    SceneManager.LoadScene("RacingSelection");
+                    SceneManager.LoadScene("RacingFinish");
                 }, 1f);
                 break;
             case GAME_STATUS.START:
