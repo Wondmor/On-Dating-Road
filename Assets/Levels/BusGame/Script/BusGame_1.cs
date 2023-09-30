@@ -3,16 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Fungus;
+using UnityEngine.SceneManagement;
 
 public class BusGame_1 : MonoBehaviour
 {
     public DialogBoxController dialogBoxController;
+    public LevelLoader levelLoader;
     public Flowchart flowchart;
     public GameObject[] child;
     public GameObject choice;
 
     public Image countTime;
     Sprite newSprite;
+
+    public Score score;
 
     bool pass = false;
     int level = 1;
@@ -212,14 +216,21 @@ public class BusGame_1 : MonoBehaviour
         {
             child[i].SetActive(false);
         }
-        
+        score.playerScore += 1;
         pass = true;
+        if(score.playerScore >= 6)
+        {
+            string targetSceneName = "BusGame_Success";
+            StartCoroutine(levelLoader.LoadLevelByName(targetSceneName));
+        }
+        
     }
     public void No()
     {
         Debug.Log("No");
         choice.SetActive(false);
         
-        
+        string targetSceneName = "BusGame_Fail";
+        StartCoroutine(levelLoader.LoadLevelByName(targetSceneName));
     }
 }

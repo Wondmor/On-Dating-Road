@@ -5,6 +5,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class ButtonEffect : MonoBehaviour
 {
@@ -12,6 +13,14 @@ public class ButtonEffect : MonoBehaviour
     public RectTransform noRectTransform;
 
     public Camera mainCamera;
+
+    public Image yesImage;
+    public Image noImage;
+
+    public Sprite yesBefore;
+    public Sprite yesAfter;
+    public Sprite noBefore;
+    public Sprite noAfter;
 
     public void Update()
     {
@@ -30,6 +39,8 @@ public class ButtonEffect : MonoBehaviour
                 sizeDelta.x = newWidth;
                 sizeDelta.y = newHeight;
                 yesRectTransform.sizeDelta = sizeDelta;
+
+                yesImage.sprite = yesAfter;
             }
             if (noRectTransform != null)
             {
@@ -39,6 +50,8 @@ public class ButtonEffect : MonoBehaviour
                 sizeDelta.x = newWidth;
                 sizeDelta.y = newHeight;
                 noRectTransform.sizeDelta = sizeDelta;
+
+                noImage.sprite = noBefore;
             }
         }
 
@@ -53,6 +66,8 @@ public class ButtonEffect : MonoBehaviour
                 sizeDelta.x = newWidth;
                 sizeDelta.y = newHeight;
                 yesRectTransform.sizeDelta = sizeDelta;
+
+                yesImage.sprite = yesBefore;
             }
             if (noRectTransform != null)
             {
@@ -62,6 +77,8 @@ public class ButtonEffect : MonoBehaviour
                 sizeDelta.x = newWidth;
                 sizeDelta.y = newHeight;
                 noRectTransform.sizeDelta = sizeDelta;
+
+                noImage.sprite = noAfter;
             }
         }
         

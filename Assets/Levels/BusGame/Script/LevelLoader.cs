@@ -22,5 +22,11 @@ public class LevelLoader : MonoBehaviour
         yield return new WaitForSeconds(transitionTime);
         SceneManager.LoadScene(levelIndex);
     }
+    public IEnumerator LoadLevelByName(string levelName)
+    {
+        transition.SetTrigger("Start");
+        yield return new WaitForSeconds(transitionTime);
+        SceneManager.LoadScene(levelName);
+    }
     
 }
