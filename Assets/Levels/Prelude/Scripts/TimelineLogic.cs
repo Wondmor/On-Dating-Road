@@ -11,7 +11,6 @@ public class TimelineLogic : MonoBehaviour
 {
     [Header("结束后跳转到")]
     [SerializeField] public string sceneName = "";
-    [SerializeField] public CommonInputAction input = null;
 
     internal void OnTimelineLastFrame()
     {
@@ -47,7 +46,7 @@ public class TimelineLogic : MonoBehaviour
     {
         if(bWaitingInput)
         {
-            if (input.GetPerformedTypeThisFrame() == eType)
+            if (GameManager.Instance.CommonInputAction.GetPerformedTypeThisFrame() == eType)
             {
                 bWaitingInput = false;
                 eType = CommonInputAction.EType.None;

@@ -1,0 +1,281 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1497581778980667343
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3904556019259862876}
+  - component: {fileID: 4431714094734768195}
+  m_Layer: 0
+  m_Name: CommonInputAction
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3904556019259862876
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1497581778980667343}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 368.68066, y: -75.45358, z: -0.20747617}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4431714094734768195
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1497581778980667343}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c1bbda30337c1e4381e681aec0b7626, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enter:
+    m_Name: Enter
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 9576605e-c96a-4e27-967c-1c49820c02d2
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: 2d2fcd8a-b1f8-48d8-a10d-5a08cb8c0d57
+      m_Path: <Keyboard>/enter
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Enter
+      m_Flags: 0
+    - m_Name: 
+      m_Id: 8b19c73c-15f1-4525-96b1-2b569986455a
+      m_Path: <Keyboard>/space
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Enter
+      m_Flags: 0
+    - m_Name: 
+      m_Id: e985e95d-454e-49f3-9ae6-2c7bf74f4af9
+      m_Path: <XInputController>/buttonSouth
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Enter
+      m_Flags: 0
+    - m_Name: 
+      m_Id: 361cdaca-4d5d-491f-8845-8e54ed805938
+      m_Path: 
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Enter
+      m_Flags: 0
+    m_Flags: 0
+  cancel:
+    m_Name: Cancel
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 4cc58041-95ad-4c16-a448-0fdd1887a40c
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: 280a2cf9-75b3-4416-b907-07beb3bb35cd
+      m_Path: <Keyboard>/backspace
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Cancel
+      m_Flags: 0
+    - m_Name: 
+      m_Id: 7ac1e751-6d5f-40e3-bf84-634b9e9746b5
+      m_Path: <XInputController>/buttonEast
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Cancel
+      m_Flags: 0
+    m_Flags: 0
+  directions:
+    m_Name: Directions
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: a12eb8b0-ba17-4897-804f-0eee30cf77ba
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 2D Vector Keyboard
+      m_Id: b0f474a5-9748-4a57-b496-c756de081dfb
+      m_Path: 2DVector
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Directions
+      m_Flags: 4
+    - m_Name: up
+      m_Id: 941e0a6c-5b87-410a-931b-92198ba16804
+      m_Path: <Keyboard>/upArrow
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Directions
+      m_Flags: 8
+    - m_Name: down
+      m_Id: 633efcb4-811b-44f3-bdf9-e42e2acd7623
+      m_Path: <Keyboard>/downArrow
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Directions
+      m_Flags: 8
+    - m_Name: left
+      m_Id: 063c3e46-a642-4d59-9e21-22123376cb02
+      m_Path: <Keyboard>/leftArrow
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Directions
+      m_Flags: 8
+    - m_Name: right
+      m_Id: 72a881ca-c176-4a9a-aff2-85f7d7cda4e6
+      m_Path: <Keyboard>/rightArrow
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Directions
+      m_Flags: 8
+    - m_Name: 2D Vector Keyboard letters
+      m_Id: 12be2442-b1e2-47da-89d6-8525883b9b9e
+      m_Path: 2DVector
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Directions
+      m_Flags: 4
+    - m_Name: up
+      m_Id: d9dcaa6b-7f6a-44d1-a92c-7c25d8847567
+      m_Path: <Keyboard>/w
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Directions
+      m_Flags: 8
+    - m_Name: down
+      m_Id: 7956095f-ab10-4529-bb8e-c9c565fc09c1
+      m_Path: <Keyboard>/s
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Directions
+      m_Flags: 8
+    - m_Name: left
+      m_Id: fc6d59b6-83c7-4503-8533-c4f3646fb1ab
+      m_Path: <Keyboard>/a
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Directions
+      m_Flags: 8
+    - m_Name: right
+      m_Id: 5efa3a09-bc81-4931-8f89-56baa1248a1f
+      m_Path: <Keyboard>/d
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Directions
+      m_Flags: 8
+    - m_Name: D-Pad Controller
+      m_Id: 1dbe4fd4-434c-48f9-b8d8-5436ca9cec3b
+      m_Path: 2DVector
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Directions
+      m_Flags: 4
+    - m_Name: up
+      m_Id: 874e6cca-0b83-4e43-b73b-5681e451afd2
+      m_Path: <Gamepad>/dpad/up
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Directions
+      m_Flags: 8
+    - m_Name: down
+      m_Id: 8fbe92dd-21ed-4b8b-92c0-6ce64a62f55a
+      m_Path: <Gamepad>/dpad/down
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Directions
+      m_Flags: 8
+    - m_Name: left
+      m_Id: 94bfb28b-f4bf-4ee2-824a-8b216f76fa8f
+      m_Path: <Gamepad>/dpad/left
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Directions
+      m_Flags: 8
+    - m_Name: right
+      m_Id: 47c0fe1c-90eb-46db-b766-151cac3267a1
+      m_Path: <Gamepad>/dpad/right
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Directions
+      m_Flags: 8
+    - m_Name: Left Joy Stick
+      m_Id: 5b464bf4-6fb4-4e47-925f-334c898637bb
+      m_Path: 2DVector
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Directions
+      m_Flags: 4
+    - m_Name: up
+      m_Id: 7ba802a4-65fb-4c48-8272-9d0f9167c629
+      m_Path: <Joystick>/stick/up
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Directions
+      m_Flags: 8
+    - m_Name: down
+      m_Id: 00c6baf5-ff37-4581-80a1-91d721632eb4
+      m_Path: <Joystick>/stick/down
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Directions
+      m_Flags: 8
+    - m_Name: left
+      m_Id: e78269c2-e88e-4a22-92fb-cf7aafa32683
+      m_Path: <Joystick>/stick/left
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Directions
+      m_Flags: 8
+    - m_Name: right
+      m_Id: b55493fa-9eb2-437f-b54b-9d2a2c2a494c
+      m_Path: <Joystick>/stick/right
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Directions
+      m_Flags: 8
+    m_Flags: 0

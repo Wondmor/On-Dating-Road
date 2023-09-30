@@ -32,7 +32,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3051904705733702668}
-  - {fileID: 3208750437399591500}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &223275224430675398
@@ -47,7 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a019d1ec7e5d4548b3da9f2f0a09b8b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inputAction: {fileID: 2821677771171687763}
+  sceneName: 
 --- !u!320 &2059051643122033196
 PlayableDirector:
   m_ObjectHideFlags: 0
@@ -79,7 +78,7 @@ PlayableDirector:
     - 66b379d01e9d70744aea4ba96419a0aa: {fileID: 7693621108966495599}
     - 6cf7dfdf81acaaa4e99da47c3c4bacfe: {fileID: 1618202215280399766}
     - 1fe9c8bca754d5449ab5342f018369f9: {fileID: 5626339174693247884}
-    - bece841937b767744a05e5a783584a58: {fileID: 2821677771171687763}
+    - bece841937b767744a05e5a783584a58: {fileID: 0}
     - f9f609b6331826846b13458b034e621b: {fileID: 1190881598011369300}
     - 0c7d01457f5a4374a98f36bd7057de78: {fileID: 2605027510986977636}
     - c654976e6184ee9448a65d7e7e3e0140: {fileID: 6980995103878278220}
@@ -89,11 +88,11 @@ PlayableDirector:
     - f20aa11b4ba08bb4bba59e6032931345: {fileID: 3926797807616222682}
     - a4ec370822a8709458bcce8cd721b8c2: {fileID: 7888332315545106915}
     - a3254e9f7d5da214792a8256b2d9dc7f: {fileID: 6915890131307998298}
-    - 6a96a92ceff22c24fae42dd20aedac2b: {fileID: 2821677771171687763}
+    - 6a96a92ceff22c24fae42dd20aedac2b: {fileID: 0}
     - 23fb50b03e7608c438fddb1930f27d89: {fileID: 4751706757191414564}
     - b2b90e4af8c3eb14788030cbb8fc93fc: {fileID: 7888332315545106915}
     - 99e6e5ef9f2e2e5468572fa4858393e8: {fileID: 5888793566209981301}
-    - eb72538054548bc4aaebca007af00377: {fileID: 2821677771171687763}
+    - eb72538054548bc4aaebca007af00377: {fileID: 0}
     - 6ad7c28aa4c461f48bff33228e839027: {fileID: 6091977109654331567}
     - 8bb3902e23f523946a0ee86a95ff76f6: {fileID: 5219857352350257179}
     - f3cb9f3183d7494429517341a207da46: {fileID: 8387996511684571931}
@@ -105,7 +104,7 @@ PlayableDirector:
     - af494e6886d312c42ab0435b557321e2: {fileID: 1618202215280399766}
     - 704eb0ab8d248974d921b8e56a42c618: {fileID: 7888332315545106915}
     - a13db548aef0ace4dbc97d7c9f2433ff: {fileID: 2210949024580078301}
-    - 4ea38a2676f88684c9a6f98062c7ac1a: {fileID: 2821677771171687763}
+    - 4ea38a2676f88684c9a6f98062c7ac1a: {fileID: 0}
     - 1f21ed4055f597348b9696e35abf9b3e: {fileID: 1190881598011369300}
     - 14fa283fc8abdd24c92af567e1ca1ae9: {fileID: 1562571480872296752}
     - 6326d46e1253e0a4e9d03001d9588fea: {fileID: 3238620308702427971}
@@ -114,12 +113,12 @@ PlayableDirector:
     - ff03cc6732b9aae45aa576c931ad68ec: {fileID: 5219857352350257179}
     - e0e4d6414aeb0274abbe358bf2b75bc3: {fileID: 6091977109654331567}
     - 75873cf8daf0bad4ba6b85d65488707e: {fileID: 3926797807616222682}
-    - 9f3f352893394eb4eb4998631afcdaec: {fileID: 2821677771171687763}
+    - 9f3f352893394eb4eb4998631afcdaec: {fileID: 0}
     - 15dedadcf27946d4faf11c3620956313: {fileID: 0}
     - 2c3321dec0cd4d44e9b0f079d2f1d3b1: {fileID: 7693621108966495599}
     - ac04d2ee7c7b9cd4bb3b8dd7d4390013: {fileID: 5963347942128540081}
     - ca3d16d462bed464cb2fa0c78a1d3cbd: {fileID: 0}
-    - e76e16fcf99bcf94bb9dad3c0188ce7e: {fileID: 2821677771171687763}
+    - e76e16fcf99bcf94bb9dad3c0188ce7e: {fileID: 0}
     - eec4c0470ffbe764dad131166d6a26c0: {fileID: 5626339174693247884}
     - a6d333f3ab6da9e42b620193fbd378e2: {fileID: 1784411599703037256}
     - 013f9376ca126a84c94e68e92f5b8bc7: {fileID: 7242715696506138427}
@@ -132,7 +131,7 @@ PlayableDirector:
     - 91db5ddf4a400de4abd0c535b807ee4c: {fileID: 7242715696506138427}
     - dc276d5f3963c694d9df6d5d9d797b3b: {fileID: 1562571480872296752}
     - 90d5e38e738e9e347a4763c195d6da3a: {fileID: 0}
-    - 9cac55765f9be0d40866beed38ec0d5b: {fileID: 2821677771171687763}
+    - 9cac55765f9be0d40866beed38ec0d5b: {fileID: 0}
     - cd635d0a34e09a44facbccc56b27ed9b: {fileID: 4835248714614727482}
     - dce82bd5e2b937c439f56bab941317ca: {fileID: 3866876165035821336}
     - 0e9c4695f81511240bc8729868880a5b: {fileID: 7888332315545106915}
@@ -143,7 +142,7 @@ PlayableDirector:
     - adf4f015ee4adcd41803b608b51211cf: {fileID: 2712903991361387906}
     - 59e2868fa0bed644f9121c6853d92435: {fileID: 4835248714614727482}
     - c15f39eb0feeb844e9aa61771b5ea4d1: {fileID: 7242715696506138427}
-    - 176304877b4f8df45830150b10a5c617: {fileID: 2821677771171687763}
+    - 176304877b4f8df45830150b10a5c617: {fileID: 0}
     - 58046c52080c0e14a8bb883b03f34f86: {fileID: 5888793566209981301}
     - 9966daa981a1e374ba312cbefe8909a6: {fileID: 4412722803710635475}
     - 07345359dfc1e0b4a80214356f449af5: {fileID: 1190881598011369300}
@@ -162,289 +161,10 @@ PlayableDirector:
     - 5b587f7cf76fd214597a86359a066542: {fileID: 2605027510986977636}
     - e7cf033a0ce7317428df7e3b3ab5a5cc: {fileID: 5626339174693247884}
     - a7890ef01534c8a42970620605a0c0cc: {fileID: 5219857352350257179}
-    - 6c82484785433254c853799880a8dc32: {fileID: 2821677771171687763}
+    - 6c82484785433254c853799880a8dc32: {fileID: 0}
     - 295869adcb80a9040b9882f39e1a4327: {fileID: 2232275028065929526}
-    - 299db3d2f36e95546af93653b452b74a: {fileID: 2821677771171687763}
+    - 299db3d2f36e95546af93653b452b74a: {fileID: 0}
     - 7db7357139c8a064092919c4c8e4a6c0: {fileID: 2210949024580078301}
---- !u!1 &1035962291099626207
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 3208750437399591500}
-  - component: {fileID: 2821677771171687763}
-  m_Layer: 0
-  m_Name: CommonInputAction
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &3208750437399591500
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1035962291099626207}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 368.68066, y: -75.45358, z: -0.20747617}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 2612622103945248044}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2821677771171687763
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1035962291099626207}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9c1bbda30337c1e4381e681aec0b7626, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enter:
-    m_Name: Enter
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: 9576605e-c96a-4e27-967c-1c49820c02d2
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings:
-    - m_Name: 
-      m_Id: 2d2fcd8a-b1f8-48d8-a10d-5a08cb8c0d57
-      m_Path: <Keyboard>/enter
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Enter
-      m_Flags: 0
-    - m_Name: 
-      m_Id: 8b19c73c-15f1-4525-96b1-2b569986455a
-      m_Path: <Keyboard>/space
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Enter
-      m_Flags: 0
-    - m_Name: 
-      m_Id: e985e95d-454e-49f3-9ae6-2c7bf74f4af9
-      m_Path: <XInputController>/buttonSouth
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Enter
-      m_Flags: 0
-    - m_Name: 
-      m_Id: 361cdaca-4d5d-491f-8845-8e54ed805938
-      m_Path: 
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Enter
-      m_Flags: 0
-    m_Flags: 0
-  cancel:
-    m_Name: Cancel
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: 4cc58041-95ad-4c16-a448-0fdd1887a40c
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings:
-    - m_Name: 
-      m_Id: 280a2cf9-75b3-4416-b907-07beb3bb35cd
-      m_Path: <Keyboard>/backspace
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Cancel
-      m_Flags: 0
-    - m_Name: 
-      m_Id: 7ac1e751-6d5f-40e3-bf84-634b9e9746b5
-      m_Path: <XInputController>/buttonEast
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Cancel
-      m_Flags: 0
-    m_Flags: 0
-  directions:
-    m_Name: Directions
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: a12eb8b0-ba17-4897-804f-0eee30cf77ba
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings:
-    - m_Name: 2D Vector Keyboard
-      m_Id: b0f474a5-9748-4a57-b496-c756de081dfb
-      m_Path: 2DVector
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Directions
-      m_Flags: 4
-    - m_Name: up
-      m_Id: 941e0a6c-5b87-410a-931b-92198ba16804
-      m_Path: <Keyboard>/upArrow
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Directions
-      m_Flags: 8
-    - m_Name: down
-      m_Id: 633efcb4-811b-44f3-bdf9-e42e2acd7623
-      m_Path: <Keyboard>/downArrow
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Directions
-      m_Flags: 8
-    - m_Name: left
-      m_Id: 063c3e46-a642-4d59-9e21-22123376cb02
-      m_Path: <Keyboard>/leftArrow
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Directions
-      m_Flags: 8
-    - m_Name: right
-      m_Id: 72a881ca-c176-4a9a-aff2-85f7d7cda4e6
-      m_Path: <Keyboard>/rightArrow
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Directions
-      m_Flags: 8
-    - m_Name: 2D Vector Keyboard letters
-      m_Id: 12be2442-b1e2-47da-89d6-8525883b9b9e
-      m_Path: 2DVector
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Directions
-      m_Flags: 4
-    - m_Name: up
-      m_Id: d9dcaa6b-7f6a-44d1-a92c-7c25d8847567
-      m_Path: <Keyboard>/w
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Directions
-      m_Flags: 8
-    - m_Name: down
-      m_Id: 7956095f-ab10-4529-bb8e-c9c565fc09c1
-      m_Path: <Keyboard>/s
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Directions
-      m_Flags: 8
-    - m_Name: left
-      m_Id: fc6d59b6-83c7-4503-8533-c4f3646fb1ab
-      m_Path: <Keyboard>/a
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Directions
-      m_Flags: 8
-    - m_Name: right
-      m_Id: 5efa3a09-bc81-4931-8f89-56baa1248a1f
-      m_Path: <Keyboard>/d
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Directions
-      m_Flags: 8
-    - m_Name: D-Pad Controller
-      m_Id: 1dbe4fd4-434c-48f9-b8d8-5436ca9cec3b
-      m_Path: 2DVector
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Directions
-      m_Flags: 4
-    - m_Name: up
-      m_Id: 874e6cca-0b83-4e43-b73b-5681e451afd2
-      m_Path: <Gamepad>/dpad/up
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Directions
-      m_Flags: 8
-    - m_Name: down
-      m_Id: 8fbe92dd-21ed-4b8b-92c0-6ce64a62f55a
-      m_Path: <Gamepad>/dpad/down
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Directions
-      m_Flags: 8
-    - m_Name: left
-      m_Id: 94bfb28b-f4bf-4ee2-824a-8b216f76fa8f
-      m_Path: <Gamepad>/dpad/left
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Directions
-      m_Flags: 8
-    - m_Name: right
-      m_Id: 47c0fe1c-90eb-46db-b766-151cac3267a1
-      m_Path: <Gamepad>/dpad/right
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Directions
-      m_Flags: 8
-    - m_Name: Left Joy Stick
-      m_Id: 5b464bf4-6fb4-4e47-925f-334c898637bb
-      m_Path: 2DVector
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Directions
-      m_Flags: 4
-    - m_Name: up
-      m_Id: 7ba802a4-65fb-4c48-8272-9d0f9167c629
-      m_Path: <Joystick>/stick/up
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Directions
-      m_Flags: 8
-    - m_Name: down
-      m_Id: 00c6baf5-ff37-4581-80a1-91d721632eb4
-      m_Path: <Joystick>/stick/down
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Directions
-      m_Flags: 8
-    - m_Name: left
-      m_Id: e78269c2-e88e-4a22-92fb-cf7aafa32683
-      m_Path: <Joystick>/stick/left
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Directions
-      m_Flags: 8
-    - m_Name: right
-      m_Id: b55493fa-9eb2-437f-b54b-9d2a2c2a494c
-      m_Path: <Joystick>/stick/right
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Directions
-      m_Flags: 8
-    m_Flags: 0
 --- !u!1 &1190881598011369300
 GameObject:
   m_ObjectHideFlags: 0
@@ -1889,8 +1609,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\u5012\u8BA1\u65F6"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 480472bc178626047b8c3954ec202444, type: 2}
-  m_sharedMaterial: {fileID: -1789879227536747502, guid: 480472bc178626047b8c3954ec202444, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2347,8 +2067,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 00:00:00
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 480472bc178626047b8c3954ec202444, type: 2}
-  m_sharedMaterial: {fileID: -1789879227536747502, guid: 480472bc178626047b8c3954ec202444, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2481,8 +2201,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\u6211\u6709\u7ED9\u4F60\u51C6\u5907\u793C\u7269\u54E6\uFF5E\u90A3\u4E48\u4E00\u4F1A\u89C1\u5566\n"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 480472bc178626047b8c3954ec202444, type: 2}
-  m_sharedMaterial: {fileID: -1789879227536747502, guid: 480472bc178626047b8c3954ec202444, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
