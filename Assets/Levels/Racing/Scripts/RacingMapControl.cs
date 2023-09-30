@@ -51,7 +51,7 @@ public class RacingMapControl : MonoBehaviour
 
     Timer timer;
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         progressDot = GetComponent<RacingProgressDot>();
         timer = GetComponent<Timer>();

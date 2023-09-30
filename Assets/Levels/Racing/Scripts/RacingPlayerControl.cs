@@ -133,7 +133,7 @@ public class RacingPlayerControl : MonoBehaviour
         }
     }
 
-    public void SetUpBikeType(int type)
+    public void SetUpBikeType(BIKE_TYPE type)
     {
         bikeType = (BIKE_TYPE)type;
         if (bike != null)

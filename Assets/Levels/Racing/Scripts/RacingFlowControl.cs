@@ -36,6 +36,8 @@ public class RacingFlowControl : MonoBehaviour
         mapControl = GetComponent<RacingMapControl>();
         timer = GetComponent<Timer>();
         healthControl = GetComponent<RacingHealth>();
+
+        SetGameStatus(GAME_STATUS.INIT);
     }
 
     private void ResetEverything()
@@ -55,6 +57,7 @@ public class RacingFlowControl : MonoBehaviour
         {
             case GAME_STATUS.INIT:
                 ResetEverything();
+                playerControl.SetUpBikeType(GameManager.Instance.RacingData.BikeType);
                 timer.Add(() => { SetGameStatus(GAME_STATUS.START); }, 3);
                 break;
             case GAME_STATUS.PAUSE:
@@ -65,20 +68,7 @@ public class RacingFlowControl : MonoBehaviour
             case GAME_STATUS.START:
                 timerControl.StartCount();
                 mapControl.GameStart();
-                // I really want to use some delegation here, but let's keep it simple and easy
-                playerControl.SetUpBikeType(bikeType);
-                break;
-            case GAME_STATUS.CHOOSE:
-                ResetEverything();
-                // TODO: choose!
-                bikeType = Random.Range(0, 3);
-                timer.Add(() => { SetGameStatus(GAME_STATUS.INIT); }, 1);
                 break;
         }
-    }
-
-    public void Test()
-    {
-        SetGameStatus(GAME_STATUS.CHOOSE);
     }
 }
