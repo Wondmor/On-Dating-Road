@@ -17,10 +17,12 @@ public class RacingPhoneMovingControl : MonoBehaviour
     int currentPos = 0;
     Camera phoneCamera;
     RacingPlayerControl.BIKE_TYPE[] bikeType = { RacingPlayerControl.BIKE_TYPE.FIRE, RacingPlayerControl.BIKE_TYPE.WATER, RacingPlayerControl.BIKE_TYPE.GRASS };
+    SubtitlePlayer player;
 
     // Start is called before the first frame update
     void Start()
     {
+        player = transform.parent.Find("Canvas/SubtitleBG").GetComponent<SubtitlePlayer>();
         phoneCamera = GetComponentInChildren<Camera>();
     }
 
@@ -48,8 +50,9 @@ public class RacingPhoneMovingControl : MonoBehaviour
             GameManager.Instance.RacingData.BikeType = bikeType[currentPos];
             // set up racing times to 0
             GameManager.Instance.RacingData.RaceTime = 0;
+            player.LoadSubtitle("racing_subtitle_selection_common");
+            transform.parent.Find("Canvas/Images").gameObject.SetActive(true);
             gameObject.SetActive(false);
-            transform.parent.Find("Canvas").gameObject.SetActive(true);
         }
         if(GameManager.Instance.CommonInputAction.GetPerformedTypeThisFrame() == CommonInputAction.EType.Directions)
         {
