@@ -203,7 +203,6 @@ public class RacingMapControl : MonoBehaviour
             roads[i].transform.localPosition = new Vector3(roads[i].transform.localPosition.x, newY, roads[i].transform.localPosition.z);
         }
 
-
         for (int i = 0; i < normalGrasses.Length; i++)
         {
             float newY = normalGrasses[i].transform.localPosition.y;

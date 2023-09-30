@@ -3,12 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
+using Fungus;
 
 public class BusGame : MonoBehaviour
 {
     public LevelLoader levelLoader;
     public DialogBoxController dialogBoxController;
     public GameObject background;
+
+
 
     void Awake()
     {
@@ -21,6 +24,7 @@ public class BusGame : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
+            
             background.SetActive(false);
             StartCoroutine(wait(2));
             
