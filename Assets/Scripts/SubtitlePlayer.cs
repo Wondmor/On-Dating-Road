@@ -26,13 +26,13 @@ public class SubtitlePlayer : MonoBehaviour
     int currentChar = 0;
     float lastSubtitleTime = 0;
 
-    TextMeshPro tmText;
+    TextMeshProUGUI tmText;
 
     // Start is called before the first frame update
     void Awake()
     {
         subtitleText = Resources.Load<TextAsset>(string.Format("Subtitles/{0}", subtitleFile)).text.Split("\n");
-        tmText = GetComponentInChildren<TextMeshPro>();
+        tmText = GetComponentInChildren<TextMeshProUGUI>();
     }
 
     private void Start()

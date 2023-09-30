@@ -51,6 +51,11 @@ public class RacingTimer : MonoBehaviour
         time = 0;
     }
 
+    public void SetClock(int time)
+    {
+        this.time = time;
+    }
+
     public int GetTime()
     {
         return (int)time;

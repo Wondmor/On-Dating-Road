@@ -46,8 +46,10 @@ public class RacingPhoneMovingControl : MonoBehaviour
         {
             Debug.Log("BIKE SELECTED " + bikeType[currentPos].ToString());
             GameManager.Instance.RacingData.BikeType = bikeType[currentPos];
+            // set up racing times to 0
+            GameManager.Instance.RacingData.RaceTime = 0;
             gameObject.SetActive(false);
-            transform.parent.Find("Doctor").gameObject.SetActive(true);
+            transform.parent.Find("Canvas").gameObject.SetActive(true);
         }
         if(GameManager.Instance.CommonInputAction.GetPerformedTypeThisFrame() == CommonInputAction.EType.Directions)
         {
