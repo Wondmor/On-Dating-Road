@@ -15,6 +15,8 @@ public class HideObjectPlayable : BasicPlayableBehaviour
 
     public override void OnGraphStart(Playable playable)
     {
+        _showGos.Clear();
+        _hideGos.Clear();
         foreach (var g in showGos)
         {
             _showGos.Add(g.Resolve(playable.GetGraph().GetResolver()));

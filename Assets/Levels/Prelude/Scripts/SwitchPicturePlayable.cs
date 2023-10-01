@@ -31,6 +31,7 @@ public class SwitchPicturePlayable : BasicPlayableBehaviour
         //sprite = target.Resolve(playable.GetGraph().GetResolver());
         if (targets != null && targets.Length > 0)
         {
+            _targets.Clear();
             foreach (var tar in targets)
             {
                 _targets.Add(tar.Resolve(playable.GetGraph().GetResolver()));
