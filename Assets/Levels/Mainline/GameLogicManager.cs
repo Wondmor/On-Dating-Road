@@ -98,10 +98,10 @@ public class GameLogicManager
     bool bTestMode = true;
 
 
-
+    
     const uint c_RoadMilestoneCount = 5;
 
-    const float c_StandardGameDuration = 1200;
+    public const float c_StandardGameDuration = 1200;
     const float c_StandardRoadDuration = 300;
     const float c_RefuseToHelpPeopleCost = 10;
 
