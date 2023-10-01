@@ -48,6 +48,6 @@ public void OnMiniGameFinished(float money, float positiveComment);
  GameLogicManager.Instance.OnMiniGameFinished(
      GameLogicManager.Instance.GameData.money + 5.5f,
      GameLogicManager.Instance.GameData.positiveComment + 20.0f,
-     GameLogicManager.Instance.GameData.countDown - GameLogicManager.c_StandardGameDuration * 1.1f,);
+     GameLogicManager.Instance.GameData.countDown - GameLogicManager.c_StandardGameDuration * 1.1f);
 ~~~
     
