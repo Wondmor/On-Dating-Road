@@ -16,7 +16,8 @@ public class BusGame_1 : MonoBehaviour
     public Image countTime;
     Sprite newSprite;
 
-    public Score score;
+
+    //int playerScore = Score.playerScore;
 
     bool pass = false;
     int level = 1;
@@ -216,9 +217,10 @@ public class BusGame_1 : MonoBehaviour
         {
             child[i].SetActive(false);
         }
-        score.playerScore += 1;
+        Score.playerScore += 1;
+        Debug.Log(Score.playerScore);
         pass = true;
-        if(score.playerScore >= 6)
+        if(Score.playerScore >= 6)
         {
             string targetSceneName = "BusGame_Success";
             StartCoroutine(levelLoader.LoadLevelByName(targetSceneName));
