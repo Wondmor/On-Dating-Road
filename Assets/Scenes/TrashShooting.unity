@@ -408,6 +408,50 @@ PrefabInstance:
       propertyPath: m_Name
       value: TrashShooting
       objectReference: {fileID: 0}
+    - target: {fileID: 5669758317572760170, guid: d3492bd4728ddb14c864a104f9592fbd, type: 3}
+      propertyPath: m_tempoLength
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5817632266887723919, guid: d3492bd4728ddb14c864a104f9592fbd, type: 3}
+      propertyPath: NumTracks
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5817632266887723919, guid: d3492bd4728ddb14c864a104f9592fbd, type: 3}
+      propertyPath: Sections.Array.data[0].TransitionType
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5817632266887723919, guid: d3492bd4728ddb14c864a104f9592fbd, type: 3}
+      propertyPath: Sections.Array.data[0].Clips.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5817632266887723919, guid: d3492bd4728ddb14c864a104f9592fbd, type: 3}
+      propertyPath: Sections.Array.data[0].LoopEndTiming.Bar
+      value: 61
+      objectReference: {fileID: 0}
+    - target: {fileID: 5817632266887723919, guid: d3492bd4728ddb14c864a104f9592fbd, type: 3}
+      propertyPath: Sections.Array.data[0].Clips.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: 1017b03d867be464180cf271b3e91606, type: 3}
+    - target: {fileID: 5817632266887723919, guid: d3492bd4728ddb14c864a104f9592fbd, type: 3}
+      propertyPath: Sections.Array.data[0].Clips.Array.data[1]
+      value: 
+      objectReference: {fileID: 8300000, guid: ce0bb4e28d078b34e9050304aed36b49, type: 3}
+    - target: {fileID: 5817632266887723919, guid: d3492bd4728ddb14c864a104f9592fbd, type: 3}
+      propertyPath: Sections.Array.data[0].ExitPointTiming.Bar
+      value: 61
+      objectReference: {fileID: 0}
+    - target: {fileID: 5817632266887723919, guid: d3492bd4728ddb14c864a104f9592fbd, type: 3}
+      propertyPath: Modes.Array.data[0].LayerVolumes.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5817632266887723919, guid: d3492bd4728ddb14c864a104f9592fbd, type: 3}
+      propertyPath: Modes.Array.data[0].LayerVolumes.Array.data[1]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5817632266887723919, guid: d3492bd4728ddb14c864a104f9592fbd, type: 3}
+      propertyPath: Sections.Array.data[0].Meters.Array.data[0].Tempo
+      value: 140
+      objectReference: {fileID: 0}
     - target: {fileID: 8986033958804868211, guid: d3492bd4728ddb14c864a104f9592fbd, type: 3}
       propertyPath: m_Camera
       value: 

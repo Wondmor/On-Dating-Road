@@ -37,6 +37,21 @@ public class FadeInOutScene : MonoBehaviour
             "easetype", iTween.EaseType.linear
         ));
     }
+    public void FadeOut(GameObject onCompleteTarget, string onComplete)
+    {
+        GetBlackScreen().gameObject.SetActive(true);
+        this.sceneName = sceneName;
+        iTween.ValueTo(GetBlackScreen().gameObject, iTween.Hash(
+            "from", 0.0f,
+            "to", 1.0f,
+            "time", lastInSecond,
+            "onupdate", "UpdateValue",
+            "onupdatetarget", gameObject,
+            "oncomplete", onComplete,
+            "oncompletetarget", onCompleteTarget,
+            "easetype", iTween.EaseType.linear
+        ));
+    }
 
     void FadeIn()
     {

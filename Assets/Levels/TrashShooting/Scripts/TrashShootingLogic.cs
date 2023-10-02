@@ -9,24 +9,12 @@ namespace TrashShooting
         public ETrashType trashType;
         public float pos;
 
-        //public MusicNote()
-        //{
-        //    trashType = ETrashType::L; 
-        //    pos = 0.0f;
-        //}
-
         public MusicNote(ETrashType _type, float _pos) 
         {
             trashType = _type; 
             pos = _pos;
         }
     }
-
-    //public class MusicNotes
-    //{
-    //    Dictionary<float, GameObject> Notes;
-    //    
-    //}
 
     class MusicInfo
     {
@@ -38,7 +26,7 @@ namespace TrashShooting
         {
             musicNotes.Clear();
             ETrashType[] typePool = { ETrashType.TrashL, ETrashType.TrashU, ETrashType.TrashR, ETrashType.Trap };
-            float randomNodeTempo = 1.0f;
+            float randomNodeTempo = 40.0f;
             for (int i = 0; i < 400; ++i)
             {
                 musicNotes.Add(new MusicNote(typePool[UnityEngine.Random.Range(0, 4)], randomNodeTempo));
@@ -48,7 +36,7 @@ namespace TrashShooting
     }
 
 
-    public class TrashShooting : MonoBehaviour
+    public class TrashShootingLogic : MonoBehaviour
     {
         Queue<MusicNote> queueMusicNote = new Queue<MusicNote>();
         MusicInfo musicInfo = new MusicInfo();
@@ -71,7 +59,11 @@ namespace TrashShooting
         // Update is called once per frame
         void Update()
         {
-
+            if(musicBoard.IsFinished)
+            {
+                musicBoard.gameObject.SetActive(false);
+                GameLogicManager.Instance.OnMiniGameFinished(0, 0);
+            }
         }
 
         void FixedUpdate()
