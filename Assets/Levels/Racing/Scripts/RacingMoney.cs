@@ -18,7 +18,6 @@ public class RacingMoney : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        ResetMoney();
         ShowMoney();
     }
 
@@ -65,6 +64,19 @@ public class RacingMoney : MonoBehaviour
     {
         amount = 0;
         currentAmount = 0;
+    }
+
+
+    public void SetMoney(int money)
+    {
+        amount = money;
+        currentAmount = money;
+        ShowMoney();
+    }
+
+    public int GetMoney()
+    {
+        return amount;
     }
 
     public void Test()

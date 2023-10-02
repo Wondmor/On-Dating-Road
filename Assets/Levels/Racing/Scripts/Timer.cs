@@ -41,6 +41,11 @@ public class Timer : MonoBehaviour
         events.Remove(time);
     }
 
+    public void Clear()
+    {
+        events.Clear();
+    }
+
     // Update is called once per frame
     void Update()
     {

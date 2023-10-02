@@ -42,4 +42,17 @@ public class GameManager{
             return m_CommonInputAction;
         }
     }
+
+    private static RacingData m_RacingData;
+    public RacingData RacingData
+    {
+        get
+        {
+            if(m_RacingData == null)
+            {
+                m_RacingData = new RacingData();
+            }
+            return m_RacingData;
+        }
+    }
 }

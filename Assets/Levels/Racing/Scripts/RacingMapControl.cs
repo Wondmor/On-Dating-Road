@@ -8,7 +8,7 @@ using UnityEngine;
 public class RacingMapControl : MonoBehaviour
 {
     [SerializeField]
-    GameObject roadPrefab, playGround, pondPrefab, lefPondPrefab, grassPrefab, singleGrassPrefab, catPrefab, hitEffectPrefab, coinPrefab, shitPrefab;
+    GameObject roadPrefab, playGround, pondPrefab, lefPondPrefab, grassPrefab, singleGrassPrefab, catPrefab, hitEffectPrefab, coinPrefab, shitPrefab, finishLinePrefab;
 
     [SerializeField]
     GameObject[] enemyPrefab;
@@ -30,30 +30,38 @@ public class RacingMapControl : MonoBehaviour
     GameObject pond;
     GameObject leftPond;
 
+    GameObject finishLine;
+
     [SerializeField]
     float roadHeight = 10.7f; // basiclly the road height
     [SerializeField]
     float normalGrassHeight = 5.36f;
     [SerializeField]
-    float totalDistance = 200f; // basiclly the road height
+    float totalDistance = 200f; // total distance we need to cover
+    [SerializeField]
+    float nearFinishline = 15f; // we are nearly got there, no more items/grounds
     [SerializeField, Range(1, 10)]
     float itemUpdateFrequency = 10f; // min distance we update items
     [SerializeField, Range(10, 20)]
     float vanishDistance = 10f;
+
+
 
     float lastCatDistance = 0;
 
     RacingPlayerControl playerControl;
     RacingMoney moneyController;
     RacingProgressDot progressDot;
+    RacingFlowControl flowControl;
 
     Dictionary<string, LinkedList<float>> ItemQueues;
 
     Timer timer;
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         progressDot = GetComponent<RacingProgressDot>();
+        flowControl = GetComponent<RacingFlowControl>();
         timer = GetComponent<Timer>();
         moneyController = GetComponent<RacingMoney>();
         playerControl = playGround.GetComponentInChildren<RacingPlayerControl>();
@@ -110,6 +118,10 @@ public class RacingMapControl : MonoBehaviour
         leftPond = Instantiate(lefPondPrefab, playGround.transform);
         leftPond.SetActive(false);
 
+        finishLine = Instantiate(finishLinePrefab, playGround.transform);
+        finishLine.transform.localPosition = new Vector3(0, 20, 0);
+        finishLine.SetActive(false);
+
         // stop rolling
         pause = true;
     }
@@ -130,7 +142,7 @@ public class RacingMapControl : MonoBehaviour
 
         // Create other things
         // Creation should be based on distance rather than time
-        if (updateItemsDistance > itemUpdateFrequency)
+        if (updateItemsDistance > itemUpdateFrequency && totalDistance - distanceCover > nearFinishline)
         {
             bool hasGround = CreateGround();
             if (!hasGround)
@@ -144,8 +156,18 @@ public class RacingMapControl : MonoBehaviour
             updateItemsDistance += distance;
         }
 
+        if(finishLine.activeSelf && finishLine.transform.localPosition.y < 0)
+        {
+            if(flowControl.GetGameStatus() == RacingFlowControl.GAME_STATUS.START)
+            {
+                flowControl.SetGameStatus(RacingFlowControl.GAME_STATUS.CROSS_LINE);
+            }
+            return;
+        }
 
         MoveLoopThings(distance);
+
+        MoveFinishLine(distance);
 
         MoveGround(distance);
 
@@ -162,7 +184,17 @@ public class RacingMapControl : MonoBehaviour
         {
             float newY = roads[i].transform.localPosition.y;
             newY -= distance;
-            if (newY < -10)
+
+            if(newY < -10 && distanceCover > totalDistance && !finishLine.activeSelf)
+            {
+                // OK, we are not going to update this one, we put finish line there
+                finishLine.SetActive(true);
+                int previous = (roads.Length + i - 1) % roads.Length;
+                float finishLineY = roads[previous].transform.localPosition.y + roadHeight;
+                finishLine.transform.localPosition = new Vector3(0, finishLineY, 0);
+            }
+
+            if (newY < -10 && !finishLine.activeSelf)
             {
                 int previous = (roads.Length + i - 1) % roads.Length;
                 newY = roads[previous].transform.localPosition.y + roadHeight;
@@ -182,6 +214,14 @@ public class RacingMapControl : MonoBehaviour
             }
 
             normalGrasses[i].transform.localPosition = new Vector3(normalGrasses[i].transform.localPosition.x, newY, normalGrasses[i].transform.localPosition.z);
+        }
+    }
+
+    void MoveFinishLine(float distance)
+    {
+        if(finishLine.activeSelf)
+        {
+            MoveSingleItem(distance, finishLine.transform);
         }
     }
 

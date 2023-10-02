@@ -45,6 +45,7 @@ public class RacingPlayerControl : MonoBehaviour
     bool stun = false;
     bool recovering = false;
     bool speedup = false;
+    bool crossingLine = false;
 
     // controllers
     RacingMoney moneyControl;
@@ -52,6 +53,7 @@ public class RacingPlayerControl : MonoBehaviour
     RacingTimer timerControl;
     RacingMapControl mapControl;
     RacingHealth healthControl;
+    RacingFlowControl flowControl;
     Timer timer;
 
     // bike type
@@ -65,6 +67,7 @@ public class RacingPlayerControl : MonoBehaviour
     public bool Stun { get => stun; set => stun = value; }
     public bool Recovering { get => recovering; private set => recovering = value; }
     public bool Speedup { get => speedup; private set => speedup = value; }
+    public bool CrossingLine { get => crossingLine; set => crossingLine = value; }
 
     // Start is called before the first frame update
     void Start()
@@ -75,6 +78,7 @@ public class RacingPlayerControl : MonoBehaviour
         mapControl = gameControl.GetComponent<RacingMapControl>();
         healthControl = gameControl.GetComponent<RacingHealth>();
         timer = gameControl.GetComponent<Timer>();
+        flowControl = gameControl.GetComponent<RacingFlowControl>();
     }
 
     // Update is called once per frame
@@ -83,7 +87,19 @@ public class RacingPlayerControl : MonoBehaviour
         if (bike == null)
             return;
 
+
         SetSpeed();
+
+        if(flowControl.GetGameStatus() == RacingFlowControl.GAME_STATUS.CROSS_LINE || flowControl.GetGameStatus() == RacingFlowControl.GAME_STATUS.STOP)
+        {
+            bike.transform.localRotation = Quaternion.identity;
+            transform.localPosition += Vector3.up * verticalSpeed * Time.deltaTime;
+        }
+
+        if(healthControl.IsDead() && flowControl.GetGameStatus() != RacingFlowControl.GAME_STATUS.DEAD)
+        {
+            flowControl.SetGameStatus(RacingFlowControl.GAME_STATUS.DEAD);
+        }
 
         if (!Stun)
         {
@@ -133,7 +149,7 @@ public class RacingPlayerControl : MonoBehaviour
         }
     }
 
-    public void SetUpBikeType(int type)
+    public void SetUpBikeType(BIKE_TYPE type)
     {
         bikeType = (BIKE_TYPE)type;
         if (bike != null)
@@ -149,6 +165,16 @@ public class RacingPlayerControl : MonoBehaviour
     {
         transform.localPosition = new Vector3(0, transform.localPosition.y, transform.localPosition.z);
         bike.transform.localRotation = Quaternion.identity;
+    }
+
+    public void InitBike()
+    {
+        transform.localPosition = new Vector3(0, transform.localPosition.y, transform.localPosition.z);
+        bike.transform.localRotation = Quaternion.identity;
+        stun = false;
+        recovering = false;
+        speedup = false;
+        verticalSpeed = 0;
     }
 
     void SetSpeed()
@@ -185,6 +211,10 @@ public class RacingPlayerControl : MonoBehaviour
             verticalSpeed *= 2;
         }
         
+        if(transform.localPosition.y > 50)
+        {
+            verticalSpeed = 0;
+        }
     }
 
     public void TriggerSpeedUp()
@@ -293,6 +323,12 @@ public class RacingPlayerControl : MonoBehaviour
             Rotate();
             // Reset
             ResetIn(0.9f, 2f);
+        }
+
+        if(collision.name == "FinishLine(Clone)")
+        {
+            flowControl.SetGameStatus(RacingFlowControl.GAME_STATUS.STOP);
+            return;
         }
     }
 

@@ -1,16 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class RacingFlowControl : MonoBehaviour
 {
     public enum GAME_STATUS
     {
-        CHOOSE,
+        NONE,
         INIT,
         START,
         PAUSE,
         STOP,
+        DEAD,
+        CROSS_LINE,
         END
     }
 
@@ -22,10 +25,16 @@ public class RacingFlowControl : MonoBehaviour
     RacingHealth healthControl;
     Timer timer;
 
-    int bikeType = 0;
-
     [SerializeField]
     RacingPlayerControl playerControl;
+
+    [SerializeField]
+    RacingCountdown countdown;
+
+    [SerializeField]
+    GameObject fadePrefab;
+
+    GAME_STATUS status = GAME_STATUS.NONE;
 
     // Start is called before the first frame update
     void Start()
@@ -36,49 +45,69 @@ public class RacingFlowControl : MonoBehaviour
         mapControl = GetComponent<RacingMapControl>();
         timer = GetComponent<Timer>();
         healthControl = GetComponent<RacingHealth>();
+
+        SetGameStatus(GAME_STATUS.INIT);
     }
 
     private void ResetEverything()
     {
         progressControl.SetPercent(0);
-        timerControl.ResetClock();
+        timerControl.SetClock(GameManager.Instance.RacingData.TimeUsed);
         // pause count
         timerControl.PauseCount();
         mapControl.ResetMap();
         healthControl.ResetHealth();
+
+        moneyControl.SetMoney(GameManager.Instance.RacingData.Money);
     }
 
+    public GAME_STATUS GetGameStatus()
+    {
+        return status;
+    }
     public void SetGameStatus(GAME_STATUS status)
     {
+        this.status = status;
+
         Debug.Log(status.ToString());
         switch (status)
         {
             case GAME_STATUS.INIT:
+                timer.Clear();
                 ResetEverything();
-                timer.Add(() => { SetGameStatus(GAME_STATUS.START); }, 3);
+                playerControl.SetUpBikeType(GameManager.Instance.RacingData.BikeType);
+                //fade in
+                var fade = Instantiate(fadePrefab).GetComponent<FadeInOutScene>();
+                fade.fadeType = FadeInOutScene.EType.FadeIn;
+                fade.lastInSecond = 0.5f;
+                timer.Add(() =>
+                {
+                    countdown.StartCountDown();
+                }, 0.5f);
                 break;
             case GAME_STATUS.PAUSE:
                 timerControl.PauseCount();
                 break;
             case GAME_STATUS.STOP:
+                GameManager.Instance.RacingData.Money = moneyControl.GetMoney();
+                GameManager.Instance.RacingData.TimeUsed = timerControl.GetTime();
+                GameManager.Instance.RacingData.RaceTime++;
+                timer.Add(() =>
+                {
+                    SceneManager.LoadScene("RacingFinish");
+                }, 1f);
                 break;
             case GAME_STATUS.START:
                 timerControl.StartCount();
                 mapControl.GameStart();
-                // I really want to use some delegation here, but let's keep it simple and easy
-                playerControl.SetUpBikeType(bikeType);
                 break;
-            case GAME_STATUS.CHOOSE:
-                ResetEverything();
-                // TODO: choose!
-                bikeType = Random.Range(0, 3);
-                timer.Add(() => { SetGameStatus(GAME_STATUS.INIT); }, 1);
+            case GAME_STATUS.DEAD:
+                // when dead set time and money into racing data
+                GameManager.Instance.RacingData.Money = moneyControl.GetMoney();
+                GameManager.Instance.RacingData.TimeUsed = timerControl.GetTime();
+                break;
+            case GAME_STATUS.CROSS_LINE:
                 break;
         }
-    }
-
-    public void Test()
-    {
-        SetGameStatus(GAME_STATUS.CHOOSE);
     }
 }

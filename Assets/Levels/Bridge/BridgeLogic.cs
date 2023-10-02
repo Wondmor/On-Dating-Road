@@ -13,12 +13,14 @@ public class BridgeLogic : MonoBehaviour
     [SerializeField] public Animator SpinningCoin = null;
 
     public bool bFadeIn = true;
-    public string[] subtitles = { 
+    public List<string> subtitles = new List<string>{ 
         "左边那条路红绿灯有点多，右边的路是个上坡，我走哪条呢？",
         "只能用投硬币来决定了"
     };
     public bool bLeft = true;
-    
+    public uint currentRoadMileStone = 0;
+
+
 
     public enum EPos
     {
@@ -33,6 +35,15 @@ public class BridgeLogic : MonoBehaviour
         Target,
     }
     public EPos ePos = EPos.Pos0;
+
+    private void Awake()
+    {
+        bFadeIn = GameLogicManager.Instance.bridgeData.bFadeIn;
+        bLeft = GameLogicManager.Instance.bridgeData.bLeft;
+        subtitles = GameLogicManager.Instance.bridgeData.subtitles;
+        currentRoadMileStone = GameLogicManager.Instance.bridgeData.currentRoadMileStone;
+        GetComponent<TimelineLogic>().OnTimelineFinish += ()=>{ GameLogicManager.Instance.OnBridgeFinished(); };
+    }
 
     // Start is called before the first frame update
     void Start()

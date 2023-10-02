@@ -9,6 +9,9 @@ using UnityEngine.UI;
 
 public class TimelineLogic : MonoBehaviour
 {
+    public delegate void OnTimelineFinishCallback();
+    public OnTimelineFinishCallback OnTimelineFinish = ()=>{ };
+
     [Header("结束后跳转到")]
     [SerializeField] public string sceneName = "";
 
@@ -19,11 +22,36 @@ public class TimelineLogic : MonoBehaviour
         {
             var fadeOut = transform.Find("CanvasFadeOut").GetComponent<FadeInOutScene>();
             fadeOut.gameObject.SetActive(true);
-            fadeOut.FadeOut(sceneName);
+            fadeOut.FadeOut(gameObject, "InvokeOnTimelineFinish");
         }
         else
-            SceneManager.LoadScene(sceneName);
+        {
+            InvokeOnTimelineFinish();
+            //SceneManager.LoadScene(sceneName);
+
+        }
     }
+
+    void InvokeOnTimelineFinish()
+    {
+        OnTimelineFinish();
+    }
+
+    //internal void OnFadeOutComplete()
+    //{
+    //    var eState = MainMgr.GetInstance().GetCurState();
+    //    switch(eState)
+    //    {
+    //        case GameStateMachine.EState.Prelude:
+    //            MainMgr.GetInstance().OnPreludeFinished();
+    //            break;
+    //        case GameStateMachine.EState.OnDatingRoad:
+    //            MainMgr.GetInstance().OnBridgeFinished();
+    //            break;
+    //        default:
+    //            throw new Exception("wrong state");
+    //    }
+    //}
 
     bool bWaitingInput = false;
     CommonInputAction.EType eType = CommonInputAction.EType.None;
