@@ -53,6 +53,7 @@ public class DeliveryPersonFallHand : MonoBehaviour
                 fixedJoint2D.enabled = true;
                 handFull.Value = true;
                 catchCargo.OnNext(other);
+                trigger.enabled = false;
             });
     }
 
@@ -69,7 +70,7 @@ public class DeliveryPersonFallHand : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (handMovable || cam == null)
+        if (!handMovable || cam == null)
             return;
         float moveAmount = moveAction.ReadValue<float>();
         float posX = transform.position.x;
@@ -80,6 +81,7 @@ public class DeliveryPersonFallHand : MonoBehaviour
     public void Reset()
     {
         handFull.Value = false;
+        trigger.enabled = true;
     }
 
     public void SetMovable(bool movable)

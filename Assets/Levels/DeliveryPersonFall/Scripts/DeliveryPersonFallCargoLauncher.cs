@@ -51,7 +51,7 @@ public class DeliveryPersonFallCargoLauncher : MonoBehaviour
             cargoRigidPair.rightCargoRigid.gameObject.SetActive(false);
             cargoRigidPair.rightCargoRigid.bodyType = RigidbodyType2D.Kinematic;
             cargoRigidPair.rightCargoRigid.transform.position = cargoRigidPair.rightCargoRigidOrigPos;
-            var rightJoint = cargoRigidPair.leftCargoRigid.GetComponent<FixedJoint2D>();
+            var rightJoint = cargoRigidPair.rightCargoRigid.GetComponent<FixedJoint2D>();
             rightJoint.enabled = false;
             rightJoint.connectedBody = null;
         }

@@ -2,11 +2,11 @@
     "name": "DeliveryPersonFall",
     "maps": [
         {
-            "name": "New action map",
+            "name": "Conitnue",
             "id": "6379ca0a-ea44-4148-81a2-8eac98962943",
             "actions": [
                 {
-                    "name": "New action",
+                    "name": "Continue",
                     "type": "Button",
                     "id": "0b266a48-2fea-4753-82e6-5c83e62f2d65",
                     "expectedControlType": "Button",
@@ -18,12 +18,67 @@
             "bindings": [
                 {
                     "name": "",
-                    "id": "f946ad43-3cfd-494a-b78f-5446846fb781",
-                    "path": "",
+                    "id": "da16864b-f34a-4011-b050-3ea97ecba5ae",
+                    "path": "<Gamepad>/buttonSouth",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "New action",
+                    "action": "Continue",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "fb90a4e2-2aa3-4b1c-b8f2-c4144fa5ef81",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Continue",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f2612972-1e4c-4591-8850-4aa290f1a8dd",
+                    "path": "<Keyboard>/enter",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Continue",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "67ebab7d-87b9-40e0-a26c-0fed0e91eec7",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Continue",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "37b8b0db-15cf-455a-9704-9a2b0bada414",
+                    "path": "<Gamepad>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Continue",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4995f8bf-a10d-4aa6-a3d0-a544cb32b6b3",
+                    "path": "<Keyboard>/anyKey",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Continue",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

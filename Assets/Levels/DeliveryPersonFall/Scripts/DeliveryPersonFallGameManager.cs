@@ -39,24 +39,27 @@ public class DeliveryPersonFallGameManager : MonoBehaviour
         }).AddTo(this);
         cargoFallCountProp.Subscribe(async fallCount =>
         {
-            hand.SetMovable(false);
-            await UniTask.Delay(TimeSpan.FromSeconds(2f));
             if (fallCount < 2)
                 return;
+            hand.SetMovable(false);
+            await UniTask.Delay(TimeSpan.FromSeconds(2f));
             resultMenu.Show(catchCargo, catchExpensiveCargo, levelNameList[curLevelIndex]);
         }).AddTo(this);
-        resultMenu.OnHideFinished.Subscribe(_ =>
+        resultMenu.OnHideFinished.Subscribe(async _ =>
         {
             Reset();
             if (curLevelIndex == levelNameList.Count - 1)
                 GameFinished();
             else
+            {
                 curLevelIndex++;
-            StartLevel();
+                await UniTask.Delay(TimeSpan.FromSeconds(1f));
+                StartLevel().Forget();
+            } 
         }).AddTo(this);
         tutorialMenu.OnHide.Subscribe(_ =>
         {
-            StartLevel();
+            StartLevel().Forget();
         }).AddTo(this);
         animEventHandler.EventTriggeredStream.Subscribe(eventName =>
         {
@@ -78,9 +81,11 @@ public class DeliveryPersonFallGameManager : MonoBehaviour
         tutorialMenu.ShowMenu();
     }
 
-    void StartLevel()
+    async UniTaskVoid StartLevel()
     {
-        animator.SetTrigger("Start");
+        hand.SetMovable(true);
+        await UniTask.Delay(TimeSpan.FromSeconds(1f));
+        animator.SetTrigger("Play");
     }
 
     public void Launch()
@@ -96,6 +101,9 @@ public class DeliveryPersonFallGameManager : MonoBehaviour
         hand.Reset();
         cargoLauncher.Reset();
         ground.Reset();
+        animator.SetTrigger("Reset");
+        animator.SetTrigger("CatReset");
+        animator.SetTrigger("GirlReset");
     }
 
     void GameFinished()

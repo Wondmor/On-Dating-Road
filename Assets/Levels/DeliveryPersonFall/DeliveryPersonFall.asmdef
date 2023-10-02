@@ -4,7 +4,9 @@
     "references": [
         "Unity.InputSystem",
         "UniRx",
-        "UniTask"
+        "UniTask",
+        "Unity.TextMeshPro",
+        "DOTween.Modules"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

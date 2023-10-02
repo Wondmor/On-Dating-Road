@@ -39,8 +39,9 @@ public class DeliveryPersonFallGround : MonoBehaviour
                 FixedJoint2D fixedJoint2D = other.GetComponent<FixedJoint2D>();
                 fixedJoint2D.connectedBody = rigid;
                 fixedJoint2D.enabled = true;
+                cargoGOList.Add(other);
                 catchCargo.OnNext(cargoGOList.Count);
-            });
+            }).AddTo(this);
     }
 
     public void Reset()
