@@ -28,7 +28,7 @@ public class SkewerGameController : MonoBehaviour
     TextMeshProUGUI NumberText, SubtitleText;
 
     [SerializeField]
-    GameObject canvas, playGround, stickPrefab, meatPrefab;
+    GameObject canvas, endCanvas, playGround, stickPrefab, meatPrefab;
 
     [SerializeField]
     float margin;
@@ -44,6 +44,8 @@ public class SkewerGameController : MonoBehaviour
     Timer timer;
 
     GameStatus status;
+
+    int totalNumber = 0;
 
     bool preventInput = false;
 
@@ -105,7 +107,14 @@ public class SkewerGameController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        GetInput();
+        if (status == GameStatus.MAIN)
+        {
+            GetInput();
+        }
+        else if(status == GameStatus.FINISH)
+        {
+
+        }
     }
 
     void GetInput()
@@ -136,6 +145,10 @@ public class SkewerGameController : MonoBehaviour
                     RemoveMeat(true);
                 }
                 break;
+            case CommonInputAction.EType.Cancel:
+                // TODO: double check
+                LeaveGame();
+                break;
         }
     }
 
@@ -153,6 +166,16 @@ public class SkewerGameController : MonoBehaviour
         SetGameStatus(GameStatus.MAIN);
     }
 
+    public void NextStatus()
+    {
+
+    }
+
+    public void LeaveGame()
+    {
+        SetGameStatus(GameStatus.FINISH);
+    }
+
     public void SetGameStatus(GameStatus status)
     {
         this.status = status;
@@ -166,6 +189,11 @@ public class SkewerGameController : MonoBehaviour
                 canvas.SetActive(false);
                 break;
             case GameStatus.FINISH:
+                endCanvas.SetActive(true);
+                playGround.SetActive(false);
+                Transform phone = endCanvas.transform.Find("Phone");
+                phone.GetComponentInChildren<TextMeshProUGUI>().text = string.Format("{0}.{1}\u5143", totalNumber * 5 / 10, totalNumber * 5 % 10);
+                iTween.MoveFrom(phone.gameObject, phone.position + Vector3.down * 1080, 1f);
                 break;
             case GameStatus.END:
                 break;
@@ -187,6 +215,8 @@ public class SkewerGameController : MonoBehaviour
         if (stick.CurrentMeat == 3)
         {
             FinishStick();
+            totalNumber++;
+            NumberText.text = string.Format("{0:D10}", totalNumber * 5);
             return;
         }
 
