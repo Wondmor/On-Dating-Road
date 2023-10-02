@@ -2,7 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UniRx;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class DeliveryPersonFallResultMenu : MonoBehaviour
@@ -20,6 +22,7 @@ public class DeliveryPersonFallResultMenu : MonoBehaviour
     }
 
     public List<CargoInfo> cargoInfoList;
+    public InputAction inputAction;
     public Text leftDesc;
     public Text leftSmallPrice;
     public Text leftBigPrice;
@@ -34,9 +37,26 @@ public class DeliveryPersonFallResultMenu : MonoBehaviour
     public GameObject expensiveFailGO;
     public GameObject cheapFailGO;
 
-    private void Start()
+    public IObservable<Unit> OnHideFinished;
+
+    Subject<Unit> onHideFinished = new();
+
+    private void Awake()
     {
-        gameObject.SetActive(false);
+        inputAction.performed += ctx => 
+        {
+            gameObject.SetActive(false);
+            onHideFinished.OnNext(Unit.Default); 
+        };
+    }
+    public void OnEnable()
+    {
+        inputAction.Enable();
+    }
+
+    public void OnDisable()
+    {
+        inputAction.Disable();
     }
 
     public void Show(bool catchCargo, bool catchExpensive, string levelName)

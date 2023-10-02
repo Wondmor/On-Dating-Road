@@ -4,7 +4,6 @@ using UnityEngine;
 using UniRx;
 using Cysharp.Threading.Tasks;
 using System;
-using UnityEngine.XR;
 
 public class DeliveryPersonFallGameManager : MonoBehaviour
 {
@@ -16,6 +15,7 @@ public class DeliveryPersonFallGameManager : MonoBehaviour
     public DeliveryPersonFallTutorialMenu tutorialMenu;
     public DeliveryPersonFallResultMenu resultMenu;
     public Camera mainCamera;
+    public AnimEventHandler animEventHandler;
     public Animator animator;
 
     bool catchCargo = false;
@@ -45,10 +45,32 @@ public class DeliveryPersonFallGameManager : MonoBehaviour
                 return;
             resultMenu.Show(catchCargo, catchExpensiveCargo, levelNameList[curLevelIndex]);
         }).AddTo(this);
+        resultMenu.OnHideFinished.Subscribe(_ =>
+        {
+            Reset();
+            if (curLevelIndex == levelNameList.Count - 1)
+                GameFinished();
+            else
+                curLevelIndex++;
+            StartLevel();
+        }).AddTo(this);
         tutorialMenu.OnHide.Subscribe(_ =>
         {
             StartLevel();
         }).AddTo(this);
+        animEventHandler.EventTriggeredStream.Subscribe(eventName =>
+        {
+            if(eventName == "Launch")
+            {
+                Launch();
+            }
+        }).AddTo(this);
+    }
+
+    private void Start()
+    {
+        tutorialMenu.gameObject.SetActive(false);
+        resultMenu.gameObject.SetActive(false);
     }
 
     public void StartGame()
@@ -63,7 +85,7 @@ public class DeliveryPersonFallGameManager : MonoBehaviour
 
     public void Launch()
     {
-        //cargoLauncher.LaunchCargo
+        cargoLauncher.LaunchCargo(levelNameList[curLevelIndex]);
     }
 
     public void Reset()
@@ -74,5 +96,10 @@ public class DeliveryPersonFallGameManager : MonoBehaviour
         hand.Reset();
         cargoLauncher.Reset();
         ground.Reset();
+    }
+
+    void GameFinished()
+    {
+
     }
 }
