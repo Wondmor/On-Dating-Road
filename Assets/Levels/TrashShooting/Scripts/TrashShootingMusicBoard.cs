@@ -35,14 +35,22 @@ namespace TrashShooting
         public float m_UnitRange = 1.9f;
         public float m_PerfectRange = 1.5f;
 
+        public bool IsFinished {  get; private set; }
+
         public LinkedList<Trash> noteBoard = new LinkedList<Trash>();
+
 
         public void SpawnNotes(Queue<MusicNote> _queueMusicNote)
         {
-            var curBeat = musicUnity.MusicalTime * musicUnity.UnitPerBar;
-            while (_queueMusicNote.Count > 0 && curBeat - _queueMusicNote.Peek().pos >= TrashShootingMusicBoard.noteSpawnDiff)
+            if (musicUnity.CurrentMeter != null)
             {
-                SpawnNote(_queueMusicNote.Dequeue());
+                var curBeat = musicUnity.MusicalTime * musicUnity.UnitPerBar;
+                var noteBoardFromDiff = -(NoteBoardCheck.transform.position - NoteBoardFrom.transform.position).magnitude / m_tempoLength;
+                while (_queueMusicNote.Count > 0 &&
+                    curBeat - _queueMusicNote.Peek().pos >= TrashShootingMusicBoard.noteSpawnDiff + noteBoardFromDiff)
+                {
+                    SpawnNote(_queueMusicNote.Dequeue());
+                }
             }
         }
         public void SpawnNote(MusicNote _musicNote)
@@ -143,11 +151,14 @@ namespace TrashShooting
 
         void RemoveUselessNotes()
         {
-            while (noteBoard.First.Value.transform.position.x > destoryDiff && noteBoard.First.Value.Checked)
+            if(noteBoard.First != noteBoard.Last)
             {
-                var temp = noteBoard.First.Value;
-                noteBoard.RemoveFirst();
-                Destroy(temp);
+                while (noteBoard.First.Value.transform.position.x > destoryDiff && noteBoard.First.Value.Checked)
+                {
+                    var temp = noteBoard.First.Value;
+                    noteBoard.RemoveFirst();
+                    Destroy(temp);
+                }
             }
         }
 
@@ -176,6 +187,7 @@ namespace TrashShooting
             EffectShootFail.GetComponent<Renderer>().enabled = false;
 
             //musicUnity.Play();
+            IsFinished = false;
         }
 
 
@@ -183,67 +195,77 @@ namespace TrashShooting
 
         void Update()
         {
-            if (!musicUnity.IsPlayingOrSuspended)
-                return;
+            //UnityEngine.Debug.LogFormat("MusicalTime {0}",
+            //               musicUnity.MusicalTime
+            //               );
 
-            var bPerfect = false;
-
-            List<Trash> missedNotes = new List<Trash>();
-            var activeNote = UpdateNodesAndGetActiveNote(NoteBoardFrom.transform.position, NoteBoardTo.transform.position, NoteBoardCheck.transform.position, ref bPerfect, ref missedNotes);
-
-            tempoBox.SetIntensity(Mathf.Pow(Mathf.Cos(musicUnity.MusicalTime* Mathf.PI*2.0f),4.0f));
-
-            // Miss
-            foreach (var note in missedNotes)
+            if(musicUnity.State == Music.PlayState.Finished)
             {
-                if (note.type == ETrashType.Trap)
-                    scoreBoard.TrapPerfect();
-                else
-                    scoreBoard.Miss((int)note.type);
+                // Music finished
+                IsFinished = true;
             }
-            missedNotes.Clear();
-
-            // Input
-            if (activeNote)
+            else if(musicUnity.State == Music.PlayState.Playing)
+            // Note check
             {
-                var inputAction = gameObject.GetComponent<TrashShootingInputAction>();
+                var bPerfect = false;
 
-                bool bLeft = inputAction.left.WasPerformedThisFrame();
-                bool bUp = inputAction.up.WasPerformedThisFrame();
-                bool bRight = inputAction.right.WasPerformedThisFrame();
-                if (bLeft || bUp || bRight)
+                List<Trash> missedNotes = new List<Trash>();
+                var activeNote = UpdateNodesAndGetActiveNote(NoteBoardFrom.transform.position, NoteBoardTo.transform.position, NoteBoardCheck.transform.position, ref bPerfect, ref missedNotes);
+
+                tempoBox.SetIntensity(Mathf.Pow(Mathf.Cos(musicUnity.MusicalTime * Mathf.PI * 2.0f), 4.0f));
+
+                // Miss
+                foreach (var note in missedNotes)
                 {
-                    UnityEngine.Debug.LogFormat("{0},{1}, {2}",
-                       inputAction.left.WasPerformedThisFrame() ? "left" : "",
-                       inputAction.up.WasPerformedThisFrame() ? "up" : "",
-                       inputAction.right.WasPerformedThisFrame() ? "right" : ""
-                       );
+                    if (note.type == ETrashType.Trap)
+                        scoreBoard.TrapPerfect();
+                    else
+                        scoreBoard.Miss((int)note.type);
                 }
+                missedNotes.Clear();
 
-                if (bLeft || bUp || bRight)
+                // Input
+                if (activeNote)
                 {
-                    int target = -1;
-                    var shootType = activeNote.GetInputRes(bLeft, bUp, bRight, bPerfect, ref target);
-                    UnityEngine.Debug.LogFormat("ActiveNote:{0},{1}, Input:{2}, {3}, {4}, Result: shootType:{5}, target:{6}", activeNote.type, activeNote.pos, bLeft, bUp, bRight, shootType, target);
-                    switch (shootType)
+                    var inputAction = gameObject.GetComponent<TrashShootingInputAction>();
+
+                    bool bLeft = inputAction.left.WasPerformedThisFrame();
+                    bool bUp = inputAction.up.WasPerformedThisFrame();
+                    bool bRight = inputAction.right.WasPerformedThisFrame();
+                    if (bLeft || bUp || bRight)
                     {
-                        case EShootType.TrapPerfect:
-                            scoreBoard.TrapPerfect();
-                            break;
-                        case EShootType.Miss:
-                            scoreBoard.Miss(target);
-                            break;
-                        default:
-                            //target can't be -1
-                            noteBoard.Remove(activeNote);
-                            activeNote.Shoot(shootType, Cans[target].transform.position);
-                            scoreBoard.Shoot(shootType, target);
-                            break;
+                        UnityEngine.Debug.LogFormat("{0},{1}, {2}",
+                           inputAction.left.WasPerformedThisFrame() ? "left" : "",
+                           inputAction.up.WasPerformedThisFrame() ? "up" : "",
+                           inputAction.right.WasPerformedThisFrame() ? "right" : ""
+                           );
+                    }
+
+                    if (bLeft || bUp || bRight)
+                    {
+                        int target = -1;
+                        var shootType = activeNote.GetInputRes(bLeft, bUp, bRight, bPerfect, ref target);
+                        UnityEngine.Debug.LogFormat("ActiveNote:{0},{1}, Input:{2}, {3}, {4}, Result: shootType:{5}, target:{6}", activeNote.type, activeNote.pos, bLeft, bUp, bRight, shootType, target);
+                        switch (shootType)
+                        {
+                            case EShootType.TrapPerfect:
+                                scoreBoard.TrapPerfect();
+                                break;
+                            case EShootType.Miss:
+                                scoreBoard.Miss(target);
+                                break;
+                            default:
+                                //target can't be -1
+                                noteBoard.Remove(activeNote);
+                                activeNote.Shoot(shootType, Cans[target].transform.position);
+                                scoreBoard.Shoot(shootType, target);
+                                break;
+                        }
                     }
                 }
-            }
 
-            RemoveUselessNotes();
+                RemoveUselessNotes();
+            }
         }
     }
 }

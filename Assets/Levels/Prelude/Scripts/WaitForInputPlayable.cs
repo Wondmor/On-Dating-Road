@@ -14,11 +14,11 @@ public class WaitForInputPlayable : BasicPlayableBehaviour
 
 
     [Header("主控件")]
-    public ExposedReference<TimelineLogic> preludeLogic;
+    public ExposedReference<TimelineLogic> timelineLogic;
 
     //private CommonInputAction _input;
     private bool _bContinue = false;
-    private TimelineLogic _preludeLogic;
+    private TimelineLogic _timelineLogic;
     //private TimelineClip clip;
     //public ExposedReference<Text> dialog;
     //private Text _dialog;
@@ -30,7 +30,7 @@ public class WaitForInputPlayable : BasicPlayableBehaviour
     public override void OnGraphStart(Playable playable)
     {
         //_input = input.Resolve(playable.GetGraph().GetResolver());
-        _preludeLogic = preludeLogic.Resolve(playable.GetGraph().GetResolver());
+        _timelineLogic = timelineLogic.Resolve(playable.GetGraph().GetResolver());
         //sprite = target.Resolve(playable.GetGraph().GetResolver());
 
     }
@@ -40,7 +40,7 @@ public class WaitForInputPlayable : BasicPlayableBehaviour
         if (!_bUsed)
         {
             _bUsed = true;
-            _preludeLogic.OnTimelineWaitingInput(eAction);
+            _timelineLogic.OnTimelineWaitingInput(eAction);
         }
     }
 

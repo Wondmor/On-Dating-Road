@@ -7,17 +7,17 @@ using UnityEngine.Timeline;
 public class TimelineEndPlayable : BasicPlayableBehaviour
 {
     [Header("主控件")]
-    public ExposedReference<TimelineLogic> preludeLogic;
-    private TimelineLogic _preludeLogic;
+    public ExposedReference<TimelineLogic> timelineLogic;
+    private TimelineLogic _timelineLogic;
 
     public override void OnGraphStart(Playable playable)
     {
-        _preludeLogic = preludeLogic.Resolve(playable.GetGraph().GetResolver());
+        _timelineLogic = timelineLogic.Resolve(playable.GetGraph().GetResolver());
     }
 
     public override void OnBehaviourPlay(Playable playable, FrameData info)
     {
-        _preludeLogic.OnTimelineLastFrame();
+        _timelineLogic.OnTimelineLastFrame();
     }
 
     public override void OnBehaviourPause(Playable playable, FrameData info)
