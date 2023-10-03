@@ -59,6 +59,7 @@ public class DeliveryPersonFallResultMenu : MonoBehaviour
 
     public GameObject leftItemGOGroup;
     public GameObject rightItemGOGroup;
+    public List<DeliveryPersonFallYellowBlue> deliveryPersonFallYellowBlues;
 
     public IObservable<Unit> OnHideFinished => onHideFinished;
 
@@ -110,8 +111,13 @@ public class DeliveryPersonFallResultMenu : MonoBehaviour
         continueAction.Disable();
     }
 
-    public void Show(bool _catchCargo, bool _catchExpensive, string levelName)
+    public void Show(bool _catchCargo, bool _catchExpensive, string levelName, bool yellow)
     {
+        foreach(var yellowBlue in deliveryPersonFallYellowBlues)
+        {
+            yellowBlue.yellow.SetActive(yellow);
+            yellowBlue.blue.SetActive(!yellow);
+        } 
         state = State.AnimatingShowBox;
         gameObject.SetActive(true);
         cargoInfoList.ForEach(info =>
