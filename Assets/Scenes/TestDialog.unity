@@ -282,6 +282,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 907277852368598393, guid: 7afb41a5d70a9d342b521d39de5b4227, type: 3}
+      propertyPath: descriptionString
+      value: "\u770B\u4E86\u4E0B\u65F6\u95F4, \u8FD8\u5269  <size=82>1</size>"
+      objectReference: {fileID: 0}
+    - target: {fileID: 907277852368598393, guid: 7afb41a5d70a9d342b521d39de5b4227, type: 3}
       propertyPath: OnSelection.m_PersistentCalls.m_Calls.Array.size
       value: 1
       objectReference: {fileID: 0}

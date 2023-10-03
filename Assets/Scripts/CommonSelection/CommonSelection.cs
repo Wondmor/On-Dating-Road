@@ -28,6 +28,7 @@ public class CommonSelection : MonoBehaviour
     {
         canvas = transform.Find("Canvas").gameObject;
         canvas.SetActive(false);
+        myInput = canvas.GetComponent<CommonInputAction>();
         ShowChoice();
     }
 
@@ -37,8 +38,6 @@ public class CommonSelection : MonoBehaviour
         GameManager.Instance.CommonInputAction.enabled = false;
 
         GameObject commonInputActionPrefab = Resources.Load<GameObject>("Prefabs/CommonInputAction");
-
-        myInput = Instantiate(commonInputActionPrefab, canvas.transform).GetComponent<CommonInputAction>();
 
         myInput.directions.performed += OnActionDirection;
         myInput.enter.performed += OnActionEnter;
