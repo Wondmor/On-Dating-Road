@@ -48,7 +48,6 @@ namespace TrashShooting
         void Start()
         {
 
-            musicInfo.bgm = Resources.Load<AudioClip>("Adam Bow - Death and Taxes Soundtrack - 16 Skelevator (Radio Effect)");
             musicInfo.Init();
             foreach (MusicNote musicNote in musicInfo.musicNotes)
             {

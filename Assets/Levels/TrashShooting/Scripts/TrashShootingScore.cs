@@ -10,11 +10,14 @@ namespace TrashShooting
 
         const float c_UnitScore = 100.0f;
         const float c_PerfectMulti = 1.5f;
-        RollingNumberText[] scoreTexts = { null, null, null };
-        RollingNumberText comboText = null;
+        //RollingNumberText[] scoreTexts = { null, null, null };
+        //RollingNumberText comboText = null;
+        RollingNumberImage scoreImage = null;
+        RollingNumberImage comboImage = null;
 
         float[] scores = { 0.0f, 0.0f, 0.0f };
-        int combo = 0;
+        float score = 0;
+        float combo = 0;
 
 
 
@@ -44,25 +47,30 @@ namespace TrashShooting
                     if (bPerfect)
                         addScore *= c_PerfectMulti;
 
-                    SetScoreToText(scores[_target] + addScore, _target);
-                    SetComboToText(combo + 1);
+                    //SetScoreToText(scores[_target] + addScore, _target);
+                    //SetComboToText(combo + 1);
+                    SetScore(score + addScore);
+                    SetCombo(combo + 1);
                 }
             }
             else
             {
-                SetComboToText(0);
+                //SetComboToText(0);
+                SetCombo(0);
             }
 
         }
 
         public void Miss(int _target)
         {
-            SetComboToText(0);
+            //SetComboToText(0);
+            SetCombo(0);
         }
 
         public void TrapPerfect()
         {
-            SetComboToText(combo + 1);
+            //SetComboToText(combo + 1);
+            SetCombo(combo + 1);
         }
 
 
@@ -70,15 +78,19 @@ namespace TrashShooting
         // Start is called before the first frame update
         void Start()
         {
-            scoreTexts[0] = transform.Find("left").GetComponent<RollingNumberText>();
-            scoreTexts[1] = transform.Find("up").GetComponent<RollingNumberText>();
-            scoreTexts[2] = transform.Find("right").GetComponent<RollingNumberText>();
-            comboText = transform.Find("combo").GetComponent<RollingNumberText>();
+            //scoreTexts[0] = transform.Find("left").GetComponent<RollingNumberText>();
+            //scoreTexts[1] = transform.Find("up").GetComponent<RollingNumberText>();
+            //scoreTexts[2] = transform.Find("right").GetComponent<RollingNumberText>();
+            //comboText = transform.Find("combo").GetComponent<RollingNumberText>();
+            scoreImage = transform.Find("rollingScore").GetComponent<RollingNumberImage>();
+            comboImage = transform.Find("rollingCombo").GetComponent<RollingNumberImage>();
 
-            SetScoreToText(scores[0], 0);
-            SetScoreToText(scores[1], 1);
-            SetScoreToText(scores[2], 2);
-            SetComboToText(0);
+            //SetScoreToText(scores[0], 0);
+            //SetScoreToText(scores[1], 1);
+            //SetScoreToText(scores[2], 2);
+            SetScore(score);
+            //SetComboToText(0);
+            SetCombo(0);
         }
 
         // Update is called once per frame
@@ -87,44 +99,48 @@ namespace TrashShooting
 
         }
 
-        float GetComboMulti(int _combo)
+        float GetComboMulti(float _combo)
         {
             return Mathf.Clamp(_combo, 0.0f, 500.0f) / 100.0f + 1.0f; // [0,5]
         }
 
-        void SetComboToText(int _combo)
+        //void SetComboToText(float _combo)
+        //{
+        //    linearValue(ref combo, _combo, comboText.gameObject);
+        //}
+
+        //void SetScoreToText(float _score, int _target)
+        //{
+        //    if (_target >= 0)
+        //    {
+        //        linearValue(ref scores[_target], _score, scoreTexts[_target].gameObject);
+        //    }
+        //}
+
+        void SetScore(float _score)
         {
-            var oldCombo = combo;
-            combo = _combo;
-
-
-            iTween.ValueTo(comboText.gameObject, iTween.Hash(
-                "from", oldCombo,
-                "to", combo,
-                "time", Mathf.Pow((Mathf.Abs(combo-oldCombo)/100.0f), 0.5f),
-                "onupdate", "UpdateValue",
-                "onupdatetarget", comboText.gameObject,
-                "easetype", iTween.EaseType.linear
-            ));
+            linearValue(ref score, _score, scoreImage.gameObject);
         }
 
-        void SetScoreToText(float _score, int _target)
+        void SetCombo(float _combo)
         {
-            if (_target >= 0)
-            {
-                var oldScore = scores[_target];
-                scores[_target] = _score;
+            linearValue(ref combo, _combo, comboImage.gameObject);
+        }
+
+        void linearValue(ref float target, float value, GameObject go)
+        {
+            var oldValue = target;
+            target = value;
 
 
-                iTween.ValueTo(scoreTexts[_target].gameObject, iTween.Hash(
-                    "from", oldScore,
-                    "to", scores[_target],
-                    "time", Mathf.Pow((Mathf.Abs(scores[_target] - oldScore) / 100.0f), 0.5f),
-                    "onupdate", "UpdateValue",
-                    "onupdatetarget", scoreTexts[_target].gameObject,
-                    "easetype", iTween.EaseType.linear
-                )); 
-            }
+            iTween.ValueTo(go, iTween.Hash(
+                "from", oldValue,
+                "to", target,
+                "time", Mathf.Pow((Mathf.Abs(target - oldValue) / 100.0f), 0.5f),
+                "onupdate", "UpdateValue",
+                "onupdatetarget", go,
+                "easetype", iTween.EaseType.linear
+            ));
         }
     }
 
