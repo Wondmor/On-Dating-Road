@@ -158,7 +158,7 @@ namespace TrashShooting
                 {
                     var temp = noteBoard.First.Value;
                     noteBoard.RemoveFirst();
-                    Destroy(temp);
+                    Destroy(temp.gameObject);
                 }
             }
         }
