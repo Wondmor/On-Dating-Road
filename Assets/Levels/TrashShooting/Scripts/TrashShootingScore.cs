@@ -7,17 +7,21 @@ namespace TrashShooting
 {
     public class TrashShootingScore : MonoBehaviour
     {
+        [SerializeField] SpriteRenderer[] HappyBins = null;
+        [SerializeField] SpriteRenderer[] AngryBins = null;
 
         const float c_UnitScore = 100.0f;
         const float c_PerfectMulti = 1.5f;
-        //RollingNumberText[] scoreTexts = { null, null, null };
-        //RollingNumberText comboText = null;
         RollingNumberImage scoreImage = null;
         RollingNumberImage comboImage = null;
 
         float[] scores = { 0.0f, 0.0f, 0.0f };
         float score = 0;
         float combo = 0;
+
+        float[] HappyEmojiDeadline = { -1.0f, -1.0f, -1.0f };
+        float[] AngryEmojiDeadline = { -1.0f, -1.0f, -1.0f };
+
 
 
 
@@ -47,15 +51,14 @@ namespace TrashShooting
                     if (bPerfect)
                         addScore *= c_PerfectMulti;
 
-                    //SetScoreToText(scores[_target] + addScore, _target);
-                    //SetComboToText(combo + 1);
+                    SetEmoji(_target, true);
                     SetScore(score + addScore);
                     SetCombo(combo + 1);
                 }
             }
             else
             {
-                //SetComboToText(0);
+                SetEmoji(_target, false);
                 SetCombo(0);
             }
 
@@ -63,13 +66,11 @@ namespace TrashShooting
 
         public void Miss(int _target)
         {
-            //SetComboToText(0);
             SetCombo(0);
         }
 
         public void TrapPerfect()
         {
-            //SetComboToText(combo + 1);
             SetCombo(combo + 1);
         }
 
@@ -78,44 +79,29 @@ namespace TrashShooting
         // Start is called before the first frame update
         void Start()
         {
-            //scoreTexts[0] = transform.Find("left").GetComponent<RollingNumberText>();
-            //scoreTexts[1] = transform.Find("up").GetComponent<RollingNumberText>();
-            //scoreTexts[2] = transform.Find("right").GetComponent<RollingNumberText>();
-            //comboText = transform.Find("combo").GetComponent<RollingNumberText>();
             scoreImage = transform.Find("rollingScore").GetComponent<RollingNumberImage>();
             comboImage = transform.Find("rollingCombo").GetComponent<RollingNumberImage>();
 
-            //SetScoreToText(scores[0], 0);
-            //SetScoreToText(scores[1], 1);
-            //SetScoreToText(scores[2], 2);
             SetScore(score);
-            //SetComboToText(0);
             SetCombo(0);
+
+            for(int i = 0; i < 3; ++i)
+            {
+                HappyBins[i].gameObject.SetActive(false);
+                AngryBins[i].gameObject.SetActive(false);
+            }
         }
 
         // Update is called once per frame
         void Update()
         {
-
+            UpdateEmojiState();
         }
 
         float GetComboMulti(float _combo)
         {
             return Mathf.Clamp(_combo, 0.0f, 500.0f) / 100.0f + 1.0f; // [0,5]
         }
-
-        //void SetComboToText(float _combo)
-        //{
-        //    linearValue(ref combo, _combo, comboText.gameObject);
-        //}
-
-        //void SetScoreToText(float _score, int _target)
-        //{
-        //    if (_target >= 0)
-        //    {
-        //        linearValue(ref scores[_target], _score, scoreTexts[_target].gameObject);
-        //    }
-        //}
 
         void SetScore(float _score)
         {
@@ -125,6 +111,25 @@ namespace TrashShooting
         void SetCombo(float _combo)
         {
             linearValue(ref combo, _combo, comboImage.gameObject);
+        }
+
+        void SetEmoji(int _target, bool bHappy)
+        {
+            const float c_lastTime = 1.0f;
+            if (bHappy)
+                HappyEmojiDeadline[_target] = Time.time + c_lastTime;
+            else
+                AngryEmojiDeadline[_target] = Time.time + c_lastTime;            
+        }
+
+        void UpdateEmojiState()
+        {
+            for(int i = 0; i < 3; ++i)
+            {
+                HappyBins[i].gameObject.SetActive(HappyEmojiDeadline[i] >= Time.time);
+                AngryBins[i].gameObject.SetActive(AngryEmojiDeadline[i] >= Time.time);
+            }
+            
         }
 
         void linearValue(ref float target, float value, GameObject go)
