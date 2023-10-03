@@ -110,7 +110,8 @@ namespace TrashShooting
                 if (beatDiff < -m_UnitRange / 2.0f)
                 {
                     // Disabled effect
-                    note.transform.localScale = new Vector2(0.5f, 0.5f);
+                    note.transform.localScale = new Vector2(1.0f, 1.0f);
+                    note.OnEscape();
                     if (!note.Checked)
                     {
                         note.Checked = true;
@@ -119,7 +120,7 @@ namespace TrashShooting
                 }
                 else
                 {
-                    note.transform.localScale = new Vector2(1.0f, 1.0f);
+                    //note.transform.localScale = new Vector2(1.0f, 1.0f);
                     if (preNote == null || preNote.Checked)
                     {
                         if (activeNote == null  // first
