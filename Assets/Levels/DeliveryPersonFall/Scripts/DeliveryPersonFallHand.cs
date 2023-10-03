@@ -20,15 +20,15 @@ public class DeliveryPersonFallHand : MonoBehaviour
     bool handMovable = false;
 
     Rigidbody2D rigid;
-    Collider2D trigger;
+    BoxCollider2D colli;
 
     public IObservable<GameObject> CatchCargo => catchCargo;
 
     private void Awake()
     {
         rigid = GetComponent<Rigidbody2D>();
-        trigger = GetComponent<Collider2D>();
-        trigger.OnCollisionEnter2DAsObservable()
+        colli = GetComponent<BoxCollider2D>();
+        colli.OnCollisionEnter2DAsObservable()
             .Where(c =>
             {
                 if (handFull.Value)
@@ -41,7 +41,7 @@ public class DeliveryPersonFallHand : MonoBehaviour
                 Vector3 otherPos = otherTrans.position;
                 Vector3 handPos = transform.position;
                 bool isYAbove = otherPos.y > handPos.y + boxCollider2D.size.y * otherTrans.lossyScale.y / 2;
-                bool isXAbove = otherPos.x < handPos.x + boxCollider2D.size.x * otherTrans.lossyScale.x / 2 && otherPos.x > handPos.x - boxCollider2D.size.x * otherTrans.lossyScale.x / 2;
+                bool isXAbove = otherPos.x < handPos.x + boxCollider2D.size.x * otherTrans.lossyScale.x / 2 + colli.size.x * transform.lossyScale.x / 2 && otherPos.x > handPos.x - boxCollider2D.size.x * otherTrans.lossyScale.x / 2 - colli.size.x * transform.lossyScale.x / 2;
                 return isDeliveryCargo && isYAbove && isXAbove;
             })
             .Subscribe(c =>
@@ -53,7 +53,8 @@ public class DeliveryPersonFallHand : MonoBehaviour
                 fixedJoint2D.enabled = true;
                 handFull.Value = true;
                 catchCargo.OnNext(other);
-                trigger.enabled = false;
+                colli.enabled = false;
+                other.GetComponent<Collider2D>().enabled = false;
             });
     }
 
@@ -81,7 +82,7 @@ public class DeliveryPersonFallHand : MonoBehaviour
     public void Reset()
     {
         handFull.Value = false;
-        trigger.enabled = true;
+        colli.enabled = true;
     }
 
     public void SetMovable(bool movable)
