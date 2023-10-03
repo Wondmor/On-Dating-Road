@@ -28,7 +28,7 @@ public class CommonSelection : MonoBehaviour
     {
         canvas = transform.Find("Canvas").gameObject;
         canvas.SetActive(false);
-        myInput = canvas.GetComponent<CommonInputAction>();
+        myInput = canvas.GetComponentInChildren<CommonInputAction>();
         ShowChoice();
     }
 
