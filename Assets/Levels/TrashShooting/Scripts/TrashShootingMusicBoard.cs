@@ -278,15 +278,15 @@ namespace TrashShooting
                     var nextDifficulty = musicInfo.curDifficulty;
 
                     var statics = scoreBoard.PhaseEnd();
-                    float missRate = statics.miss / statics.notes;
-                    float perfectRate = statics.perfect / statics.notes;
+                    float missRate = (float)statics.miss / (float)statics.notes;
+                    float hitRate = (float)statics.perfect / (float)statics.notes + (float)statics.normal / (float)statics.notes;
                     float maxCombo = statics.maxCombo;
 
-                    if(missRate < 0.2 && musicInfo.curDifficulty != MusicInfo.EDifficulty.Hard)
+                    if(hitRate >=0.8 && musicInfo.curDifficulty != MusicInfo.EDifficulty.Hard)
                     {
                         nextDifficulty++;
                     }
-                    else if(missRate > 0.6 && musicInfo.curDifficulty != MusicInfo.EDifficulty.Easy)
+                    else if(hitRate < 0.4 && musicInfo.curDifficulty != MusicInfo.EDifficulty.Easy)
                     {
 
                         nextDifficulty--;
@@ -312,7 +312,7 @@ namespace TrashShooting
             List<Trash> missedNotes = new List<Trash>();
             var activeNote = UpdateNodesAndGetActiveNote(NoteBoardFrom.transform.position, NoteBoardTo.transform.position, NoteBoardCheck.transform.position, ref bPerfect, ref missedNotes);
 
-            tempoBox.SetIntensity(Mathf.Pow(Mathf.Cos(musicUnity.MusicalTime * 2.0f * Mathf.PI * 2.0f), 4.0f));
+            tempoBox.SetIntensity(Mathf.Pow(Mathf.Sin(musicUnity.MusicalTime * 2.0f * Mathf.PI * 2.0f), 4.0f));
 
             // Miss
             foreach (var note in missedNotes)
@@ -334,18 +334,18 @@ namespace TrashShooting
                 bool bRight = inputAction.right.WasPerformedThisFrame();
                 if (bLeft || bUp || bRight)
                 {
-                    UnityEngine.Debug.LogFormat("{0},{1}, {2}",
-                       inputAction.left.WasPerformedThisFrame() ? "left" : "",
-                       inputAction.up.WasPerformedThisFrame() ? "up" : "",
-                       inputAction.right.WasPerformedThisFrame() ? "right" : ""
-                       );
+                    //UnityEngine.Debug.LogFormat("{0},{1}, {2}",
+                    //   inputAction.left.WasPerformedThisFrame() ? "left" : "",
+                    //   inputAction.up.WasPerformedThisFrame() ? "up" : "",
+                    //   inputAction.right.WasPerformedThisFrame() ? "right" : ""
+                    //   );
                 }
 
                 if (bLeft || bUp || bRight)
                 {
                     int target = -1;
                     var shootType = activeNote.GetInputRes(bLeft, bUp, bRight, bPerfect, ref target);
-                    UnityEngine.Debug.LogFormat("ActiveNote:{0},{1}, Input:{2}, {3}, {4}, Result: shootType:{5}, target:{6}", activeNote.type, activeNote.unit, bLeft, bUp, bRight, shootType, target);
+                    //UnityEngine.Debug.LogFormat("ActiveNote:{0},{1}, Input:{2}, {3}, {4}, Result: shootType:{5}, target:{6}", activeNote.type, activeNote.unit, bLeft, bUp, bRight, shootType, target);
                     switch (shootType)
                     {
                         case EShootType.TrapPerfect:

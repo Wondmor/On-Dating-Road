@@ -78,7 +78,7 @@ namespace TrashShooting
 
             for (float fUnit = phase.From; fUnit < phase.To; fUnit += c_intervals[(int)eDifficulty])
             {
-                musicNotes.Enqueue(new MusicNote(c_typePool[UnityEngine.Random.Range(0, 3)], fUnit));
+                musicNotes.Enqueue(new MusicNote(c_typePool[UnityEngine.Random.Range(0, 3)], fUnit+0.5f));
             }
             //float randomNodeTempo = 40.0f;
             //for (int i = 0; i < 400; ++i)
