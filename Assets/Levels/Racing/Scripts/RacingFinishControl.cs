@@ -84,7 +84,7 @@ public class RacingFinishControl : MonoBehaviour
                     ));
                 break;
             case 1:
-                SceneManager.LoadScene("TestMain");
+                GameLogicManager.Instance.OnMiniGameFinished(GameManager.Instance.RacingData.Money - GetMoney(), 0);
                 break;
         }
         step++;
