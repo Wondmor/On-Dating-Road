@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 using TMPro;
 using UnityEngine;
 
@@ -28,7 +29,7 @@ public class SkewerGameController : MonoBehaviour
     TextMeshProUGUI NumberText, SubtitleText;
 
     [SerializeField]
-    GameObject canvas, endCanvas, playGround, stickPrefab, meatPrefab;
+    GameObject canvas, endCanvas, playGround, stickPrefab, meatPrefab, workingSelection, finishSelection;
 
     [SerializeField]
     float margin;
@@ -55,6 +56,14 @@ public class SkewerGameController : MonoBehaviour
 
     void Awake()
     {
+        timer = gameObject.AddComponent<Timer>();
+
+        ingameSubs = Resources.Load<TextAsset>("Subtitles/SkewerIngame").text.Split("\n");
+    }
+
+    void InitializeMainGame()
+    {
+        playGround.SetActive(true);
         sticks = new LinkedList<SkewerStick>();
         finishedSticks = new LinkedList<SkewerStick>();
         meats = new LinkedList<SkewerMeat>();
@@ -99,9 +108,7 @@ public class SkewerGameController : MonoBehaviour
             meats.AddLast(meat);
         }
 
-        timer = gameObject.AddComponent<Timer>();
 
-        ingameSubs = Resources.Load<TextAsset>("Subtitles/SkewerIngame").text.Split("\n");
     }
 
     // Update is called once per frame
@@ -111,9 +118,12 @@ public class SkewerGameController : MonoBehaviour
         {
             GetInput();
         }
-        else if(status == GameStatus.FINISH)
+        else if (status == GameStatus.END)
         {
-
+            if (GameManager.Instance.CommonInputAction.GetPerformedTypeThisFrame() == CommonInputAction.EType.Enter)
+            {
+                GameLogicManager.Instance.OnMiniGameFinished((float)totalNumber * 5 / 10, 0);
+            }
         }
     }
 
@@ -124,7 +134,7 @@ public class SkewerGameController : MonoBehaviour
         switch (GameManager.Instance.CommonInputAction.GetPerformedTypeThisFrame())
         {
             case CommonInputAction.EType.Enter:
-                if(SubtitleText.text != "")
+                if (SubtitleText.text != "")
                 {
                     SubtitleText.text = "";
                     break;
@@ -147,7 +157,7 @@ public class SkewerGameController : MonoBehaviour
                 break;
             case CommonInputAction.EType.Cancel:
                 // TODO: double check
-                LeaveGame();
+                finishSelection.GetComponent<CommonSelection>().ShowChoice();
                 break;
         }
     }
@@ -161,19 +171,29 @@ public class SkewerGameController : MonoBehaviour
         }, 0.6f);
     }
 
-    public void StartGame()
+    public void StartGame(bool start)
     {
-        SetGameStatus(GameStatus.MAIN);
+        if (start)
+        {
+            SetGameStatus(GameStatus.MAIN);
+        }
+        else
+        {
+            GameLogicManager.Instance.OnMiniGameFinished(0, 0);
+        }
     }
 
-    public void NextStatus()
+    public void ShowEntergameSelection()
     {
-
+        workingSelection.GetComponent<CommonSelection>().ShowChoice();
     }
 
-    public void LeaveGame()
+    public void LeaveGame(bool leave)
     {
-        SetGameStatus(GameStatus.FINISH);
+        if (!leave)
+        {
+            SetGameStatus(GameStatus.FINISH);
+        }
     }
 
     public void SetGameStatus(GameStatus status)
@@ -187,6 +207,7 @@ public class SkewerGameController : MonoBehaviour
                 break;
             case GameStatus.MAIN:
                 canvas.SetActive(false);
+                InitializeMainGame();
                 break;
             case GameStatus.FINISH:
                 endCanvas.SetActive(true);
@@ -194,6 +215,7 @@ public class SkewerGameController : MonoBehaviour
                 Transform phone = endCanvas.transform.Find("Phone");
                 phone.GetComponentInChildren<TextMeshProUGUI>().text = string.Format("{0}.{1}\u5143", totalNumber * 5 / 10, totalNumber * 5 % 10);
                 iTween.MoveFrom(phone.gameObject, phone.position + Vector3.down * 1080, 1f);
+                timer.Add(() => { SetGameStatus(GameStatus.END); }, 1.5f);
                 break;
             case GameStatus.END:
                 break;
@@ -220,14 +242,14 @@ public class SkewerGameController : MonoBehaviour
             return;
         }
 
-        if(stick.Type != SkewerStick.StickType.NORMAL)
+        if (stick.Type != SkewerStick.StickType.NORMAL)
         {
             // wrong stick
             SubtitleText.text = ingameSubs[(int)IngameSubType.WRONG_STICK];
             return;
         }
 
-        if((stick.CurrentMeat % 2 == 0 && meats.First.Value.MeatType != SkewerMeat.Type.LEAN) ||
+        if ((stick.CurrentMeat % 2 == 0 && meats.First.Value.MeatType != SkewerMeat.Type.LEAN) ||
             (stick.CurrentMeat % 2 == 1 && meats.First.Value.MeatType != SkewerMeat.Type.FAT))
         {
             // wrong meat
@@ -265,7 +287,7 @@ public class SkewerGameController : MonoBehaviour
         }
 
         sticks.RemoveFirst();
-        if(withAni)
+        if (withAni)
         {
             ShowStickRemoveAni(stick.Type);
         }

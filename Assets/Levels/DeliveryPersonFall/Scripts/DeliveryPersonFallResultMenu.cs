@@ -31,7 +31,8 @@ public class DeliveryPersonFallResultMenu : MonoBehaviour
         AnimatingShowBox,
         WaitingShowBox,
         AnimatingShowResult,
-        WaitingContinue
+        WaitingResult,
+        AnimatingHeartResult,
     }
 
     public List<CargoInfo> cargoInfoList;
@@ -60,6 +61,8 @@ public class DeliveryPersonFallResultMenu : MonoBehaviour
     public GameObject leftItemGOGroup;
     public GameObject rightItemGOGroup;
     public List<DeliveryPersonFallYellowBlue> deliveryPersonFallYellowBlues;
+    public CanvasGroup heartLoseCanvasGroup;
+    public List<GameObject> heartList;
 
     public IObservable<Unit> OnHideFinished => onHideFinished;
 
@@ -68,6 +71,7 @@ public class DeliveryPersonFallResultMenu : MonoBehaviour
     State state = State.AnimatingShowBox;
     bool catchExpensive;
     bool catchCargo;
+    int heartCount;
 
     private void Awake()
     {
@@ -89,18 +93,46 @@ public class DeliveryPersonFallResultMenu : MonoBehaviour
                         expensiveSuccessGO.SetActive(catchExpensive);
                         expensiveFailGO.SetActive(!catchExpensive && !catchCargo);
                         cheapFailGO.SetActive(!catchExpensive || !catchCargo);
-                        state = State.WaitingContinue;
+                        state = State.WaitingResult;
                     });
                     break;
-                case State.WaitingContinue:
-                    gameObject.SetActive(false);
-                    onHideFinished.OnNext(Unit.Default);
+                case State.WaitingResult:
+                    if(catchExpensive)
+                    {
+                        HideAndContinue();
+                    }
+                    else
+                    {
+                        state = State.AnimatingHeartResult;
+                        int origHeartCount = heartCount + 1; 
+                        for (int i = 0; i < heartList.Count; ++i)
+                        {
+                            heartList[i].SetActive(i < origHeartCount);
+                        }
+                        Sequence heartSequence = DOTween.Sequence();
+                        heartSequence.Append(heartLoseCanvasGroup.DOFade(1f, 0.5f))
+                        .Append(heartList[heartCount].transform.DOShakeRotation(1f, new Vector3(0f, 0f, 90f)))
+                        .Insert(0.5f, heartList[heartCount].GetComponent<Image>().DOFade(0f, 0.5f))
+                        .AppendInterval(1f)
+                        .Append(heartLoseCanvasGroup.DOFade(0f, 0.5f))
+                        .AppendCallback(() =>
+                        {
+                            HideAndContinue();
+                        });
+                    }
                     break;
                 default:
                     return;
             }
         };
     }
+
+    private void HideAndContinue()
+    {
+        gameObject.SetActive(false);
+        onHideFinished.OnNext(Unit.Default);
+    }
+
     public void OnEnable()
     {
         continueAction.Enable();
@@ -111,7 +143,7 @@ public class DeliveryPersonFallResultMenu : MonoBehaviour
         continueAction.Disable();
     }
 
-    public void Show(bool _catchCargo, bool _catchExpensive, string levelName, bool yellow)
+    public void Show(bool _catchCargo, bool _catchExpensive, string levelName, bool yellow, int _heartCount)
     {
         foreach(var yellowBlue in deliveryPersonFallYellowBlues)
         {
@@ -161,5 +193,8 @@ public class DeliveryPersonFallResultMenu : MonoBehaviour
         {
             state = State.WaitingShowBox;
         });
+        heartLoseCanvasGroup.alpha = 0f;
+        heartCount = _heartCount;
+        heartList.ForEach(heart => heart.GetComponent<Image>().color = Color.white);
     }
 }
