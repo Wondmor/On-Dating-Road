@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static TrashShooting.TrashShootingScore;
+using static UnityEngine.GraphicsBuffer;
 
 namespace TrashShooting
 {
@@ -22,8 +24,50 @@ namespace TrashShooting
         float[] HappyEmojiDeadline = { -1.0f, -1.0f, -1.0f };
         float[] AngryEmojiDeadline = { -1.0f, -1.0f, -1.0f };
 
+        public struct ScoreStatic
+        {
+            public uint maxCombo;
+            public uint notes;
+            public uint perfect;
+            public uint normal;
+            public uint miss;
+            public uint[] perfects;
+            public uint[] normals;
+            public uint[] misses;
 
+        }
 
+        List<ScoreStatic> scoreStatics {  get; set; }
+        ScoreStatic curStatics = new ScoreStatic
+        {
+            maxCombo = 0,
+            notes = 0,
+            perfect = 0,
+            normal = 0,
+            miss = 0,
+            perfects = new uint[4] { 0, 0, 0, 0 },
+            normals = new uint[4] { 0, 0, 0, 0 },
+            misses = new uint[4] { 0, 0, 0, 0 }
+        };
+
+        //
+        public ScoreStatic PhaseEnd()
+        {
+            scoreStatics.Add(curStatics);
+
+            curStatics = new ScoreStatic
+            {
+                maxCombo = 0,
+                notes = 0,
+                perfect = 0,
+                normal = 0,
+                miss = 0,
+                perfects = new uint[4] { 0, 0, 0, 0 },
+                normals = new uint[4] { 0, 0, 0, 0 },
+                misses = new uint[4] { 0, 0, 0, 0 }
+            };
+            return scoreStatics[scoreStatics.Count - 1];
+        }
 
 
 
@@ -49,7 +93,19 @@ namespace TrashShooting
                 {
                     var addScore = GetComboMulti(combo) * c_UnitScore;
                     if (bPerfect)
+                    {
                         addScore *= c_PerfectMulti;
+
+                        curStatics.perfect++;
+                        curStatics.perfects[_target]++;
+                        curStatics.notes++;
+                    }
+                    else
+                    {
+                        curStatics.normal++;
+                        curStatics.normals[_target]++;
+                        curStatics.notes++;
+                    }
 
                     SetEmoji(_target, true);
                     SetScore(score + addScore);
@@ -58,6 +114,10 @@ namespace TrashShooting
             }
             else
             {
+                curStatics.miss++;
+                curStatics.misses[_target]++;
+                curStatics.notes++;
+
                 SetEmoji(_target, false);
                 SetCombo(0);
             }
@@ -66,11 +126,19 @@ namespace TrashShooting
 
         public void Miss(int _target)
         {
+            curStatics.miss++;
+            curStatics.misses[_target]++;
+            curStatics.notes++;
+
             SetCombo(0);
         }
 
         public void TrapPerfect()
         {
+            curStatics.miss++;
+            curStatics.misses[3]++;
+            curStatics.notes++;
+
             SetCombo(combo + 1);
         }
 
@@ -90,6 +158,8 @@ namespace TrashShooting
                 HappyBins[i].gameObject.SetActive(false);
                 AngryBins[i].gameObject.SetActive(false);
             }
+
+            scoreStatics = new List<ScoreStatic>();
         }
 
         // Update is called once per frame
@@ -110,6 +180,7 @@ namespace TrashShooting
 
         void SetCombo(float _combo)
         {
+            curStatics.maxCombo = Mathf.RoundToInt(_combo) > curStatics.maxCombo ? (uint)Mathf.RoundToInt(_combo) : curStatics.maxCombo;
             linearValue(ref combo, _combo, comboImage.gameObject);
         }
 

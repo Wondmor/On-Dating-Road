@@ -29,7 +29,7 @@ namespace TrashShooting
 
         [SerializeField] public Sprite escape;
         [SerializeField] public ETrashType type;
-        public float pos = 0.0f;
+        public float unit = 0.0f;
         public bool Checked = false;
 
         // Start is called before the first frame update
