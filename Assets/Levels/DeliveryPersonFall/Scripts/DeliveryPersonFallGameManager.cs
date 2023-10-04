@@ -18,6 +18,7 @@ public class DeliveryPersonFallGameManager : MonoBehaviour
     public AnimEventHandler animEventHandler;
     public Animator animator;
     public DeliveryPersonFallAnimMgr animMgr;
+    public DeliveryPersonFallHUD hud;
 
     bool catchCargo = false;
     bool catchExpensiveCargo = false;
@@ -25,6 +26,7 @@ public class DeliveryPersonFallGameManager : MonoBehaviour
     int curLevelIndex = 0;
     int cargoCatchCount = 0;
     bool yellow;
+    ReactiveProperty<int> heartCountProp = new(3);
 
     private void Awake()
     {
@@ -48,13 +50,19 @@ public class DeliveryPersonFallGameManager : MonoBehaviour
             hand.SetMovable(false);
             await UniTask.Delay(TimeSpan.FromSeconds(2f));
             if (catchExpensiveCargo)
+            {
                 cargoCatchCount++;
-            resultMenu.Show(catchCargo, catchExpensiveCargo, levelNameList[curLevelIndex], yellow);
+            }  
+            else
+            {
+                heartCountProp.Value--;
+            }
+            resultMenu.Show(catchCargo, catchExpensiveCargo, levelNameList[curLevelIndex], yellow, heartCountProp.Value);
         }).AddTo(this);
         resultMenu.OnHideFinished.Subscribe(async _ =>
         {
             Reset();
-            if (curLevelIndex == levelNameList.Count - 1)
+            if (heartCountProp.Value == 0 || curLevelIndex == levelNameList.Count - 1)
                 GameFinished();
             else
             {
@@ -74,6 +82,7 @@ public class DeliveryPersonFallGameManager : MonoBehaviour
                 Launch();
             }
         }).AddTo(this);
+        hud.SetHeartCountObservable(heartCountProp);
     }
 
     private void Start()
@@ -84,6 +93,7 @@ public class DeliveryPersonFallGameManager : MonoBehaviour
 
     public void StartGame()
     {
+        heartCountProp.Value = 3;
         tutorialMenu.ShowMenu();
     }
 
@@ -116,7 +126,7 @@ public class DeliveryPersonFallGameManager : MonoBehaviour
 
     void GameFinished()
     {
-        GameLogicManager.Instance.OnMiniGameFinished(GameLogicManager.Instance.gameData.money,
-     GameLogicManager.Instance.gameData.positiveComment + cargoCatchCount);
+        GameLogicManager gameLogicMgrInstance = GameLogicManager.Instance;
+        gameLogicMgrInstance.OnMiniGameFinished(gameLogicMgrInstance.gameData.money, gameLogicMgrInstance.gameData.positiveComment + cargoCatchCount);
     }
 }
