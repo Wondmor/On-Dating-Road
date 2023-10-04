@@ -24,6 +24,8 @@ public class RacingPhoneMovingControl : MonoBehaviour
     {
         player = transform.parent.Find("Canvas/SubtitleBG").GetComponent<SubtitlePlayer>();
         phoneCamera = GetComponentInChildren<Camera>();
+
+        transform.parent.Find("Canvas/SubtitleBG").gameObject.SetActive(true);
     }
 
     // Update is called once per frame
