@@ -23,6 +23,8 @@ namespace TrashShooting
         /*[SerializeField] */GameObject EffectShootFail = null;
         /*[SerializeField] */GameObject[] Cans = { null, null, null};
         /*[SerializeField] */TempoBox tempoBox = null;
+        /*[SerializeField] */ManholeCover manholeCover = null;
+        /*[SerializeField] */TrashShootingLight lightSystem = null;
         [SerializeField] TrashShootingScore scoreBoard = null;
 
 
@@ -206,6 +208,13 @@ namespace TrashShooting
             }
         }
 
+        void SetNextPhase(MusicInfo.EDifficulty eDifficulty)
+        {
+            musicInfo.GenerateAPhase(eDifficulty);
+            manholeCover.SetDifficulty(eDifficulty);
+            lightSystem.SetDifficulty(eDifficulty);
+        }
+
 
         // Start is called before the first frame update
         void Start()
@@ -222,6 +231,8 @@ namespace TrashShooting
             Cans[1] = transform.Find("canU").gameObject;
             Cans[2] = transform.Find("canR").gameObject;
             tempoBox = transform.Find("TempoBox").gameObject.GetComponent<TempoBox>();
+            manholeCover = transform.Find("ManholeCover").gameObject.GetComponent<ManholeCover>();
+            lightSystem = transform.Find("Light").gameObject.GetComponent<TrashShootingLight>();
             //scoreBoard = transform.Find("ScoreBoard").gameObject.GetComponent<TrashShootingScore>();
 
             EffectNormal.GetComponent<Renderer>().enabled = false;
@@ -241,7 +252,7 @@ namespace TrashShooting
             //unitFromDiff = positionToUnitDiff(NoteBoardFrom.transform.position);
 
 
-            musicInfo.GenerateAPhase(MusicInfo.EDifficulty.Easy);
+            SetNextPhase(MusicInfo.EDifficulty.Easy);
         }
 
 
@@ -281,7 +292,7 @@ namespace TrashShooting
                         nextDifficulty--;
                     }
 
-                    musicInfo.GenerateAPhase(nextDifficulty);
+                    SetNextPhase(nextDifficulty);
                 }
 
                 // Note check
@@ -348,6 +359,8 @@ namespace TrashShooting
                             noteBoard.Remove(activeNote);
                             activeNote.Shoot(shootType, Cans[target].transform.position);
                             scoreBoard.Shoot(shootType, target);
+                            manholeCover.Shoot();
+                            lightSystem.Shoot(target);
                             break;
                     }
                 }

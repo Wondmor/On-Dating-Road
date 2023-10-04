@@ -16,7 +16,7 @@ namespace TrashShooting
         }
     }
 
-    class MusicInfo
+    public class MusicInfo
     {
         public enum EDifficulty : int
         {
