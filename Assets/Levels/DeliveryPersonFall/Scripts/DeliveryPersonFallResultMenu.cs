@@ -8,7 +8,6 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using DG.Tweening;
-using UnityEditor.Build;
 
 public class DeliveryPersonFallResultMenu : MonoBehaviour
 {
