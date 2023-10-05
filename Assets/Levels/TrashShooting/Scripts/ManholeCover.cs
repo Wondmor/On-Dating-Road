@@ -7,14 +7,12 @@ namespace TrashShooting
 {
     public class ManholeCover : MonoBehaviour
     {
-        Animator manholeCover = null;
-        Animator lighten = null;
+        [SerializeField] Animator manholeCover = null;
+        [SerializeField] Animator lighten = null;
         TrashShooting.MusicInfo.EDifficulty eDifficulty;
         // Start is called before the first frame update
         void Start()
         {
-            manholeCover = GetComponent<Animator>();
-            lighten = transform.Find("LightLighten").GetComponent<Animator>();
         }
 
         // Update is called once per frame

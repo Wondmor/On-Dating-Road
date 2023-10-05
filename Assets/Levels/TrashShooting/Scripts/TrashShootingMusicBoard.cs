@@ -9,22 +9,23 @@ namespace TrashShooting
 
     public class TrashShootingMusicBoard : MonoBehaviour
     {
+        [SerializeField] float decale = 0.0f;
         [SerializeField] GameObject[] LeftNotePrefabs = null;
         [SerializeField] GameObject[] UpNotePrefabs = null;
         [SerializeField] GameObject[] RightNotePrefabs = null;
         [SerializeField] GameObject[] TrapNotePrefabs = null;
-        /*[SerializeField] */GameObject NoteBoardFrom = null;
-        /*[SerializeField] */GameObject NoteBoardTo = null;
-        /*[SerializeField] */GameObject NoteBoardCheck = null;
-        /*[SerializeField] */GameObject EffectNormal = null;
-        /*[SerializeField] */GameObject EffectPerfect = null;
-        /*[SerializeField] */GameObject EffectShootPerfect = null;
-        /*[SerializeField] */GameObject EffectShootNormal = null;
-        /*[SerializeField] */GameObject EffectShootFail = null;
-        /*[SerializeField] */GameObject[] Cans = { null, null, null};
-        /*[SerializeField] */TempoBox tempoBox = null;
-        /*[SerializeField] */ManholeCover manholeCover = null;
-        /*[SerializeField] */TrashShootingLight lightSystem = null;
+        [SerializeField] GameObject NoteBoardFrom = null;
+        [SerializeField] GameObject NoteBoardTo = null;
+        [SerializeField] GameObject NoteBoardCheck = null;
+        [SerializeField] GameObject EffectNormal = null;
+        [SerializeField] GameObject EffectPerfect = null;
+        [SerializeField] GameObject EffectShootPerfect = null;
+        [SerializeField] GameObject EffectShootNormal = null;
+        [SerializeField] GameObject EffectShootFail = null;
+        [SerializeField] GameObject[] Cans = { null, null, null};
+        [SerializeField] TempoBox tempoBox = null;
+        [SerializeField] ManholeCover manholeCover = null;
+        [SerializeField] TrashShootingLight lightSystem = null;
         [SerializeField] TrashShootingScore scoreBoard = null;
 
 
@@ -49,6 +50,14 @@ namespace TrashShooting
 
         MusicInfo musicInfo = new MusicInfo();
 
+        private float money = 0;
+        private float positiveComment = 0;
+        private float timeRate = 1.0f;
+        private uint result = 0;
+        private float noteCount = 0;
+        private float hitNotes = 0;
+        private float perfectNotes = 0;
+        private float maxCombo = 0;
 
         private Vector2 unitToPosition(float _unit)
         {
@@ -117,7 +126,7 @@ namespace TrashShooting
                     break;
             }
 
-            goNote.GetComponent<Trash>().unit = _musicNote.unit;
+            goNote.GetComponent<Trash>().unit = _musicNote.unit + decale;
             noteBoard.AddLast(goNote.GetComponent<Trash>());
         }
 
@@ -215,24 +224,44 @@ namespace TrashShooting
             lightSystem.SetDifficulty(eDifficulty);
         }
 
+        public void StartGame()
+        {
+            musicUnity.Play();
+            lightSystem.TurnOn();
+        }
+
+        public void StopGame()
+        {
+            lightSystem.TurnOff();
+        }
+
+        public uint GetScore(ref float addMoney, ref float addPositiveComments, ref float passTimeRate)
+        {
+            addMoney = money;
+            addPositiveComments = positiveComment;
+            passTimeRate = timeRate;
+
+            return result;
+        }
+
 
         // Start is called before the first frame update
         void Start()
         { 
-            NoteBoardFrom = transform.Find("NoteFrom").gameObject;
-            NoteBoardTo = transform.Find("NoteTo").gameObject;
-            NoteBoardCheck = transform.Find("NoteCheck").gameObject;
-            EffectNormal = transform.Find("effectNormal").gameObject;
-            EffectPerfect = transform.Find("effectPerfect").gameObject;
-            EffectShootPerfect = transform.Find("effectShootPerfect").gameObject;
-            EffectShootNormal = transform.Find("effectShootNormal").gameObject;
-            EffectShootFail = transform.Find("effectShootFail").gameObject;
-            Cans[0] = transform.Find("canL").gameObject;
-            Cans[1] = transform.Find("canU").gameObject;
-            Cans[2] = transform.Find("canR").gameObject;
-            tempoBox = transform.Find("TempoBox").gameObject.GetComponent<TempoBox>();
-            manholeCover = transform.Find("ManholeCover").gameObject.GetComponent<ManholeCover>();
-            lightSystem = transform.Find("Light").gameObject.GetComponent<TrashShootingLight>();
+            //NoteBoardFrom = transform.Find("NoteFrom").gameObject;
+            //NoteBoardTo = transform.Find("NoteTo").gameObject;
+            //NoteBoardCheck = transform.Find("NoteCheck").gameObject;
+            //EffectNormal = transform.Find("effectNormal").gameObject;
+            //EffectPerfect = transform.Find("effectPerfect").gameObject;
+            //EffectShootPerfect = transform.Find("effectShootPerfect").gameObject;
+            //EffectShootNormal = transform.Find("effectShootNormal").gameObject;
+            //EffectShootFail = transform.Find("effectShootFail").gameObject;
+            //Cans[0] = transform.Find("canL").gameObject;
+            //Cans[1] = transform.Find("canU").gameObject;
+            //Cans[2] = transform.Find("canR").gameObject;
+            //tempoBox = transform.Find("TempoBox").gameObject.GetComponent<TempoBox>();
+            //manholeCover = transform.Find("ManholeCover").gameObject.GetComponent<ManholeCover>();
+            //lightSystem = transform.Find("Light").gameObject.GetComponent<TrashShootingLight>();
             //scoreBoard = transform.Find("ScoreBoard").gameObject.GetComponent<TrashShootingScore>();
 
             EffectNormal.GetComponent<Renderer>().enabled = false;
@@ -260,13 +289,16 @@ namespace TrashShooting
 
         void Update()
         {
-            UnityEngine.Debug.LogFormat("MusicalTime {0}",
-                           musicUnity.MusicalTime
-                           );
+            //UnityEngine.Debug.LogFormat("MusicalTime {0}",
+            //               musicUnity.MusicalTime
+            //               );
 
             if (musicUnity.State == Music.PlayState.Finished)
             {
                 // Music finished
+                money = Mathf.RoundToInt(hitNotes / 100);
+                positiveComment = 10 + hitNotes / noteCount / 5;//0-30
+                result = (uint)Mathf.CeilToInt(hitNotes / noteCount / 20); //0-5 stars
                 IsFinished = true;
             }
             else if(musicUnity.State == Music.PlayState.Playing)
@@ -281,8 +313,13 @@ namespace TrashShooting
                     float missRate = (float)statics.miss / (float)statics.notes;
                     float hitRate = (float)statics.perfect / (float)statics.notes + (float)statics.normal / (float)statics.notes;
                     float maxCombo = statics.maxCombo;
+                    noteCount += statics.notes;
+                    hitNotes += statics.perfect + statics.normal;
+                    perfectNotes += statics.perfect;
+                    this.maxCombo = Mathf.Max(maxCombo, this.maxCombo);
 
-                    if(hitRate >=0.8 && musicInfo.curDifficulty != MusicInfo.EDifficulty.Hard)
+
+                    if(hitRate >=0.7 && musicInfo.curDifficulty != MusicInfo.EDifficulty.Hard)
                     {
                         nextDifficulty++;
                     }

@@ -8,29 +8,39 @@ namespace TrashShooting
     public class TrashShootingLight : MonoBehaviour
     {
 
-        Light2D ColorLight = null;
-        Light2D WhiteLight = null;
-        Light2D FalloutLight = null;
-        Animator LightL = null;
-        Animator LightU = null;
-        Animator LightR = null;
+        [SerializeField]Light2D ColorLight = null;
+        [SerializeField]Light2D WhiteLight = null;
+        [SerializeField]Light2D FalloutLight = null;
+        [SerializeField]Animator LightL = null;
+        [SerializeField] Animator LightU = null;
+        [SerializeField] Animator LightR = null;
 
         MusicInfo.EDifficulty eDifficulty = MusicInfo.EDifficulty.Easy;
         // Start is called before the first frame update
         void Start()
         {
-            ColorLight = GetComponent<Light2D>();
-            WhiteLight = transform.Find("LightWhite").GetComponent<Light2D>();
-            FalloutLight = transform.Find("LightFallout").GetComponent<Light2D>();
-            LightL = transform.Find("TargetLightL").GetComponent<Animator>();
-            LightU = transform.Find("TargetLightU").GetComponent<Animator>();
-            LightR = transform.Find("TargetLightR").GetComponent<Animator>();
+            //ColorLight = GetComponent<Light2D>();
+            //WhiteLight = transform.Find("LightWhite").GetComponent<Light2D>();
+            //FalloutLight = transform.Find("LightFallout").GetComponent<Light2D>();
+            //LightL = transform.Find("TargetLightL").GetComponent<Animator>();
+            //LightU = transform.Find("TargetLightU").GetComponent<Animator>();
+            //LightR = transform.Find("TargetLightR").GetComponent<Animator>();
         }
 
         // Update is called once per frame
         void Update()
         {
 
+        }
+
+        public void TurnOn()
+        {
+            ColorLight.gameObject.GetComponent<Animator>().SetBool("Playing", true);
+        }
+
+        public void TurnOff()
+        {
+            ColorLight.gameObject.GetComponent<Animator>().SetBool("Playing", false);
         }
 
         public void SetDifficulty(MusicInfo.EDifficulty difficulty)
