@@ -17,14 +17,20 @@ public class DeliveryPersonFallGameManager : MonoBehaviour
     public Camera mainCamera;
     public AnimEventHandler animEventHandler;
     public Animator animator;
+    public DeliveryPersonFallAnimMgr animMgr;
+    public DeliveryPersonFallHUD hud;
 
     bool catchCargo = false;
     bool catchExpensiveCargo = false;
     ReactiveProperty<int> cargoFallCountProp = new(0);
     int curLevelIndex = 0;
+    int cargoCatchCount = 0;
+    bool yellow;
+    ReactiveProperty<int> heartCountProp = new(3);
 
     private void Awake()
     {
+        cargoCatchCount = 0;
         hand.cam = mainCamera;
         hand.CatchCargo.Subscribe(cargo =>
         {
@@ -43,12 +49,20 @@ public class DeliveryPersonFallGameManager : MonoBehaviour
                 return;
             hand.SetMovable(false);
             await UniTask.Delay(TimeSpan.FromSeconds(2f));
-            resultMenu.Show(catchCargo, catchExpensiveCargo, levelNameList[curLevelIndex]);
+            if (catchExpensiveCargo)
+            {
+                cargoCatchCount++;
+            }  
+            else
+            {
+                heartCountProp.Value--;
+            }
+            resultMenu.Show(catchCargo, catchExpensiveCargo, levelNameList[curLevelIndex], yellow, heartCountProp.Value);
         }).AddTo(this);
         resultMenu.OnHideFinished.Subscribe(async _ =>
         {
             Reset();
-            if (curLevelIndex == levelNameList.Count - 1)
+            if (heartCountProp.Value == 0 || curLevelIndex == levelNameList.Count - 1)
                 GameFinished();
             else
             {
@@ -68,6 +82,7 @@ public class DeliveryPersonFallGameManager : MonoBehaviour
                 Launch();
             }
         }).AddTo(this);
+        hud.SetHeartCountObservable(heartCountProp);
     }
 
     private void Start()
@@ -78,12 +93,15 @@ public class DeliveryPersonFallGameManager : MonoBehaviour
 
     public void StartGame()
     {
+        heartCountProp.Value = 3;
         tutorialMenu.ShowMenu();
     }
 
     async UniTaskVoid StartLevel()
     {
         hand.SetMovable(true);
+        yellow = UnityEngine.Random.Range(0, 2) == 0;
+        animMgr.SetYellow(yellow);
         await UniTask.Delay(TimeSpan.FromSeconds(1f));
         animator.SetTrigger("Play");
     }
@@ -108,6 +126,7 @@ public class DeliveryPersonFallGameManager : MonoBehaviour
 
     void GameFinished()
     {
-
+        GameLogicManager gameLogicMgrInstance = GameLogicManager.Instance;
+        gameLogicMgrInstance.OnMiniGameFinished(gameLogicMgrInstance.gameData.money, gameLogicMgrInstance.gameData.positiveComment + cargoCatchCount);
     }
 }

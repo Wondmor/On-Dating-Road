@@ -47,3 +47,9 @@ TagManager:
   - name: UI
     uniqueID: 1072650481
     locked: 0
+  - name: CloseView
+    uniqueID: 3422668745
+    locked: 0
+  - name: MidView
+    uniqueID: 2975270125
+    locked: 0

@@ -2,21 +2,72 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static TrashShooting.TrashShootingScore;
+using static UnityEngine.GraphicsBuffer;
 
 namespace TrashShooting
 {
     public class TrashShootingScore : MonoBehaviour
     {
+        [SerializeField] SpriteRenderer[] HappyBins = null;
+        [SerializeField] SpriteRenderer[] AngryBins = null;
 
         const float c_UnitScore = 100.0f;
         const float c_PerfectMulti = 1.5f;
-        RollingNumberText[] scoreTexts = { null, null, null };
-        RollingNumberText comboText = null;
+        RollingNumberImage scoreImage = null;
+        RollingNumberImage comboImage = null;
 
         float[] scores = { 0.0f, 0.0f, 0.0f };
-        int combo = 0;
+        float score = 0;
+        float combo = 0;
 
+        float[] HappyEmojiDeadline = { -1.0f, -1.0f, -1.0f };
+        float[] AngryEmojiDeadline = { -1.0f, -1.0f, -1.0f };
 
+        public struct ScoreStatic
+        {
+            public uint maxCombo;
+            public uint notes;
+            public uint perfect;
+            public uint normal;
+            public uint miss;
+            public uint[] perfects;
+            public uint[] normals;
+            public uint[] misses;
+
+        }
+
+        List<ScoreStatic> scoreStatics {  get; set; }
+        ScoreStatic curStatics = new ScoreStatic
+        {
+            maxCombo = 0,
+            notes = 0,
+            perfect = 0,
+            normal = 0,
+            miss = 0,
+            perfects = new uint[4] { 0, 0, 0, 0 },
+            normals = new uint[4] { 0, 0, 0, 0 },
+            misses = new uint[4] { 0, 0, 0, 0 }
+        };
+
+        //
+        public ScoreStatic PhaseEnd()
+        {
+            scoreStatics.Add(curStatics);
+
+            curStatics = new ScoreStatic
+            {
+                maxCombo = 0,
+                notes = 0,
+                perfect = 0,
+                normal = 0,
+                miss = 0,
+                perfects = new uint[4] { 0, 0, 0, 0 },
+                normals = new uint[4] { 0, 0, 0, 0 },
+                misses = new uint[4] { 0, 0, 0, 0 }
+            };
+            return scoreStatics[scoreStatics.Count - 1];
+        }
 
 
 
@@ -42,27 +93,53 @@ namespace TrashShooting
                 {
                     var addScore = GetComboMulti(combo) * c_UnitScore;
                     if (bPerfect)
+                    {
                         addScore *= c_PerfectMulti;
 
-                    SetScoreToText(scores[_target] + addScore, _target);
-                    SetComboToText(combo + 1);
+                        curStatics.perfect++;
+                        curStatics.perfects[_target]++;
+                        curStatics.notes++;
+                    }
+                    else
+                    {
+                        curStatics.normal++;
+                        curStatics.normals[_target]++;
+                        curStatics.notes++;
+                    }
+
+                    SetEmoji(_target, true);
+                    SetScore(score + addScore);
+                    SetCombo(combo + 1);
                 }
             }
             else
             {
-                SetComboToText(0);
+                curStatics.miss++;
+                curStatics.misses[_target]++;
+                curStatics.notes++;
+
+                SetEmoji(_target, false);
+                SetCombo(0);
             }
 
         }
 
         public void Miss(int _target)
         {
-            SetComboToText(0);
+            curStatics.miss++;
+            curStatics.misses[_target]++;
+            curStatics.notes++;
+
+            SetCombo(0);
         }
 
         public void TrapPerfect()
         {
-            SetComboToText(combo + 1);
+            curStatics.miss++;
+            curStatics.misses[3]++;
+            curStatics.notes++;
+
+            SetCombo(combo + 1);
         }
 
 
@@ -70,61 +147,76 @@ namespace TrashShooting
         // Start is called before the first frame update
         void Start()
         {
-            scoreTexts[0] = transform.Find("left").GetComponent<RollingNumberText>();
-            scoreTexts[1] = transform.Find("up").GetComponent<RollingNumberText>();
-            scoreTexts[2] = transform.Find("right").GetComponent<RollingNumberText>();
-            comboText = transform.Find("combo").GetComponent<RollingNumberText>();
+            scoreImage = transform.Find("rollingScore").GetComponent<RollingNumberImage>();
+            comboImage = transform.Find("rollingCombo").GetComponent<RollingNumberImage>();
 
-            SetScoreToText(scores[0], 0);
-            SetScoreToText(scores[1], 1);
-            SetScoreToText(scores[2], 2);
-            SetComboToText(0);
+            SetScore(score);
+            SetCombo(0);
+
+            for(int i = 0; i < 3; ++i)
+            {
+                HappyBins[i].gameObject.SetActive(false);
+                AngryBins[i].gameObject.SetActive(false);
+            }
+
+            scoreStatics = new List<ScoreStatic>();
         }
 
         // Update is called once per frame
         void Update()
         {
-
+            UpdateEmojiState();
         }
 
-        float GetComboMulti(int _combo)
+        float GetComboMulti(float _combo)
         {
             return Mathf.Clamp(_combo, 0.0f, 500.0f) / 100.0f + 1.0f; // [0,5]
         }
 
-        void SetComboToText(int _combo)
+        void SetScore(float _score)
         {
-            var oldCombo = combo;
-            combo = _combo;
-
-
-            iTween.ValueTo(comboText.gameObject, iTween.Hash(
-                "from", oldCombo,
-                "to", combo,
-                "time", Mathf.Pow((Mathf.Abs(combo-oldCombo)/100.0f), 0.5f),
-                "onupdate", "UpdateValue",
-                "onupdatetarget", comboText.gameObject,
-                "easetype", iTween.EaseType.linear
-            ));
+            linearValue(ref score, _score, scoreImage.gameObject);
         }
 
-        void SetScoreToText(float _score, int _target)
+        void SetCombo(float _combo)
         {
-            if (_target >= 0)
+            curStatics.maxCombo = Mathf.RoundToInt(_combo) > curStatics.maxCombo ? (uint)Mathf.RoundToInt(_combo) : curStatics.maxCombo;
+            linearValue(ref combo, _combo, comboImage.gameObject);
+        }
+
+        void SetEmoji(int _target, bool bHappy)
+        {
+            const float c_lastTime = 1.0f;
+            if (bHappy)
+                HappyEmojiDeadline[_target] = Time.time + c_lastTime;
+            else
+                AngryEmojiDeadline[_target] = Time.time + c_lastTime;            
+        }
+
+        void UpdateEmojiState()
+        {
+            for(int i = 0; i < 3; ++i)
             {
-                var oldScore = scores[_target];
-                scores[_target] = _score;
-
-
-                iTween.ValueTo(scoreTexts[_target].gameObject, iTween.Hash(
-                    "from", oldScore,
-                    "to", scores[_target],
-                    "time", Mathf.Pow((Mathf.Abs(scores[_target] - oldScore) / 100.0f), 0.5f),
-                    "onupdate", "UpdateValue",
-                    "onupdatetarget", scoreTexts[_target].gameObject,
-                    "easetype", iTween.EaseType.linear
-                )); 
+                HappyBins[i].gameObject.SetActive(HappyEmojiDeadline[i] >= Time.time);
+                AngryBins[i].gameObject.SetActive(AngryEmojiDeadline[i] >= Time.time);
             }
+            
+        }
+
+        void linearValue(ref float target, float value, GameObject go)
+        {
+            var oldValue = target;
+            target = value;
+
+
+            iTween.ValueTo(go, iTween.Hash(
+                "from", oldValue,
+                "to", target,
+                "time", Mathf.Pow((Mathf.Abs(target - oldValue) / 100.0f), 0.5f),
+                "onupdate", "UpdateValue",
+                "onupdatetarget", go,
+                "easetype", iTween.EaseType.linear
+            ));
         }
     }
 

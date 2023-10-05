@@ -875,7 +875,7 @@ MonoBehaviour:
   - {fileID: 3522710534704503355, guid: e3fddef808b59c14991172def4fb07e2, type: 3}
   - {fileID: 3522710534704503355, guid: a72c32d5dcb1655408d3570ade5a2411, type: 3}
   roadHeight: 10.7
-  normalGrassHeight: 5.1
+  normalGrassHeight: 5.349
   totalDistance: 200
   nearFinishline: 15
   itemUpdateFrequency: 5

@@ -27,7 +27,6 @@ public class DeliveryPersonFallGround : MonoBehaviour
                 GameObject other = c.gameObject;
                 if (cargoGOList.Contains(other))
                     return false;
-                BoxCollider2D boxCollider2D = other.GetComponent<BoxCollider2D>();
                 string otherLayerName = LayerMask.LayerToName(other.layer);
                 bool isDeliveryCargo = otherLayerName.StartsWith("DeliveryPerson");
                 return isDeliveryCargo;
@@ -35,12 +34,14 @@ public class DeliveryPersonFallGround : MonoBehaviour
             .Subscribe(c =>
             {
                 GameObject other = c.gameObject;
+                BoxCollider2D boxCollider2D = other.GetComponent<BoxCollider2D>();
                 Rigidbody2D otherRigid = other.GetComponent<Rigidbody2D>();
                 FixedJoint2D fixedJoint2D = other.GetComponent<FixedJoint2D>();
                 fixedJoint2D.connectedBody = rigid;
                 fixedJoint2D.enabled = true;
                 cargoGOList.Add(other);
                 catchCargo.OnNext(cargoGOList.Count);
+                boxCollider2D.enabled = false;
             }).AddTo(this);
     }
 
