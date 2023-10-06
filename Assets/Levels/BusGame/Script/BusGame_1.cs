@@ -16,6 +16,10 @@ public class BusGame_1 : MonoBehaviour
     public Image countTime;
     Sprite newSprite;
 
+    public AudioSource backgroundMusic;
+    public AudioSource selectAudio;
+    public AudioSource countAudio;
+    public AudioSource confirmAudio;
 
     //int playerScore = Score.playerScore;
 
@@ -40,9 +44,10 @@ public class BusGame_1 : MonoBehaviour
         pass = true;
         currentTime = totalTime;
 
-        
-
-
+        backgroundMusic.Stop();
+        selectAudio.Stop();
+        countAudio.Stop();
+        confirmAudio.Stop();
     }
 
     void Start()
@@ -51,6 +56,7 @@ public class BusGame_1 : MonoBehaviour
         {
             availableNumbers.Add(i);
         }
+        backgroundMusic.Play();
     }
 
     void Update()
@@ -59,7 +65,7 @@ public class BusGame_1 : MonoBehaviour
 
         if(currentTime<=0)
         {
-            Debug.Log("fail");
+            No();
         }
         if(pass)
         {
@@ -107,6 +113,7 @@ public class BusGame_1 : MonoBehaviour
     {
         yield return new WaitForSeconds(1f);
         child[0].SetActive(true);
+        
         Debug.Log("Plot_1");
         flowchart.ExecuteBlock("Plot_1");
         /*
@@ -127,12 +134,14 @@ public class BusGame_1 : MonoBehaviour
 
         yield return new WaitForSeconds(1f);
         choice.SetActive(true);
+        countAudio.Play();
 
     }
 
      IEnumerator Plot_2()
      {
         yield return new WaitForSeconds(1f);
+        
         Debug.Log("Plot_2");
         child[1].SetActive(true);
         Transform transform = child[1].transform;
@@ -141,7 +150,7 @@ public class BusGame_1 : MonoBehaviour
 
         yield return new WaitForSeconds(1f);
         choice.SetActive(true);
-
+        countAudio.Play();
 
         while (true)
         {
@@ -183,48 +192,58 @@ public class BusGame_1 : MonoBehaviour
      IEnumerator Plot_3()
      {
         yield return new WaitForSeconds(1f);
+
         Debug.Log("Plot_3");
         child[2].SetActive(true);
         flowchart.ExecuteBlock("Plot_3");
 
         yield return new WaitForSeconds(1f);
         choice.SetActive(true);
+        countAudio.Play();
      }
      IEnumerator Plot_4()
      {
         yield return new WaitForSeconds(1f);
+
         Debug.Log("Plot_4");
         child[3].SetActive(true);
         flowchart.ExecuteBlock("Plot_4");
 
         yield return new WaitForSeconds(1f);
         choice.SetActive(true);
+        countAudio.Play();
      }
      IEnumerator Plot_5()
      {
         yield return new WaitForSeconds(1f);
+
         Debug.Log("Plot_5");
         child[4].SetActive(true);
         flowchart.ExecuteBlock("Plot_5");
 
         yield return new WaitForSeconds(1f);
         choice.SetActive(true);
+        countAudio.Play();
      }
      IEnumerator Plot_6()
      {
         yield return new WaitForSeconds(1f);
+
         Debug.Log("Plot_6");
         child[5].SetActive(true);
         flowchart.ExecuteBlock("Plot_6");
 
         yield return new WaitForSeconds(1f);
         choice.SetActive(true);
+        countAudio.Play();
      }
 
     
     public void Yes()
     {
         Debug.Log("Yes");
+        countAudio.Stop();
+        confirmAudio.Play();
         choice.SetActive(false);
         for(int i=0 ; i<=5 ; i++)
         {
@@ -244,6 +263,8 @@ public class BusGame_1 : MonoBehaviour
     public void No()
     {
         Debug.Log("No");
+        countAudio.Stop();
+        confirmAudio.Play();
         choice.SetActive(false);
         
         string targetSceneName = "BusGame_Fail";
