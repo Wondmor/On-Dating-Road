@@ -8,6 +8,7 @@ using UnityEngine.UI;
 
 public class SwitchPicturePlayable : BasicPlayableBehaviour
 {
+    public override double duration => 1 / 300.0f;
     [Header("换图片")]
     public ExposedReference<Image> target;
     public Sprite sprite;
