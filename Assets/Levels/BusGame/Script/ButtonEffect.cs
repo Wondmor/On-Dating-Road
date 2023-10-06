@@ -22,14 +22,23 @@ public class ButtonEffect : MonoBehaviour
     public Sprite noBefore;
     public Sprite noAfter;
 
+    public AudioSource selectAudio;
+
+    private Vector3 mousePastPosition;
+    void Start()
+    {
+        selectAudio.Stop();
+    }
     public void Update()
     {
         Vector3 mouseScreenPosition = Input.mousePosition;
 
         Vector3 mouseWorldPosition = mainCamera.ScreenToWorldPoint(mouseScreenPosition);
 
+
         if(mouseWorldPosition.x > 1)
         {
+            
             
             if (yesRectTransform != null)
             {
@@ -41,6 +50,7 @@ public class ButtonEffect : MonoBehaviour
                 yesRectTransform.sizeDelta = sizeDelta;
 
                 yesImage.sprite = yesAfter;
+
             }
             if (noRectTransform != null)
             {
@@ -81,7 +91,18 @@ public class ButtonEffect : MonoBehaviour
                 noImage.sprite = noAfter;
             }
         }
-        
+
+
+        if(mouseWorldPosition.x > 1 && mousePastPosition.x < 1)
+        {
+            selectAudio.Play();
+        }
+        if(mouseWorldPosition.x < 1 && mousePastPosition.x > 1)
+        {
+            selectAudio.Play();
+        }
+
+        mousePastPosition = mouseWorldPosition;
     }
 
 

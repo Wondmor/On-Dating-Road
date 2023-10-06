@@ -16,6 +16,10 @@ public class BusGame_1 : MonoBehaviour
     public Image countTime;
     Sprite newSprite;
 
+    public AudioSource backgroundMusic;
+    public AudioSource selectAudio;
+    public AudioSource countAudio;
+    public AudioSource confirmAudio;
 
     //int playerScore = Score.playerScore;
 
@@ -36,8 +40,23 @@ public class BusGame_1 : MonoBehaviour
 
     void Awake()
     {
-        StartCoroutine(Plot_1());
+        //StartCoroutine(Plot_1());
+        pass = true;
         currentTime = totalTime;
+
+        backgroundMusic.Stop();
+        selectAudio.Stop();
+        countAudio.Stop();
+        confirmAudio.Stop();
+    }
+
+    void Start()
+    {
+        for (int i = 1; i <= 6; i++)
+        {
+            availableNumbers.Add(i);
+        }
+        backgroundMusic.Play();
     }
 
     void Update()
@@ -46,13 +65,13 @@ public class BusGame_1 : MonoBehaviour
 
         if(currentTime<=0)
         {
-            Debug.Log("fail");
+            No();
         }
         if(pass)
         {
             currentTime = totalTime;
             pass = false;
-            level += 1;
+            level = GetUniqueRandomNumber();
             switch (level)
             {
                 case 1:
@@ -94,6 +113,7 @@ public class BusGame_1 : MonoBehaviour
     {
         yield return new WaitForSeconds(1f);
         child[0].SetActive(true);
+        
         Debug.Log("Plot_1");
         flowchart.ExecuteBlock("Plot_1");
         /*
@@ -114,12 +134,14 @@ public class BusGame_1 : MonoBehaviour
 
         yield return new WaitForSeconds(1f);
         choice.SetActive(true);
+        countAudio.Play();
 
     }
 
      IEnumerator Plot_2()
      {
         yield return new WaitForSeconds(1f);
+        
         Debug.Log("Plot_2");
         child[1].SetActive(true);
         Transform transform = child[1].transform;
@@ -128,7 +150,7 @@ public class BusGame_1 : MonoBehaviour
 
         yield return new WaitForSeconds(1f);
         choice.SetActive(true);
-
+        countAudio.Play();
 
         while (true)
         {
@@ -170,48 +192,58 @@ public class BusGame_1 : MonoBehaviour
      IEnumerator Plot_3()
      {
         yield return new WaitForSeconds(1f);
+
         Debug.Log("Plot_3");
         child[2].SetActive(true);
         flowchart.ExecuteBlock("Plot_3");
 
         yield return new WaitForSeconds(1f);
         choice.SetActive(true);
+        countAudio.Play();
      }
      IEnumerator Plot_4()
      {
         yield return new WaitForSeconds(1f);
+
         Debug.Log("Plot_4");
         child[3].SetActive(true);
         flowchart.ExecuteBlock("Plot_4");
 
         yield return new WaitForSeconds(1f);
         choice.SetActive(true);
+        countAudio.Play();
      }
      IEnumerator Plot_5()
      {
         yield return new WaitForSeconds(1f);
+
         Debug.Log("Plot_5");
         child[4].SetActive(true);
         flowchart.ExecuteBlock("Plot_5");
 
         yield return new WaitForSeconds(1f);
         choice.SetActive(true);
+        countAudio.Play();
      }
      IEnumerator Plot_6()
      {
         yield return new WaitForSeconds(1f);
+
         Debug.Log("Plot_6");
         child[5].SetActive(true);
         flowchart.ExecuteBlock("Plot_6");
 
         yield return new WaitForSeconds(1f);
         choice.SetActive(true);
+        countAudio.Play();
      }
 
     
     public void Yes()
     {
         Debug.Log("Yes");
+        countAudio.Stop();
+        confirmAudio.Play();
         choice.SetActive(false);
         for(int i=0 ; i<=5 ; i++)
         {
@@ -220,8 +252,9 @@ public class BusGame_1 : MonoBehaviour
         Score.playerScore += 1;
         Debug.Log(Score.playerScore);
         pass = true;
-        if(Score.playerScore >= 6)
+        if(Score.playerScore >= 3)
         {
+            pass = false;
             string targetSceneName = "BusGame_Success";
             StartCoroutine(levelLoader.LoadLevelByName(targetSceneName));
         }
@@ -230,9 +263,29 @@ public class BusGame_1 : MonoBehaviour
     public void No()
     {
         Debug.Log("No");
+        countAudio.Stop();
+        confirmAudio.Play();
         choice.SetActive(false);
         
         string targetSceneName = "BusGame_Fail";
         StartCoroutine(levelLoader.LoadLevelByName(targetSceneName));
+    }
+
+
+    private List<int> availableNumbers = new List<int>();
+    private System.Random random = new System.Random();
+
+    int GetUniqueRandomNumber()
+    {
+        if (availableNumbers.Count == 0)
+        {
+            Debug.LogWarning("没有可用的随机数了！");
+            return -1; // 表示没有可用的数字
+        }
+
+        int index = random.Next(availableNumbers.Count); // 从可用数字中随机选择一个索引
+        int randomNumber = availableNumbers[index]; // 获取随机数字
+        availableNumbers.RemoveAt(index); // 从列表中移除已使用的数字
+        return randomNumber;
     }
 }

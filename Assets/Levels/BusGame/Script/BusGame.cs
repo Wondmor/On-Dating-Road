@@ -11,13 +11,14 @@ public class BusGame : MonoBehaviour
     public DialogBoxController dialogBoxController;
     public GameObject background;
 
+    public AudioSource backgroundMusic;
 
 
     void Awake()
     {
         
         //StartCoroutine(BusGamePlot());
-        
+        backgroundMusic.Play();
     }
 
     void Update()
