@@ -1,0 +1,94 @@
+{
+    "items": [
+        {
+            "name": "奥特曼",
+            "desc": "嗯？我一直都相信光……",
+            "count": 1,
+            "sprite": "奥特曼大",
+            "small_sprite": "奥特曼小",
+            "show": true,
+            "finish": false
+        },
+        {
+            "name": "指环",
+            "desc": "嗯？My precious……",
+            "count": 1,
+            "sprite": "指环大",
+            "small_sprite": "指环小",
+            "show": true,
+            "finish": false
+        },
+        {
+            "name": "诺基亚",
+            "desc": "嗯？屏幕上写着“有内鬼，终止交易”",
+            "count": 1,
+            "sprite": "诺基亚大",
+            "small_sprite": "诺基亚小",
+            "show": true,
+            "finish": false
+        },
+        {
+            "name": "如来神掌",
+            "desc": "嗯？难道我是百年一遇的练武奇才？",
+            "count": 1,
+            "sprite": "如来神掌大",
+            "small_sprite": "如来神掌小",
+            "show": true,
+            "finish": false
+        },
+        {
+            "name": "水浒卡",
+            "desc": "嗯？小时候缺的就是这一张……",
+            "count": 1,
+            "sprite": "水浒卡大",
+            "small_sprite": "水浒卡小",
+            "show": true,
+            "finish": false
+        },
+        {
+            "name": "小强",
+            "desc": "嗯？小强……你死了吗？",
+            "count": 1,
+            "sprite": "小强大",
+            "small_sprite": "小强小",
+            "show": true,
+            "finish": false
+        },
+        {
+            "name": "一元",
+            "desc": "嗯？竟然是立在地上的，这种或然率几乎是零……",
+            "count": 5,
+            "sprite": "一元大",
+            "small_sprite": "一元小",
+            "show": false,
+            "finish": false
+        },
+        {
+            "name": "月光宝盒",
+            "desc": "嗯？随便乱扔的话砸到花花草草也不好啊……",
+            "count": 1,
+            "sprite": "月光宝盒大",
+            "small_sprite": "月光宝盒小",
+            "show": true,
+            "finish": false
+        },
+        {
+            "name": "钱包",
+            "desc": "太好了！找到钱包了",
+            "count": 1,
+            "sprite": "钱包大",
+            "small_sprite": "钱包小",
+            "show": true,
+            "finish": true
+        },
+        {
+            "name": "车钥匙",
+            "desc": "太好了！找到车钥匙了",
+            "count": 1,
+            "sprite": "车钥匙大",
+            "small_sprite": "车钥匙小",
+            "show": true,
+            "finish": true
+        }
+    ]
+}
