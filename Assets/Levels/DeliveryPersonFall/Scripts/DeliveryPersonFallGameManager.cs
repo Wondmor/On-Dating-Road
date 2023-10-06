@@ -14,11 +14,15 @@ public class DeliveryPersonFallGameManager : MonoBehaviour
     public DeliveryPersonFallGround ground;
     public DeliveryPersonFallTutorialMenu tutorialMenu;
     public DeliveryPersonFallResultMenu resultMenu;
+    public DeliveryPersonFallGameResultMenu gameResultMenu;
+    public CommonSelection commonSelection;
     public Camera mainCamera;
     public AnimEventHandler animEventHandler;
     public Animator animator;
     public DeliveryPersonFallAnimMgr animMgr;
     public DeliveryPersonFallHUD hud;
+    public GameObject bgGO;
+    public AudioSource audioSource;
 
     bool catchCargo = false;
     bool catchExpensiveCargo = false;
@@ -58,12 +62,15 @@ public class DeliveryPersonFallGameManager : MonoBehaviour
                 heartCountProp.Value--;
             }
             resultMenu.Show(catchCargo, catchExpensiveCargo, levelNameList[curLevelIndex], yellow, heartCountProp.Value);
+            audioSource.Stop();
         }).AddTo(this);
         resultMenu.OnHideFinished.Subscribe(async _ =>
         {
             Reset();
             if (heartCountProp.Value == 0 || curLevelIndex == levelNameList.Count - 1)
-                GameFinished();
+            {
+                gameResultMenu.gameObject.SetActive(true);
+            }
             else
             {
                 curLevelIndex++;
@@ -83,18 +90,40 @@ public class DeliveryPersonFallGameManager : MonoBehaviour
             }
         }).AddTo(this);
         hud.SetHeartCountObservable(heartCountProp);
+        gameResultMenu.OnHideFinished.Subscribe(_ =>
+        {
+            GameFinished();
+        }).AddTo(this);
     }
 
     private void Start()
     {
         tutorialMenu.gameObject.SetActive(false);
         resultMenu.gameObject.SetActive(false);
+        gameResultMenu.gameObject.SetActive(false);
+        commonSelection.gameObject.SetActive(false);
+        bgGO.gameObject.SetActive(true);
     }
 
     public void StartGame()
     {
-        heartCountProp.Value = 3;
-        tutorialMenu.ShowMenu();
+        commonSelection.gameObject.SetActive(true);
+        commonSelection.ShowChoice();
+    }
+
+    public void SelectionResult(bool help)
+    {
+        bgGO.gameObject.SetActive(false);
+        commonSelection.gameObject.SetActive(false);
+        if (help)
+        {
+            heartCountProp.Value = 3;
+            tutorialMenu.ShowMenu();
+        }
+        else
+        {
+            GameFinished();
+        }
     }
 
     async UniTaskVoid StartLevel()
@@ -104,6 +133,7 @@ public class DeliveryPersonFallGameManager : MonoBehaviour
         animMgr.SetYellow(yellow);
         await UniTask.Delay(TimeSpan.FromSeconds(1f));
         animator.SetTrigger("Play");
+        audioSource.Play();
     }
 
     public void Launch()

@@ -27,8 +27,9 @@ namespace TrashShooting
     public class Trash : MonoBehaviour
     {
 
+        [SerializeField] public Sprite escape;
         [SerializeField] public ETrashType type;
-        public float pos = 0.0f;
+        public float unit = 0.0f;
         public bool Checked = false;
 
         // Start is called before the first frame update
@@ -174,6 +175,11 @@ namespace TrashShooting
                     }
                     
             }
+        }
+
+        public void OnEscape()
+        {
+            GetComponent<SpriteRenderer>().sprite = escape;
         }
 
         public void OnCompleteMethod()
