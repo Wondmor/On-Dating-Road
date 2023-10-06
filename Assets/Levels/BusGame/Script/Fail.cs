@@ -20,22 +20,22 @@ public class Fail : MonoBehaviour
             }
             case 1:
             {
-                image.sprite = sprites[0];
+                image.sprite = sprites[1];
                 break;
             }
             case 2:
             {
-                image.sprite = sprites[1];
+                image.sprite = sprites[2];
                 break;
             }
             case 3:
             {
-                image.sprite = sprites[1];
+                image.sprite = sprites[3];
                 break;
             }
             case 4:
             {   
-                image.sprite = sprites[2];
+                image.sprite = sprites[3];
                 break;
             }
             case 5:

@@ -500,7 +500,7 @@ MonoBehaviour:
   m_BlockingObjects: 0
   m_BlockingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 247
 --- !u!225 &64721150
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -937,7 +937,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ab2705b21552ef46b93e917631d0a0a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerScore: 0
 --- !u!4 &1091543509
 Transform:
   m_ObjectHideFlags: 0
@@ -1253,7 +1252,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: bdbd75268ffbf814199979870a5dd19e, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 54cadbdc7f06efe459b6f68999569091, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
