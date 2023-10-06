@@ -1,3 +1,4 @@
+using Fungus;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +17,7 @@ public class WalletGameControl
     {
         public WalletItemInfo[] items;
     }
+
 
     [Serializable]
     public struct WalletItemInfo
@@ -54,13 +56,16 @@ public class WalletGameControl
     WalletItem center, left, right, up, down;
 
     [SerializeField]
-    GameObject tiles, pickedItemPrefab, subtitle;
-
-    [SerializeField]
-    TextMeshProUGUI subtitleText;
+    GameObject tiles, pickedItemPrefab;
 
     [SerializeField]
     WalletFlowControl flowControl;
+
+    [SerializeField]
+    Flowchart flowchart;
+
+    [SerializeField]
+    AudioClip moveAudio, pickAudio;
 
     WalletItemInfos itemInfos;
     List<Sprite> itemSprites;
@@ -76,6 +81,9 @@ public class WalletGameControl
     int pickedCoin = 0;
 
     bool gamefinish = false;
+    bool gamePaused = false;
+
+    AudioSource sfx;
 
     // Start is called before the first frame update
     void Awake()
@@ -97,7 +105,7 @@ public class WalletGameControl
         SetTile();
         SetPickedItems();
 
-        subtitle.SetActive(false);
+        sfx = gameObject.AddComponent<AudioSource>();
     }
 
     void GenerateMap()
@@ -168,7 +176,7 @@ public class WalletGameControl
     // Update is called once per frame
     void Update()
     {
-        if (gamefinish)
+        if (gamefinish || gamePaused)
             return;
 
         if (GameManager.Instance.CommonInputAction.GetPerformedTypeThisFrame() == CommonInputAction.EType.Directions)
@@ -208,32 +216,42 @@ public class WalletGameControl
                     pickedCoin++;
                 }
                 currMap.picked = true;
-                SetTile();
-                SetPickedItems();
-            }
+                gamePaused = true;
 
-            // check if we got everything
-            int finishCnt = 0;
-            foreach(int item in itemsPicked)
-            {
-                if (itemInfos.items[item].finish)
-                {
-                    finishCnt++;
-                }
-            }
-
-            if(finishCnt > 0)
-            {
-                subtitle.SetActive(true);
-                subtitleText.text = "¸Ï½ô»¹¸øËû°É£¡";
-                gamefinish = true;
-                flowControl.Invoke("FinishGame", 1f);
+                flowchart.SetIntegerVariable("ItemType", currMap.itemType);
+                flowchart.ExecuteIfHasBlock("IngameItemNarrative");
             }
         }
     }
     public void TestMove(int d)
     {
         MoveTile((Direction)Random.Range(0, 4));
+    }
+
+    public void ItemPicked()
+    {
+        gamePaused = false;
+        SetTile();
+        SetPickedItems();
+        sfx.clip = pickAudio;
+        sfx.Play();
+
+        int finishCnt = 0;
+        foreach (int item in itemsPicked)
+        {
+            if (itemInfos.items[item].finish)
+            {
+                finishCnt++;
+            }
+        }
+
+
+        if (finishCnt == 2)
+        {
+            flowchart.StopAllBlocks();
+            flowchart.SetBooleanVariable("GameEnd", true);
+            flowchart.ExecuteIfHasBlock("IngameItemNarrative");
+        }
     }
 
     public void MoveTile(Direction direction)
@@ -244,6 +262,8 @@ public class WalletGameControl
         }
 
         isMoving = true;
+        sfx.clip = moveAudio;
+        sfx.Play();
 
         Vector3 position = Vector3.zero;
         switch (direction)
@@ -313,18 +333,6 @@ public class WalletGameControl
         SetupImageForMap(up, upCol, currentTileRow);
         SetupImageForMap(down, downCol, currentTileRow);
         tiles.transform.localPosition = Vector3.zero;
-
-
-        MapInfo mapInfo = map[currentTileCol, currentTileRow];
-        if (!mapInfo.picked && mapInfo.itemType != -1)
-        {
-            subtitle.SetActive(true);
-            subtitleText.text = itemInfos.items[mapInfo.itemType].desc;
-        }
-        else
-        {
-            subtitle.SetActive(false);
-        }
     }
 
     void SetupImageForMap(WalletItem mapItem, int col, int row)

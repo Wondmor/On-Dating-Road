@@ -1,3 +1,4 @@
+using Fungus;
 using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
@@ -26,10 +27,13 @@ public class SkewerGameController : MonoBehaviour
 
 
     [SerializeField]
-    TextMeshProUGUI NumberText, SubtitleText;
+    TextMeshProUGUI NumberText;
 
     [SerializeField]
     GameObject canvas, endCanvas, playGround, stickPrefab, meatPrefab, workingSelection, finishSelection;
+
+    [SerializeField]
+    Flowchart flowchart;
 
     [SerializeField]
     float margin;
@@ -134,11 +138,6 @@ public class SkewerGameController : MonoBehaviour
         switch (GameManager.Instance.CommonInputAction.GetPerformedTypeThisFrame())
         {
             case CommonInputAction.EType.Enter:
-                if (SubtitleText.text != "")
-                {
-                    SubtitleText.text = "";
-                    break;
-                }
                 PreventInput();
                 AddMeat();
                 break;
@@ -175,11 +174,11 @@ public class SkewerGameController : MonoBehaviour
     {
         if (start)
         {
-            SetGameStatus(GameStatus.MAIN);
+            flowchart.ExecuteIfHasBlock("GameInit");
         }
         else
         {
-            GameLogicManager.Instance.OnMiniGameFinished(0, 0);
+            GameLogicManager.Instance.OnMiniGameRefused();
         }
     }
 
@@ -210,14 +209,11 @@ public class SkewerGameController : MonoBehaviour
                 InitializeMainGame();
                 break;
             case GameStatus.FINISH:
-                endCanvas.SetActive(true);
-                playGround.SetActive(false);
-                Transform phone = endCanvas.transform.Find("Phone");
-                phone.GetComponentInChildren<TextMeshProUGUI>().text = string.Format("{0}.{1}\u5143", totalNumber * 5 / 10, totalNumber * 5 % 10);
-                iTween.MoveFrom(phone.gameObject, phone.position + Vector3.down * 1080, 1f);
-                timer.Add(() => { SetGameStatus(GameStatus.END); }, 1.5f);
+                flowchart.SetStringVariable("Money", string.Format("{0}.{1}\u5143", totalNumber * 5 / 10, totalNumber * 5 % 10));
+                flowchart.ExecuteIfHasBlock("GameEnd");
                 break;
             case GameStatus.END:
+                GameLogicManager.Instance.OnMiniGameFinished(totalNumber * 5 / 10, 0);
                 break;
             default:
                 Debug.Log("Wrong status?" + status.ToString());
@@ -245,7 +241,8 @@ public class SkewerGameController : MonoBehaviour
         if (stick.Type != SkewerStick.StickType.NORMAL)
         {
             // wrong stick
-            SubtitleText.text = ingameSubs[(int)IngameSubType.WRONG_STICK];
+            flowchart.SetStringVariable("IngameWord", ingameSubs[(int)IngameSubType.WRONG_STICK]);
+            flowchart.ExecuteIfHasBlock("Ingame");
             return;
         }
 
@@ -253,7 +250,8 @@ public class SkewerGameController : MonoBehaviour
             (stick.CurrentMeat % 2 == 1 && meats.First.Value.MeatType != SkewerMeat.Type.FAT))
         {
             // wrong meat
-            SubtitleText.text = ingameSubs[(int)IngameSubType.WRONG_MEAT];
+            flowchart.SetStringVariable("IngameWord", ingameSubs[(int)IngameSubType.WRONG_MEAT]);
+            flowchart.ExecuteIfHasBlock("Ingame");
             return;
         }
 

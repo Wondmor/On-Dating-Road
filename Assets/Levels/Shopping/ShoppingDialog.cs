@@ -61,6 +61,7 @@ public class ShoppingDialog : MonoBehaviour
     public void ShowGet(Sprite sprite, string name)
     {
         item.sprite = sprite;
+        item.SetNativeSize();
         moneyText.text = "";
         canvas.SetActive(true);
         notEnough.SetActive(false);

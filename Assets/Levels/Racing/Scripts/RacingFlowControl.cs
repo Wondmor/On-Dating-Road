@@ -23,6 +23,7 @@ public class RacingFlowControl : MonoBehaviour
     RacingTimer timerControl;
     RacingMapControl mapControl;
     RacingHealth healthControl;
+    RacingAudioControl audioControl;
     Timer timer;
 
     [SerializeField]
@@ -36,6 +37,8 @@ public class RacingFlowControl : MonoBehaviour
 
     GAME_STATUS status = GAME_STATUS.NONE;
 
+    FadeInOutScene fade;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -45,6 +48,7 @@ public class RacingFlowControl : MonoBehaviour
         mapControl = GetComponent<RacingMapControl>();
         timer = GetComponent<Timer>();
         healthControl = GetComponent<RacingHealth>();
+        audioControl = GetComponent<RacingAudioControl>();
 
         SetGameStatus(GAME_STATUS.INIT);
     }
@@ -77,12 +81,10 @@ public class RacingFlowControl : MonoBehaviour
                 ResetEverything();
                 playerControl.SetUpBikeType(GameManager.Instance.RacingData.BikeType);
                 //fade in
-                var fade = Instantiate(fadePrefab).GetComponent<FadeInOutScene>();
-                fade.fadeType = FadeInOutScene.EType.FadeIn;
-                fade.lastInSecond = 0.5f;
                 timer.Add(() =>
                 {
                     countdown.StartCountDown();
+                    audioControl.PlayCountDown();
                 }, 0.5f);
                 break;
             case GAME_STATUS.PAUSE:
@@ -92,10 +94,10 @@ public class RacingFlowControl : MonoBehaviour
                 GameManager.Instance.RacingData.Money = moneyControl.GetMoney();
                 GameManager.Instance.RacingData.TimeUsed = timerControl.GetTime();
                 GameManager.Instance.RacingData.RaceTime++;
-                timer.Add(() =>
-                {
-                    SceneManager.LoadScene("RacingFinish");
-                }, 1f);
+                fade = Instantiate(fadePrefab).GetComponent<FadeInOutScene>();
+                fade.fadeType = FadeInOutScene.EType.FadeOut;
+                fade.lastInSecond = 1f;
+                fade.FadeOut("RacingFinish");
                 break;
             case GAME_STATUS.START:
                 timerControl.StartCount();
@@ -105,8 +107,14 @@ public class RacingFlowControl : MonoBehaviour
                 // when dead set time and money into racing data
                 GameManager.Instance.RacingData.Money = moneyControl.GetMoney();
                 GameManager.Instance.RacingData.TimeUsed = timerControl.GetTime();
+                audioControl.BGMVolumeDown();
+                fade = Instantiate(fadePrefab).GetComponent<FadeInOutScene>();
+                fade.fadeType = FadeInOutScene.EType.FadeOut;
+                fade.lastInSecond = 1f;
+                fade.FadeOut("RacingSelection");
                 break;
             case GAME_STATUS.CROSS_LINE:
+                audioControl.BGMVolumeDown();
                 break;
         }
     }

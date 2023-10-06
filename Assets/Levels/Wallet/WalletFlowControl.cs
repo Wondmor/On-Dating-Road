@@ -1,6 +1,9 @@
 using Fungus;
 using System.Collections;
 using System.Collections.Generic;
+using System.Reflection.Emit;
+using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class WalletFlowControl : MonoBehaviour
@@ -10,6 +13,12 @@ public class WalletFlowControl : MonoBehaviour
 
     [SerializeField]
     CommonSelection preChoice, finishChoice;
+
+    [SerializeField]
+    TextMeshProUGUI phoneMoneyText;
+
+    [SerializeField]
+    Flowchart flowchart;
     // Start is called before the first frame update
     void Start()
     {
@@ -46,6 +55,7 @@ public class WalletFlowControl : MonoBehaviour
         mainGame.SetActive(false);
         preGame.SetActive(false);
         postGame.SetActive(true);
+        flowchart.ExecuteIfHasBlock("End");
     }
 
     public void ShowFinishChoice()
@@ -57,11 +67,25 @@ public class WalletFlowControl : MonoBehaviour
     {
         if(money)
         {
+            phoneMoneyText.text = "20\u5143";
             // show money
+            flowchart.ExecuteIfHasBlock("Money");
         }
         else
         {
+            
             // show car
+            flowchart.ExecuteIfHasBlock("Car");
         }
+    }
+
+    public void EndWithCar()
+    {
+        GameLogicManager.Instance.OnMiniGameFinished(0, 15);
+    }
+
+    public void EndWithMoney()
+    {
+        GameLogicManager.Instance.OnMiniGameFinished(20, 0);
     }
 }
