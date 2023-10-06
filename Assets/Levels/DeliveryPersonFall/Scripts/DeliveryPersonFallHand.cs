@@ -11,6 +11,7 @@ public class DeliveryPersonFallHand : MonoBehaviour
 {
     public float speed = 10;
     public InputAction moveAction;
+    public AudioSource catchAudioSource;
 
     [HideInInspector]
     public Camera cam;
@@ -46,6 +47,7 @@ public class DeliveryPersonFallHand : MonoBehaviour
             })
             .Subscribe(c =>
             {
+                catchAudioSource.Play();
                 GameObject other = c.gameObject;
                 Rigidbody2D otherRigid = other.GetComponent<Rigidbody2D>();
                 FixedJoint2D fixedJoint2D = other.GetComponent<FixedJoint2D>();

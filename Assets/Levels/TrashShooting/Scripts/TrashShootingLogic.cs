@@ -75,10 +75,13 @@ namespace TrashShooting
             curDifficulty = eDifficulty;
             var phase = musicPhaseQueue.Dequeue();
             curPhaseEnd = phase.To;
+            UnityEngine.Debug.LogFormat("GenerateAPhase {0}, {1}",
+                           phase.From, phase.To);
 
             for (float fUnit = phase.From; fUnit < phase.To; fUnit += c_intervals[(int)eDifficulty])
             {
-                musicNotes.Enqueue(new MusicNote(c_typePool[UnityEngine.Random.Range(0, 3)], fUnit));
+                musicNotes.Enqueue(new MusicNote(c_typePool[UnityEngine.Random.Range(0, 3)], 
+                    fUnit));
             }
             //float randomNodeTempo = 40.0f;
             //for (int i = 0; i < 400; ++i)
@@ -94,23 +97,83 @@ namespace TrashShooting
 
     public class TrashShootingLogic : MonoBehaviour
     {
-
         [SerializeField] TrashShootingMusicBoard musicBoard = null;
-        
+        [SerializeField] Canvas scoreCanvas = null;
+        [SerializeField] TrashShootingStory musicStory = null;
+        [SerializeField] TrashShootingSummary summary = null;
+
+        enum EStage
+        {
+            Before,
+            Game,
+            After,
+            AfterFinished,
+        }
+
+        EStage eStage = EStage.Before;
+
+        private void Awake()
+        {
+            musicStory.onFinished = OnStoryFinished;
+        }
 
         // Start is called before the first frame update
         void Start()
         {
+            musicStory.onFinished = OnStoryFinished;
+        }
+
+        public void OnStoryFinished()
+        {
+            eStage = EStage.Game;
+            musicStory.gameObject.SetActive(false);
+            musicBoard.gameObject.SetActive(true);
+            scoreCanvas.gameObject.SetActive(true);
+            musicBoard.StartGame();
+        }
+
+        public void OnAfterFinished()
+        {
+            musicBoard.gameObject.SetActive(false);
+            float addMoney = 0, addPositiveComments = 0, passTimeRate = 0;
+            musicBoard.GetScore(ref addMoney, ref addPositiveComments, ref passTimeRate);
+            float money = GameLogicManager.Instance.gameData.money + addMoney;
+            float positiveComment = GameLogicManager.Instance.gameData.positiveComment + addPositiveComments;
+            float time = GameLogicManager.Instance.gameData.countDown - GameLogicManager.c_StandardGameDuration * passTimeRate;
+
+            GameLogicManager.Instance.OnMiniGameFinished(money, positiveComment, time);
         }
 
         // Update is called once per frame
         void Update()
         {
-            if(musicBoard.IsFinished)
+            switch(eStage)
             {
-                musicBoard.gameObject.SetActive(false);
-                GameLogicManager.Instance.OnMiniGameFinished(0, 0);
+                case EStage.Game:
+                    if (musicBoard.IsFinished)
+                    {
+                        musicBoard.StopGame();
+                        musicBoard.gameObject.SetActive(false);
+                        scoreCanvas.gameObject.SetActive(false);
+                        summary.gameObject.SetActive(true);
+
+                        float addMoney = 0, addPositiveComments = 0, passTimeRate = 0;
+                        uint result = musicBoard.GetScore(ref addMoney, ref addPositiveComments, ref passTimeRate);
+                        summary.SetScore(result, addMoney, addPositiveComments, passTimeRate);
+                        eStage = EStage.After;
+                    }
+                    break;
+                case EStage.After:
+                    if(summary.IsFinished)
+                    {
+                        eStage = EStage.AfterFinished;
+                        OnAfterFinished();
+                    }
+                    break;
+                default:
+                    break;
             }
+
         }
 
         void Pause()

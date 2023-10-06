@@ -8,7 +8,6 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using DG.Tweening;
-using UnityEditor.Build;
 
 public class DeliveryPersonFallResultMenu : MonoBehaviour
 {
@@ -64,6 +63,10 @@ public class DeliveryPersonFallResultMenu : MonoBehaviour
     public CanvasGroup heartLoseCanvasGroup;
     public List<GameObject> heartList;
 
+    public AudioSource goodEndAS;
+    public AudioSource badEndAS;
+    public AudioSource paperAS;
+
     public IObservable<Unit> OnHideFinished => onHideFinished;
 
     private InputAction continueAction;
@@ -72,6 +75,7 @@ public class DeliveryPersonFallResultMenu : MonoBehaviour
     bool catchExpensive;
     bool catchCargo;
     int heartCount;
+    private AudioSource resultAudioSource;
 
     private void Awake()
     {
@@ -86,6 +90,8 @@ public class DeliveryPersonFallResultMenu : MonoBehaviour
                     rightItemGOGroup.SetActive(false);
                     state = State.AnimatingShowResult;
                     var centerResultTrans = catchExpensive ? goodImageGO.transform : badImageGO.transform;
+                    resultAudioSource = catchExpensive ? goodEndAS : badEndAS;
+                    resultAudioSource.Play();
                     sequence.Append(centerResultTrans.transform.DOScale(Vector3.one, 1.5f));
                     sequence.Join(centerResultTrans.transform.DOLocalRotate(new Vector3(0f, 0f, 3600f), 1.5f, RotateMode.FastBeyond360));
                     sequence.AppendCallback(() =>
@@ -141,6 +147,7 @@ public class DeliveryPersonFallResultMenu : MonoBehaviour
     public void OnDisable()
     {
         continueAction.Disable();
+        resultAudioSource?.Stop();
     }
 
     public void Show(bool _catchCargo, bool _catchExpensive, string levelName, bool yellow, int _heartCount)
@@ -186,6 +193,7 @@ public class DeliveryPersonFallResultMenu : MonoBehaviour
         badImageGO.transform.localScale = Vector3.zero;
         goodImageGO.transform.eulerAngles = Vector3.zero;
         badImageGO.transform.eulerAngles = Vector3.zero;
+        paperAS.Play();
         Sequence sequence = DOTween.Sequence();
         sequence.Append(leftTicketTrans.DOLocalMove(leftTicketEndPos.localPosition, 0.5f).SetEase(Ease.Linear));
         sequence.Join(rightTicketTrans.DOLocalMove(rightTicketEndPos.localPosition, 0.5f).SetEase(Ease.Linear));

@@ -31,6 +31,7 @@ public class DeliveryPersonFallCargoLauncher : MonoBehaviour
     public Vector2 rightCargoMinLaunchForce;
     public Vector2 rightCargoMaxLaunchForce;
     public List<CargoRigidPair> cargoGOPairList;
+    public AudioSource launchAudioSource;
 
     private void Awake()
     {
@@ -74,6 +75,7 @@ public class DeliveryPersonFallCargoLauncher : MonoBehaviour
 
     public void LaunchCargo(string name)
     {
+        launchAudioSource.Play();
         var targetCargo = cargoGOPairList.FirstOrDefault(pair => pair.name == name);
         if(targetCargo == null)
         {
