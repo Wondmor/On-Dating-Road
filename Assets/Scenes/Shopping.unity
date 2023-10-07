@@ -2019,6 +2019,10 @@ GameObject:
   - component: {fileID: 953656491}
   - component: {fileID: 953656490}
   - component: {fileID: 953656489}
+  - component: {fileID: 953656497}
+  - component: {fileID: 953656498}
+  - component: {fileID: 953656500}
+  - component: {fileID: 953656499}
   m_Layer: 0
   m_Name: Flowchart
   m_TagString: Untagged
@@ -2129,7 +2133,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: -1757.5
     y: 188
-    width: 77
+    width: 76.27735
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -2223,7 +2227,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: -304
     y: 216
-    width: 110
+    width: 108.39411
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -2249,11 +2253,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   version: 1
-  scrollPos: {x: 1829, y: 86.5}
+  scrollPos: {x: 1580.559, y: 8.776052}
   variablesScrollPos: {x: 0, y: 0}
   variablesExpanded: 1
   blockViewHeight: 530
-  zoom: 1
+  zoom: 0.82200074
   scrollViewRect:
     serializedVersion: 2
     x: -343
@@ -2263,7 +2267,7 @@ MonoBehaviour:
   selectedBlocks:
   - {fileID: 953656430}
   selectedCommands:
-  - {fileID: 953656491}
+  - {fileID: 953656490}
   variables:
   - {fileID: 953656405}
   - {fileID: 953656399}
@@ -2339,7 +2343,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: -1593.5
     y: 191
-    width: 111
+    width: 109.36735
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -2349,6 +2353,7 @@ MonoBehaviour:
   eventHandler: {fileID: 0}
   commandList:
   - {fileID: 953656422}
+  - {fileID: 953656497}
   - {fileID: 953656425}
   suppressAllAutoSelections: 0
 --- !u!114 &953656424
@@ -2447,7 +2452,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: -1402
     y: 189.5
-    width: 104
+    width: 102.5547
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -2477,7 +2482,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: -1467
     y: 263.5
-    width: 97
+    width: 95.74205
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -2499,6 +2504,8 @@ MonoBehaviour:
   - {fileID: 953656495}
   - {fileID: 953656491}
   - {fileID: 953656490}
+  - {fileID: 953656500}
+  - {fileID: 953656499}
   - {fileID: 953656493}
   - {fileID: 953656438}
   - {fileID: 953656466}
@@ -2552,7 +2559,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: -1356
     y: 361.5
-    width: 112
+    width: 110.340576
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -2658,7 +2665,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: -1636
     y: 346.5
-    width: 102
+    width: 100.60823
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -3678,7 +3685,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: -1340
     y: 477.5
-    width: 149
+    width: 146.35028
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -4691,7 +4698,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: -1545
     y: 513.5
-    width: 105
+    width: 103.52794
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -4713,6 +4720,7 @@ MonoBehaviour:
   - {fileID: 953656486}
   - {fileID: 953656485}
   - {fileID: 953656482}
+  - {fileID: 953656498}
   suppressAllAutoSelections: 0
 --- !u!114 &953656477
 MonoBehaviour:
@@ -4949,7 +4957,7 @@ MonoBehaviour:
   callMode: 0
 --- !u!114 &953656485
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -4970,7 +4978,7 @@ MonoBehaviour:
   targetGameObjectOLD: {fileID: 0}
 --- !u!114 &953656486
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -4997,7 +5005,7 @@ MonoBehaviour:
   setSayDialog: {fileID: 1097933436}
 --- !u!114 &953656487
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -5059,7 +5067,7 @@ MonoBehaviour:
   callMode: 0
 --- !u!114 &953656488
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -5080,7 +5088,7 @@ MonoBehaviour:
   targetGameObjectOLD: {fileID: 0}
 --- !u!114 &953656489
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -5098,7 +5106,7 @@ MonoBehaviour:
   durationOLD: 0
 --- !u!114 &953656490
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -5116,7 +5124,7 @@ MonoBehaviour:
   durationOLD: 0
 --- !u!114 &953656491
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -5133,7 +5141,7 @@ MonoBehaviour:
   sprite: {fileID: 21300000, guid: 062aaad05397e3249bf5b93644e832a4, type: 3}
 --- !u!114 &953656492
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -5150,7 +5158,7 @@ MonoBehaviour:
   sprite: {fileID: 21300000, guid: 062aaad05397e3249bf5b93644e832a4, type: 3}
 --- !u!114 &953656493
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -5171,7 +5179,7 @@ MonoBehaviour:
   callMode: 0
 --- !u!114 &953656494
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -5198,7 +5206,7 @@ MonoBehaviour:
   setSayDialog: {fileID: 1097933436}
 --- !u!114 &953656495
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -5212,7 +5220,7 @@ MonoBehaviour:
   indentLevel: 0
 --- !u!114 &953656496
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -5227,6 +5235,127 @@ MonoBehaviour:
   _targetGameObject:
     gameObjectRef: {fileID: 0}
     gameObjectVal: {fileID: 1399528839}
+  activeState:
+    booleanRef: {fileID: 0}
+    booleanVal: 1
+  targetGameObjectOLD: {fileID: 0}
+--- !u!114 &953656497
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 953656396}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 688e35811870d403f9e2b1ab2a699d98, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemId: 234
+  indentLevel: 0
+  description: 
+  targetObject: {fileID: 743038356}
+  targetComponentAssemblyName: Shopping, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+    PublicKeyToken=null
+  targetComponentFullname: UnityEngine.Component[]
+  targetComponentText: Shopping
+  targetMethod: UnPause
+  targetMethodText: 'UnPause (): Void'
+  methodParameters: []
+  saveReturnValue: 0
+  returnValueVariableKey: 
+  returnValueType: System.Void
+  showInherited: 0
+  callMode: 0
+--- !u!114 &953656498
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 953656396}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 688e35811870d403f9e2b1ab2a699d98, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemId: 235
+  indentLevel: 0
+  description: 
+  targetObject: {fileID: 743038356}
+  targetComponentAssemblyName: Shopping, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+    PublicKeyToken=null
+  targetComponentFullname: UnityEngine.Component[]
+  targetComponentText: Shopping
+  targetMethod: ShoppingFinish
+  targetMethodText: 'ShoppingFinish (EGift): Void'
+  methodParameters:
+  - objValue:
+      typeAssemblyname: EGift, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      typeFullname: EGift
+      intValue: 0
+      boolValue: 0
+      floatValue: 0
+      stringValue: 
+      colorValue: {r: 0, g: 0, b: 0, a: 0}
+      gameObjectValue: {fileID: 0}
+      materialValue: {fileID: 0}
+      objectValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+      textureValue: {fileID: 0}
+      vector2Value: {x: 0, y: 0}
+      vector3Value: {x: 0, y: 0, z: 0}
+    variableKey: 
+  saveReturnValue: 0
+  returnValueVariableKey: 
+  returnValueType: System.Void
+  showInherited: 0
+  callMode: 0
+--- !u!114 &953656499
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 953656396}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec422cd568a9c4a31ad7c36d0572b9da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemId: 237
+  indentLevel: 1
+  storyText: 
+  description: 
+  character: {fileID: 0}
+  portrait: {fileID: 0}
+  voiceOverClip: {fileID: 0}
+  showAlways: 1
+  showCount: 1
+  extendPrevious: 0
+  fadeWhenDone: 1
+  waitForClick: 1
+  stopVoiceover: 1
+  waitForVO: 0
+  setSayDialog: {fileID: 1097933436}
+--- !u!114 &953656500
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 953656396}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbd8c931f22994b9d90e2037fffaa770, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemId: 236
+  indentLevel: 1
+  _targetGameObject:
+    gameObjectRef: {fileID: 0}
+    gameObjectVal: {fileID: 293826311}
   activeState:
     booleanRef: {fileID: 0}
     booleanVal: 1

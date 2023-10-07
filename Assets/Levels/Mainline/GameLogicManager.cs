@@ -30,7 +30,9 @@ public enum EScene : int
     TrashShooting   = InGame,
     Racing          = TrashShooting + 1,
     BusGame         = Racing + 1,
-    InGameEnd       = BusGame,
+    Skewer          = BusGame + 1,
+    Delivery        = Skewer + 1,
+    InGameEnd       = Delivery,
 
     CoinSkill       = InGameEnd + 1,
     Shopping        = CoinSkill + 1,
@@ -99,7 +101,7 @@ public class GameLogicManager
 
 
     
-    const uint c_RoadMilestoneCount = 5;
+    const uint c_RoadMilestoneCount = 4;
 
     public const float c_StandardGameDuration = 1200;
     const float c_StandardRoadDuration = 300;
@@ -117,9 +119,12 @@ public class GameLogicManager
             {EScene.Bridge, "Bridge"},
 
             {EScene.TrashShooting, "TrashShooting"},
-            {EScene.Racing, "Racing"},
+            {EScene.Racing, "RacingSelection"},
             {EScene.BusGame, "BusGame"},
             {EScene.CoinSkill, "CoinSkill"},
+            {EScene.Delivery, "DeliveryPersonFall"},
+            {EScene.Skewer, "Skewer"},
+
 
             {EScene.Shopping, "Shopping"},
             {EScene.Ending, "Ending"},
@@ -298,10 +303,9 @@ public class GameLogicManager
         // TODO: shouldn't repeat but we don't have more than them for now.
         gamePool.Add(EScene.TrashShooting);
         gamePool.Add(EScene.Racing);
-        gamePool.Add(EScene.BusGame);
-        gamePool.Add(EScene.TrashShooting);
-        gamePool.Add(EScene.Racing);
-        gamePool.Add(EScene.BusGame);
+        gamePool.Add(EScene.Delivery);
+        gamePool.Add(EScene.Skewer);
+        //gamePool.Add(EScene.BusGame);
 
 
         currentRoadMilestone = 0;

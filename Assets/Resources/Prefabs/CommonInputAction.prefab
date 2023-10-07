@@ -70,7 +70,7 @@ MonoBehaviour:
       m_Flags: 0
     - m_Name: 
       m_Id: e985e95d-454e-49f3-9ae6-2c7bf74f4af9
-      m_Path: <XInputController>/buttonSouth
+      m_Path: <Gamepad>/buttonSouth
       m_Interactions: 
       m_Processors: 
       m_Groups: 
@@ -103,7 +103,7 @@ MonoBehaviour:
       m_Flags: 0
     - m_Name: 
       m_Id: 7ac1e751-6d5f-40e3-bf84-634b9e9746b5
-      m_Path: <XInputController>/buttonEast
+      m_Path: <Gamepad>/buttonEast
       m_Interactions: 
       m_Processors: 
       m_Groups: 
@@ -246,9 +246,9 @@ MonoBehaviour:
       m_Groups: 
       m_Action: Directions
       m_Flags: 4
-    - m_Name: up
+    - m_Name: left
       m_Id: 7ba802a4-65fb-4c48-8272-9d0f9167c629
-      m_Path: <Joystick>/stick/up
+      m_Path: <Gamepad>/leftStick/left
       m_Interactions: 
       m_Processors: 
       m_Groups: 
@@ -256,23 +256,23 @@ MonoBehaviour:
       m_Flags: 8
     - m_Name: down
       m_Id: 00c6baf5-ff37-4581-80a1-91d721632eb4
-      m_Path: <Joystick>/stick/down
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Directions
-      m_Flags: 8
-    - m_Name: left
-      m_Id: e78269c2-e88e-4a22-92fb-cf7aafa32683
-      m_Path: <Joystick>/stick/left
+      m_Path: <Gamepad>/leftStick/down
       m_Interactions: 
       m_Processors: 
       m_Groups: 
       m_Action: Directions
       m_Flags: 8
     - m_Name: right
+      m_Id: e78269c2-e88e-4a22-92fb-cf7aafa32683
+      m_Path: <Gamepad>/leftStick/right
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Directions
+      m_Flags: 8
+    - m_Name: up
       m_Id: b55493fa-9eb2-437f-b54b-9d2a2c2a494c
-      m_Path: <Joystick>/stick/right
+      m_Path: <Gamepad>/leftStick/up
       m_Interactions: 
       m_Processors: 
       m_Groups: 

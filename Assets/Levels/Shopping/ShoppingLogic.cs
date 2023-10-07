@@ -88,7 +88,7 @@ public class Shopping : MonoBehaviour
         TextAsset shopListJson = Resources.Load<TextAsset>("Shopping/shoplist");
         shopInfo = JsonUtility.FromJson<ShopInfo>(shopListJson.text);
         finalMainPosition = main.transform.localPosition + Vector3.up * 260;
-        money = 128;
+        money = GameLogicManager.Instance.gameData.money;
     }
     // Start is called before the first frame update
     void Start()
@@ -144,9 +144,14 @@ public class Shopping : MonoBehaviour
         dialog.ShowGet(sprite, name);
     }
 
+    public void UnPause()
+    {
+        pause = false;
+    }
+
     public void ShoppingFinish(EGift gift = EGift.None)
     {
-        if(gift == EGift.None)
+        if (gift == EGift.None)
         {
             gift = (EGift)shopInfo.items[currentItem].type;
         }
@@ -156,15 +161,42 @@ public class Shopping : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        for (int i = 0; i < items.Length; i++)
+        {
+            if (i == currentItem)
+            {
+                items[i].transform.localScale = Vector3.Lerp(items[i].transform.localScale, Vector3.one * 1.5f, Time.deltaTime * speed);
+            }
+            else
+            {
+                items[i].transform.localScale = Vector3.Lerp(items[i].transform.localScale, Vector3.one, Time.deltaTime * speed);
+            }
+        }
+
         if (pause)
             return;
 
         CommonInputAction.EType performed = GameManager.Instance.CommonInputAction.GetPerformedTypeThisFrame();
+        if (performed != CommonInputAction.EType.None)
+        {
+            if (Time.fixedTime - lastInputTime > 0.1)
+            {
+                lastInputTime = Time.fixedTime;
+            }
+            else
+            {
+                return;
+            }
+        }
+
 
         if (status == Status.MAIN)
         {
             if (performed == CommonInputAction.EType.Directions)
             {
+
+
                 int currentRow = currentItem % 6;
                 int currentLine = currentItem / 6;
                 Vector2 vec2 = GameManager.Instance.CommonInputAction.directions.ReadValue<Vector2>();
@@ -194,6 +226,7 @@ public class Shopping : MonoBehaviour
                 flowchart.StopAllBlocks();
                 flowchart.SetStringVariable("Desc", shopInfo.items[currentItem].description);
                 flowchart.ExecuteIfHasBlock("ShowDesc");
+                pause = true;
             }
             else if (performed == CommonInputAction.EType.Enter)
             {
@@ -218,19 +251,9 @@ public class Shopping : MonoBehaviour
                 flowchart.SetFloatVariable("Price", shopInfo.items[currentItem].price);
                 flowchart.SetBooleanVariable("Buy", false);
                 flowchart.ExecuteIfHasBlock("BuyTest");
+                pause = true;
             }
         }
 
-        for (int i = 0; i < items.Length; i++)
-        {
-            if (i == currentItem)
-            {
-                items[i].transform.localScale = Vector3.Lerp(items[i].transform.localScale, Vector3.one * 1.5f, Time.deltaTime * speed);
-            }
-            else
-            {
-                items[i].transform.localScale = Vector3.Lerp(items[i].transform.localScale, Vector3.one, Time.deltaTime * speed);
-            }
-        }
     }
 }

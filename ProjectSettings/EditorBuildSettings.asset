@@ -8,9 +8,12 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Levels/EdgeJumping/SampleScene.unity
     guid: 8c9cfa26abfee488c85f1582747f6a02
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/TestMain.unity
     guid: 449f7ec605b3c46489f2df7e1638c391
+  - enabled: 1
+    path: Assets/Scenes/GameStart.unity
+    guid: 6a126e8bc67b9a24dab659e9da928e17
   - enabled: 1
     path: Assets/Scenes/TrashShooting.unity
     guid: 8534ec6d5bad6d7489822e3537e9e974
@@ -46,13 +49,16 @@ EditorBuildSettings:
     guid: 6911d7b4057b1f6439032bc3f08e1d3b
   - enabled: 1
     path: Assets/Scenes/CoinSkill.unity
-    guid: 616741fbb5d73a0489f565f22a75478e
+    guid: 2c904d23ff349ec449333929a8284e44
   - enabled: 1
     path: Assets/Scenes/Ending.unity
     guid: f83f4461731718a4c803e5d2a96400b6
   - enabled: 1
-    path: Assets/Scenes/GameStart.unity
-    guid: 6a126e8bc67b9a24dab659e9da928e17
+    path: Assets/Levels/DeliveryPersonFall/DeliveryPersonFall.unity
+    guid: 42d45a71f7d100b42b482399a36616bf
+  - enabled: 1
+    path: Assets/Scenes/Skewer.unity
+    guid: 0e14cf1d5a830b7498b8ab34c27eb537
   - enabled: 1
     path: Assets/Scenes/Shopping.unity
     guid: a7df41c5172421b499df74e3f5ca4733
