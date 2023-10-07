@@ -238,7 +238,7 @@ public class RacingPlayerControl : MonoBehaviour
 
     public void TriggerSpeedUp()
     {
-        if(Speedup || recovering || bikeType != BIKE_TYPE.FIRE)
+        if(flowControl.GetGameStatus() != RacingFlowControl.GAME_STATUS.START || Speedup || recovering || bikeType != BIKE_TYPE.FIRE)
         {
             return;
         }

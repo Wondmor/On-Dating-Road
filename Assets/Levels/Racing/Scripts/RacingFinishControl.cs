@@ -13,7 +13,7 @@ public class RacingFinishControl : MonoBehaviour
    private void Awake()
     {
         bool finished = GameManager.Instance.RacingData.RaceTime == 2;
-        flowchart.SetBooleanVariable("Finished", true);
+        flowchart.SetBooleanVariable("Finished", finished);
         flowchart.SetStringVariable("Money", GetMoney().ToString() + "\u5143");
     }
 
