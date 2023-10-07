@@ -78,7 +78,7 @@ public class FadeInOutScene : MonoBehaviour
     void OnComplete()
     {
         SceneManager.LoadScene(sceneName);
-        Destroy(gameObject);
+        //Destroy(gameObject);
     }
 
     Image GetBlackScreen()

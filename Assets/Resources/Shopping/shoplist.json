@@ -1,122 +1,148 @@
 {
-    "intro": "欢～迎～光～临～\n桃心百货商店～\n您可以看看有没有喜欢的商品，\n我可以给您介绍哦～\n",
-    "lastLine": "您是问还有没有更便宜实惠的商品是吗~\n\n有的哦~\n\n可以看下柜台最下面的商品",
-    "final": "您看看这些有没有合适的~",
-    "zero" : "有的哦~这是本店最新版宣传单,可以免费赠送给您",
-    "praise" : "哇哦，先生您真是心灵手巧呢~",
-    "ask1" : "那个...请问...有没有性价比再高一些的商品...",
-    "ask2" : "那个...请问...有没有赠品之类的...",
-    "final_self1": "......",
-    "final_self2": "(将宣传单折成了一只千纸鹤)",
-    "final_self3": "只能这样了",
     "items": [
         {
             "name": "钻戒",
             "sprite": "1",
             "description": "顾客您眼光非常好！\n这款商品是我们镇店之宝,\n中间是22克拉非洲安哥拉粉钻，\n由国际大师雕刻成完美心形，\n周边镶嵌19颗八心八箭的星钻，\n寓意诺守真爱～长长久久～\n稀世珍品，爱的永恒见证！\n仅售38888",
-            "price": 38888.0
+            "giftname": "镇店之宝安哥拉心形粉钻钻戒",
+            "price": 38888.0,
+            "type": 2
         },
         {
             "name": "项链",
             "sprite": "2",
             "description": "这款商品也不错！\n极品昆仑山羊脂白玉心形项链！\n搭配稀有双色天然水晶项链！\n洁白无瑕，含蓄高贵！\n仅售18888！\n",
-            "price": 18888.0
+            "giftname": "极品昆仑山羊脂白玉心形项链",
+            "price": 18888.0,
+            "type": 2
         },
         {
             "name": "耳环",
             "sprite": "3",
             "description": "这款商品也不错！\n足金小猫咪耳环，由国内工艺品\n大师古法雕刻成可爱小猫咪！\n富贵又不失可爱！\n仅售8888！\n",
-            "price": 8888.0
+            "giftname": "足金小猫咪耳环",
+            "price": 8888.0,
+            "type": 2
         },
         {
             "name": "手机",
             "sprite": "4",
             "description": "这款商品也不错！\n刚刚到货的最新款水果15手机！\n仅售5999！\n",
-            "price": 5999.0
+            "giftname": "最新款水果15手机",
+            "price": 5999.0,
+            "type": 2
         },
         {
             "name": "服装",
             "sprite": "5",
             "description": "这款商品也不错！\n八宝瑞秋冬秀场最新款蓝色格纹\n长裙！\n仅售3999！\n",
-            "price": 3999.0
+            "giftname": "八宝瑞秋冬秀场最新款蓝色格纹",
+            "price": 3999.0,
+            "type": 2
         },
         {
             "name": "香水",
             "sprite": "6",
             "description": "这款商品也不错！\n妞妞牌100ml莹蓝甜心女士香水！\n仅售999！\n",
-            "price": 999.0
+            "giftname": "妞妞牌100ml莹蓝甜心女士香水",
+            "price": 999.0,
+            "type": 2
         },
         {
             "name": "单肩包",
             "sprite": "7",
             "description": "这款商品是\n吞吞吐吐牌设计师合作款时尚\n单肩包\n仅售399！\n",
-            "price": 399.0
+            "giftname": "吞吞吐吐牌设计师合作款时尚单肩包\n",
+            "price": 399.0,
+            "type": 1
         },
         {
             "name": "玫瑰花",
             "sprite": "8",
             "description": "这款商品是\n浪漫告白99朵红玫瑰花束\n仅售199！\n",
-            "price": 199.0
+            "giftname": "浪漫告白99朵红玫瑰花束",
+            "price": 199.0,
+            "type": 1
         },
         {
             "name": "毛绒玩具",
             "sprite": "9",
             "description": "这款商品是\n可爱毛绒小狗玩具公仔挂饰\n仅售88！\n",
-            "price": 88.0
+            "giftname": "可爱毛绒小狗玩具公仔挂饰",
+            "price": 88.0,
+            "type": 1
         },
         {
             "name": "笔记本",
             "sprite": "10",
             "description": "这款商品是\n笔记本\n仅售68！\n",
-            "price": 68.0
+            "giftname": "笔记本",
+            "price": 68.0,
+            "type": 1
         },
         {
             "name": "发卡",
             "sprite": "11",
             "description": "这款商品是\n小猫抱郁金香亚克力发卡\n仅售58！\n",
-            "price": 38.0
+            "giftname": "小猫抱郁金香亚克力发卡",
+            "price": 38.0,
+            "type": 1
         },
         {
             "name": "数据线",
             "sprite": "12",
             "description": "这款商品是\n酷炫七彩流光彩虹三头充电\n数据线\n仅售38！\n",
-            "price": 38.0
+            "giftname": "酷炫七彩流光彩虹三头充电",
+            "price": 38.0,
+            "type": 1
         },
         {
             "name": "拖鞋",
             "sprite": "13",
             "description": "粉色洗澡拖鞋26元",
-            "price": 26.0
+            "giftname": "粉色洗澡拖鞋",
+            "price": 26.0,
+            "type": 1
         },
         {
             "name": "锁",
             "sprite": "14",
             "description": "爱情同心锁19元",
-            "price": 19.0
+            "giftname": "爱情同心锁",
+            "price": 19.0,
+            "type": 0
         },
         {
             "name": "盆",
             "sprite": "15",
             "description": "不锈钢洗菜盆10元",
-            "price": 10.0
+            "giftname": "不锈钢洗菜盆",
+            "price": 10.0,
+            "type": 0
         },
         {
             "name": "水枪",
             "sprite": "16",
             "description": "儿童塑料水枪3元",
-            "price": 3.0
+            "giftname": "儿童塑料水枪",
+            "price": 3.0,
+            "type": 0
         },
         {
             "name": "头绳",
             "sprite": "17",
             "description": "彩色头绳一包2元",
-            "price": 2.0
+            "giftname": "彩色头绳一包",
+            "price": 2.0,
+            "type": 0
         },
         {
             "name": "纸巾",
             "sprite": "18",
             "description": "纸巾一包1元",
-            "price": 1.0
+            "giftname": "纸巾一包",
+            "price": 1.0,
+            "type": 0
         }
     ]
 }

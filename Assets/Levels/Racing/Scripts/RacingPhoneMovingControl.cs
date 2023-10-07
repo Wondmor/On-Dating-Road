@@ -1,3 +1,4 @@
+using Fungus;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.Rendering;
@@ -13,6 +14,9 @@ public class RacingPhoneMovingControl : MonoBehaviour
     [SerializeField]
     Vector3[] positions, cameraPositions;
 
+    [SerializeField]
+    Flowchart flowchart;
+
     bool moving = false;
     int currentPos = 0;
     Camera phoneCamera;
@@ -22,10 +26,7 @@ public class RacingPhoneMovingControl : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        player = transform.parent.Find("Canvas/SubtitleBG").GetComponent<SubtitlePlayer>();
         phoneCamera = GetComponentInChildren<Camera>();
-
-        transform.parent.Find("Canvas/SubtitleBG").gameObject.SetActive(true);
     }
 
     // Update is called once per frame
@@ -52,9 +53,9 @@ public class RacingPhoneMovingControl : MonoBehaviour
             GameManager.Instance.RacingData.BikeType = bikeType[currentPos];
             // set up racing times to 0
             GameManager.Instance.RacingData.RaceTime = 0;
-            player.LoadSubtitle("racing_subtitle_selection_common");
-            transform.parent.Find("Canvas/Images").gameObject.SetActive(true);
-            gameObject.SetActive(false);
+
+            flowchart.SetIntegerVariable("BikeType", (int)bikeType[currentPos]);
+            flowchart.ExecuteIfHasBlock("Introduce");
         }
         if(GameManager.Instance.CommonInputAction.GetPerformedTypeThisFrame() == CommonInputAction.EType.Directions)
         {

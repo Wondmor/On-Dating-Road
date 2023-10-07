@@ -54,6 +54,7 @@ public class RacingPlayerControl : MonoBehaviour
     RacingMapControl mapControl;
     RacingHealth healthControl;
     RacingFlowControl flowControl;
+    RacingAudioControl audioControl;
     Timer timer;
 
     // bike type
@@ -79,6 +80,7 @@ public class RacingPlayerControl : MonoBehaviour
         healthControl = gameControl.GetComponent<RacingHealth>();
         timer = gameControl.GetComponent<Timer>();
         flowControl = gameControl.GetComponent<RacingFlowControl>();
+        audioControl = gameControl.GetComponent<RacingAudioControl>();
     }
 
     // Update is called once per frame
@@ -99,6 +101,8 @@ public class RacingPlayerControl : MonoBehaviour
         if(healthControl.IsDead() && flowControl.GetGameStatus() != RacingFlowControl.GAME_STATUS.DEAD)
         {
             flowControl.SetGameStatus(RacingFlowControl.GAME_STATUS.DEAD);
+            GetComponent<BoxCollider2D>().enabled = false;
+            return;
         }
 
         if (!Stun)
@@ -111,7 +115,7 @@ public class RacingPlayerControl : MonoBehaviour
             transform.localPosition = currentPos;
 
             // skill trigger?
-            if(Input.GetKeyDown(KeyCode.C) || Input.GetKeyDown(KeyCode.JoystickButton0))
+            if(GameManager.Instance.CommonInputAction.GetPerformedTypeThisFrame() == CommonInputAction.EType.Enter)
             {
                 TriggerSpeedUp();
             }
@@ -180,40 +184,55 @@ public class RacingPlayerControl : MonoBehaviour
     void SetSpeed()
     {
         verticalSpeed = baseVerticalSpeed;
+        bool onGrass = false;
         // TODO! check if dead
 
         if (Stun)
         {
             verticalSpeed = 0;
-            return;
         }
 
-        if (healthControl.IsDead())
+        else if (healthControl.IsDead())
         {
             verticalSpeed = 0;
-            return;
+        }
+        else
+        {
+
+            if (recovering)
+            {
+                verticalSpeed *= 0.5f;
+            }
+            // check if pause
+            // check if on grass
+            onGrass = OnGrass();
+            if (onGrass && bikeType != BIKE_TYPE.GRASS)
+            {
+                verticalSpeed = verticalSpeed * grassSpeedDownRatio;
+            }
+
+            if (Speedup)
+            {
+                verticalSpeed *= 2;
+            }
+
+            if (transform.localPosition.y > 50)
+            {
+                verticalSpeed = 0;
+            }
         }
 
-        if(recovering)
+        if (flowControl.GetGameStatus() == RacingFlowControl.GAME_STATUS.START || 
+            flowControl.GetGameStatus() == RacingFlowControl.GAME_STATUS.CROSS_LINE)
         {
-            verticalSpeed *= 0.5f;
-        }
-        // check if pause
-        // check if on grass
-        bool onGrass = OnGrass();
-        if (onGrass && bikeType != BIKE_TYPE.GRASS)
-        {
-            verticalSpeed = verticalSpeed * grassSpeedDownRatio;
-        }
-
-        if(Speedup)
-        {
-            verticalSpeed *= 2;
-        }
-        
-        if(transform.localPosition.y > 50)
-        {
-            verticalSpeed = 0;
+            if (healthControl.IsDead() || recovering)
+            {
+                audioControl.StopPlayDrive();
+            }
+            else
+            {
+                audioControl.PlayDrive(onGrass);
+            }
         }
     }
 
@@ -225,6 +244,8 @@ public class RacingPlayerControl : MonoBehaviour
         }
 
         Speedup = true;
+        audioControl.PlaySpeedup();
+
         timer.Add(() =>
         {
             Speedup = false;
@@ -268,12 +289,15 @@ public class RacingPlayerControl : MonoBehaviour
                 Rotate();
                 // Reset
                 ResetIn(0.9f, 2f);
+                audioControl.PlayHitBike(true);
             }
             else
             {
                 // reset stun
                 timer.Add(() => { Stun = false; }, 0.1f);
+                audioControl.PlayHitBike(false);
             }
+
 
             return;
         }
@@ -283,6 +307,7 @@ public class RacingPlayerControl : MonoBehaviour
         {
             coin.Hit();
 
+            audioControl.PlayCoin();
             return;
         }
 
@@ -299,6 +324,8 @@ public class RacingPlayerControl : MonoBehaviour
             // Reset
             ResetIn(0.9f, 2f);
 
+            audioControl.PlayHitShit();
+
             return;
         }
 
@@ -313,6 +340,8 @@ public class RacingPlayerControl : MonoBehaviour
             // Reset
             ResetIn(0.9f, 2f);
 
+            audioControl.PlayHitCat();
+
             return;
         }
 
@@ -323,11 +352,14 @@ public class RacingPlayerControl : MonoBehaviour
             Rotate();
             // Reset
             ResetIn(0.9f, 2f);
+
+            audioControl.PlayHit();
         }
 
         if(collision.name == "FinishLine(Clone)")
         {
             flowControl.SetGameStatus(RacingFlowControl.GAME_STATUS.STOP);
+            audioControl.PlayFinish();
             return;
         }
     }

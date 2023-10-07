@@ -11,6 +11,10 @@ namespace TrashShooting
     {
         [SerializeField] SpriteRenderer[] HappyBins = null;
         [SerializeField] SpriteRenderer[] AngryBins = null;
+        [SerializeField] AudioClip aPerfect = null;
+        [SerializeField] AudioClip aNormal = null;
+        [SerializeField] AudioClip aMiss = null;
+        AudioSource audioSource;
 
         const float c_UnitScore = 100.0f;
         const float c_PerfectMulti = 1.5f;
@@ -99,12 +103,14 @@ namespace TrashShooting
                         curStatics.perfect++;
                         curStatics.perfects[_target]++;
                         curStatics.notes++;
+                        audioSource.clip = aPerfect;
                     }
                     else
                     {
                         curStatics.normal++;
                         curStatics.normals[_target]++;
                         curStatics.notes++;
+                        audioSource.clip = aNormal;
                     }
 
                     SetEmoji(_target, true);
@@ -117,10 +123,12 @@ namespace TrashShooting
                 curStatics.miss++;
                 curStatics.misses[_target]++;
                 curStatics.notes++;
+                audioSource.clip = aMiss;
 
                 SetEmoji(_target, false);
                 SetCombo(0);
             }
+            audioSource.Play();
 
         }
 
@@ -160,6 +168,8 @@ namespace TrashShooting
             }
 
             scoreStatics = new List<ScoreStatic>();
+
+            audioSource = gameObject.AddComponent<AudioSource>();
         }
 
         // Update is called once per frame

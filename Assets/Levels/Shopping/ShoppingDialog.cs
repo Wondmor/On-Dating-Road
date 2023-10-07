@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -61,11 +61,12 @@ public class ShoppingDialog : MonoBehaviour
     public void ShowGet(Sprite sprite, string name)
     {
         item.sprite = sprite;
+        item.SetNativeSize();
         moneyText.text = "";
         canvas.SetActive(true);
         notEnough.SetActive(false);
         buttonTrue.gameObject.SetActive(false);
         buttonFalse.gameObject.SetActive(false);
-        buyText.text = string.Format("�õ���{0}", name);
+        buyText.text = string.Format("µÃµ½ÁË{0}", name);
     }
 }

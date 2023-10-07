@@ -6,6 +6,7 @@ using UnityEngine.Timeline;
 
 public class TimelineEndPlayable : BasicPlayableBehaviour
 {
+    public override double duration => 1 / 300.0f;
     [Header("主控件")]
     public ExposedReference<TimelineLogic> timelineLogic;
     private TimelineLogic _timelineLogic;

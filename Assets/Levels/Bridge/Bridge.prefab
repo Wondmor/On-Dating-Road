@@ -899,6 +899,7 @@ MonoBehaviour:
   - "\u5DE6\u8FB9\u90A3\u6761\u8DEF\u7EA2\u7EFF\u706F\u6709\u70B9\u591A\uFF0C\u53F3\u8FB9\u7684\u8DEF\u662F\u4E2A\u4E0A\u5761\uFF0C\u6211\u8D70\u54EA\u6761\u5462\uFF1F"
   - "\u53EA\u80FD\u7528\u6295\u786C\u5E01\u6765\u51B3\u5B9A\u4E86"
   bLeft: 1
+  currentRoadMileStone: 0
   ePos: 1
 --- !u!114 &2224166929562396516
 MonoBehaviour:
@@ -913,7 +914,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneName: TestMain
-  input: {fileID: 355297100146968894}
 --- !u!1 &6256288067931196803
 GameObject:
   m_ObjectHideFlags: 0

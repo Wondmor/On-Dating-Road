@@ -8,6 +8,7 @@ using UnityEngine.UI;
 
 public class SubtitlePlayable : BasicPlayableBehaviour
 {
+    public override double duration => 1 / 300.0f;
     [Header("字幕")]
     public ExposedReference<Image> subtitleBG;
     private Image _subtitleBG;
