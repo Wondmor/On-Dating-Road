@@ -24,19 +24,36 @@ public class ButtonEffect : MonoBehaviour
 
     public AudioSource selectAudio;
 
-    private Vector3 mousePastPosition;
+    private bool pastSelection;
+
+    bool currentSelection = true;
+
     void Start()
     {
         selectAudio.Stop();
+        
     }
+
     public void Update()
     {
         Vector3 mouseScreenPosition = Input.mousePosition;
 
         Vector3 mouseWorldPosition = mainCamera.ScreenToWorldPoint(mouseScreenPosition);
 
+        if(Input.GetAxis("Horizontal") < 0)
+        {
+            currentSelection = false;
+        }
+        if(Input.GetAxis("Horizontal") > 0)
+        {
+            currentSelection = true;
+        }
 
-        if(mouseWorldPosition.x > 1)
+
+
+
+        
+        if(currentSelection == true)
         {
             
             
@@ -65,7 +82,7 @@ public class ButtonEffect : MonoBehaviour
             }
         }
 
-        if(mouseWorldPosition.x < -1)
+        if(currentSelection == false)
         {
             
             if (yesRectTransform != null)
@@ -93,16 +110,16 @@ public class ButtonEffect : MonoBehaviour
         }
 
 
-        if(mouseWorldPosition.x > 1 && mousePastPosition.x < 1)
+        if(currentSelection == true && pastSelection == false)
         {
             selectAudio.Play();
         }
-        if(mouseWorldPosition.x < 1 && mousePastPosition.x > 1)
+        if(currentSelection == false && pastSelection == true)
         {
             selectAudio.Play();
         }
 
-        mousePastPosition = mouseWorldPosition;
+        pastSelection = currentSelection;
     }
 
 

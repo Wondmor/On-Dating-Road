@@ -165,7 +165,7 @@ MonoBehaviour:
   scrollPos: {x: 0, y: 0}
   variablesScrollPos: {x: 0, y: 0}
   variablesExpanded: 1
-  blockViewHeight: 403.66666
+  blockViewHeight: 316
   zoom: 1
   scrollViewRect:
     serializedVersion: 2
@@ -176,7 +176,7 @@ MonoBehaviour:
   selectedBlocks:
   - {fileID: 362039722}
   selectedCommands:
-  - {fileID: 362039723}
+  - {fileID: 362039721}
   variables: []
   description: 
   stepPause: 0
@@ -202,7 +202,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemId: 2
   indentLevel: 0
-  storyText: "\u4F60\u9009\u62E9\u4E86\u9519\u8BEF\u7684\u7B54\u6848\uFF0C\u53F8\u673A\u5F88\u96BE\u8FC7"
+  storyText: "\u8001\u4EBA\u6709\u70B9\u751F\u6C14\uFF0C\u53F8\u673A\u8FD8\u662F\u5F88\u96BE\u8FC7"
   description: 
   character: {fileID: 0}
   portrait: {fileID: 0}
@@ -229,7 +229,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nodeRect:
     serializedVersion: 2
-    x: 205
+    x: 203
     y: 86
     width: 113.33333
     height: 40
@@ -323,7 +323,7 @@ MonoBehaviour:
   m_BlockingObjects: 0
   m_BlockingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 247
 --- !u!114 &376884812
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -669,10 +669,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sprites:
   - {fileID: 21300000, guid: 5c6a1048a03caa24d9decce68214a3d6, type: 3}
-  - {fileID: 21300000, guid: 530e52c24b2a68f40bd076ce3a354608, type: 3}
-  - {fileID: 21300000, guid: 07130a8addf0d994dac4499bb82ec3ba, type: 3}
-  - {fileID: 21300000, guid: 54cadbdc7f06efe459b6f68999569091, type: 3}
-  - {fileID: 21300000, guid: 2883c2d0bbe233644b66a368a370d95e, type: 3}
+  - {fileID: 21300000, guid: 1a81b9b6902074a4c83b277899a67f97, type: 3}
+  - {fileID: 21300000, guid: 16152cd485954f645b4db4fa67ef84c6, type: 3}
+  - {fileID: 21300000, guid: cd1949c833309664f9faa3bebd8945db, type: 3}
+  - {fileID: 21300000, guid: 5a2aaefce1393994bbfc891863b088bd, type: 3}
   image: {fileID: 678055747}
 --- !u!1 &716452196
 GameObject:
@@ -1159,7 +1159,7 @@ MonoBehaviour:
   m_BlockingObjects: 0
   m_BlockingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 247
 --- !u!225 &1013535698
 CanvasGroup:
   m_ObjectHideFlags: 0

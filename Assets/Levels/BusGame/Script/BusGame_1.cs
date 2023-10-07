@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Fungus;
 using UnityEngine.SceneManagement;
+using UnityEngine.InputSystem;
 
 public class BusGame_1 : MonoBehaviour
 {
@@ -25,6 +26,7 @@ public class BusGame_1 : MonoBehaviour
 
     bool pass = false;
     int level = 1;
+    int tryTime = 4;
 
     float totalTime = 5.0f;
     float currentTime;
@@ -36,7 +38,9 @@ public class BusGame_1 : MonoBehaviour
     float moveDuration = 1.0f; // 移动持续时间
     bool isMoving = false;
 
-
+    bool choiceExecuting = false;
+    bool currentSelection = true;
+    
 
     void Awake()
     {
@@ -63,9 +67,12 @@ public class BusGame_1 : MonoBehaviour
     {
         currentTime -= Time.deltaTime;
 
-        if(currentTime<=0)
+        if(currentTime<=0 && choiceExecuting == false)
         {
+            choiceExecuting = true;
             No();
+            StartCoroutine(ResetChoice());
+            
         }
         if(pass)
         {
@@ -107,6 +114,31 @@ public class BusGame_1 : MonoBehaviour
             }
         }
 
+        
+        if(Input.GetAxis("Horizontal") < 0)
+        {
+            currentSelection = false;
+        }
+        if(Input.GetAxis("Horizontal") > 0)
+        {
+            currentSelection = true;
+        }
+        
+        if(Input.GetButtonUp("Submit") && choiceExecuting == false)
+        {
+            choiceExecuting = true;
+            if(currentSelection == false)
+            {
+                No();
+            }
+            if(currentSelection == true)
+            {
+                Yes();
+            }
+            StartCoroutine(ResetChoice());
+        }
+
+        
     }
 
     IEnumerator Plot_1()
@@ -241,34 +273,72 @@ public class BusGame_1 : MonoBehaviour
     
     public void Yes()
     {
+
         Debug.Log("Yes");
+
+        tryTime -= 1;
         countAudio.Stop();
         confirmAudio.Play();
         choice.SetActive(false);
+
         for(int i=0 ; i<=5 ; i++)
         {
             child[i].SetActive(false);
         }
         Score.playerScore += 1;
-        Debug.Log(Score.playerScore);
+        Debug.Log("Player score: "+Score.playerScore);
         pass = true;
-        if(Score.playerScore >= 3)
+
+        if(tryTime <= 0)
         {
-            pass = false;
-            string targetSceneName = "BusGame_Success";
-            StartCoroutine(levelLoader.LoadLevelByName(targetSceneName));
+            if(Score.playerScore >= 4)
+            {
+                pass = false;
+                string targetSceneName = "BusGame_Success";
+                StartCoroutine(levelLoader.LoadLevelByName(targetSceneName));
+            }
+            else if(Score.playerScore < 4)
+            {
+                string targetSceneName = "BusGame_Fail";
+                StartCoroutine(levelLoader.LoadLevelByName(targetSceneName));
+            }
         }
-        
+
+
     }
     public void No()
     {
+        
         Debug.Log("No");
+
+        tryTime -= 1;
         countAudio.Stop();
         confirmAudio.Play();
         choice.SetActive(false);
-        
-        string targetSceneName = "BusGame_Fail";
-        StartCoroutine(levelLoader.LoadLevelByName(targetSceneName));
+
+        for(int i=0 ; i<=5 ; i++)
+        {
+            child[i].SetActive(false);
+        }
+
+        Debug.Log("Player score: "+Score.playerScore);
+        pass = true;
+
+        if(tryTime <= 0)
+        {
+            if(Score.playerScore >= 4)
+            {
+                pass = false;
+                string targetSceneName = "BusGame_Success";
+                StartCoroutine(levelLoader.LoadLevelByName(targetSceneName));
+            }
+            else if(Score.playerScore < 4)
+            {
+                string targetSceneName = "BusGame_Fail";
+                StartCoroutine(levelLoader.LoadLevelByName(targetSceneName));
+            }
+        }
+
     }
 
 
@@ -288,4 +358,12 @@ public class BusGame_1 : MonoBehaviour
         availableNumbers.RemoveAt(index); // 从列表中移除已使用的数字
         return randomNumber;
     }
+
+
+     IEnumerator ResetChoice()
+     {
+        yield return new WaitForSeconds(1f);
+        currentTime = 3f;
+        choiceExecuting = false;
+     }
 }
