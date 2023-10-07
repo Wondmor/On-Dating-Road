@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using static Shopping;
 
 
 public struct GameData
@@ -16,7 +17,7 @@ public struct BridgeData
 {
     public bool bFadeIn { get; set; }
     public bool bLeft { get; set; }
-    public List<string> subtitles { get; set; }
+    public string subtitle { get; set; }
     public uint currentRoadMileStone { get; set; }
 }
 
@@ -29,10 +30,10 @@ public enum EScene : int
     InGame          = Bridge + 1,
     TrashShooting   = InGame,
     Racing          = TrashShooting + 1,
-    BusGame         = Racing + 1,
-    Skewer          = BusGame + 1,
-    Delivery        = Skewer + 1,
-    InGameEnd       = Delivery,
+    BusGame         = RacingSelection + 1,
+    Delivery        = BusGame + 1,
+    Skewer          = Delivery + 1,
+    InGameEnd       = Skewer,
 
     CoinSkill       = InGameEnd + 1,
     Shopping        = CoinSkill + 1,
@@ -56,6 +57,7 @@ public enum EGift
     Bad,
     Normal,
     Good,
+    Free,
     None,
 }
 
@@ -70,6 +72,7 @@ public struct EndingData
 {
     public EGift eGift { get; set; }
     public EEnding eEnding { get; set; }
+    public ShopItem giftInfo { get; set; }
 }
 
 public class GameLogicManager
@@ -121,6 +124,8 @@ public class GameLogicManager
             {EScene.TrashShooting, "TrashShooting"},
             {EScene.Racing, "RacingSelection"},
             {EScene.BusGame, "BusGame"},
+            {EScene.Delivery, "DeliveryPersonFall"},
+            {EScene.Skewer, "Skewer"},
             {EScene.CoinSkill, "CoinSkill"},
             {EScene.Delivery, "DeliveryPersonFall"},
             {EScene.Skewer, "Skewer"},
@@ -129,6 +134,15 @@ public class GameLogicManager
             {EScene.Shopping, "Shopping"},
             {EScene.Ending, "Ending"},
             {EScene.Test, "TestMain"},
+    };
+
+    List<string> bridgeLines = new List<string> { 
+    "（左边那条路红灯有点多，右边是个陡坡，我走哪边呢？）",
+    "（左边还要上天桥过马路，右边是个窄巷子，我走哪边呢？）",
+    "（左边人行道被占用了，右边地上好多水啊，我走哪边呢？）",
+    "（左边绕远路了，右边会经过前女友的楼下，我走哪边呢？）",
+    "（左边那几个大哥感觉好可怕，右边小道阴森森的，我走哪边呢？）",
+    "（左边在修路到处都是灰尘，右边有狂吠的野狗，我走哪边呢？）"
     };
 
     // Variables END///////////////////////////////////////////
@@ -260,7 +274,7 @@ public class GameLogicManager
         }
     }
 
-    public void OnShoppingFinished(EGift gift)
+    public void OnShoppingFinished(EGift gift, ShopItem giftInfo)
     {
         if (bTestMode)
             onTestFinished();
@@ -272,7 +286,7 @@ public class GameLogicManager
 
             EEnding eEnding = gameData.positiveComment >= c_GoodCharacterEndingRequest ? EEnding.GoodCharacter : EEnding.BadCharacter;
 
-            endingControl(eEnding, gift);
+            endingControl(eEnding, gift, giftInfo);
         }
     }
     public void OnEndingFinished()
@@ -283,6 +297,11 @@ public class GameLogicManager
         {
             yieldToScene(EScene.GameStart);
         }
+    }
+
+    public void SetEndingDataForTest(EndingData _endingData)
+    {
+        endingData = _endingData;
     }
     // Public Functions END///////////////////////////////////////////
 
@@ -303,9 +322,10 @@ public class GameLogicManager
         // TODO: shouldn't repeat but we don't have more than them for now.
         gamePool.Add(EScene.TrashShooting);
         gamePool.Add(EScene.Racing);
+        gamePool.Add(EScene.BusGame);
         gamePool.Add(EScene.Delivery);
         gamePool.Add(EScene.Skewer);
-        //gamePool.Add(EScene.BusGame);
+
 
 
         currentRoadMilestone = 0;
@@ -347,11 +367,15 @@ public class GameLogicManager
         {
             // Still on the road
 
+            int bridgeLineIdx = UnityEngine.Random.Range(0, bridgeLines.Count);
             BridgeData _bridgeData = new BridgeData();
             _bridgeData.bFadeIn = true;
             _bridgeData.bLeft = UnityEngine.Random.Range(0, 2) > 0;
-            _bridgeData.subtitles = new List<string>();
+            _bridgeData.subtitle = bridgeLines[bridgeLineIdx];
             _bridgeData.currentRoadMileStone = currentRoadMilestone;
+            bridgeData = _bridgeData;
+
+            bridgeLines.Remove(bridgeLines[bridgeLineIdx]);
 
             yieldToScene(EScene.Bridge);
         }
@@ -376,7 +400,7 @@ public class GameLogicManager
             if(eType == ECoinSkillType.Time)
             {
                 curState = EState.Ending;
-                endingControl(EEnding.BeLate, EGift.None);
+                endingControl(EEnding.BeLate, EGift.None, new ShopItem());
             }
             else
             {
@@ -393,7 +417,7 @@ public class GameLogicManager
         yieldToScene(EScene.Shopping);
     }
 
-    void endingControl(EEnding eEnding, EGift eGift)
+    void endingControl(EEnding eEnding, EGift eGift, ShopItem giftInfo)
     {
         if (curState != EState.Ending)
             throw new System.Exception("endingControl() during wrong state.");
@@ -401,6 +425,7 @@ public class GameLogicManager
         var _endingData = endingData;
         _endingData.eEnding = eEnding;
         _endingData.eGift = eGift;
+        _endingData.giftInfo = giftInfo;
         endingData = _endingData;
 
         yieldToScene(EScene.Ending);

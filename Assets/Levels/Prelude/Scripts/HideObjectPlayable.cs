@@ -6,6 +6,7 @@ using UnityEngine.Timeline;
 
 public class HideObjectPlayable : BasicPlayableBehaviour
 {
+    public override double duration => 1 / 300.0f;
     [Header("显示对象")]
     public ExposedReference<GameObject>[] showGos = null;
     [Header("隐藏对象")]

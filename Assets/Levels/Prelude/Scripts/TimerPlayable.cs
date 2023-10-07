@@ -7,6 +7,7 @@ using UnityEngine.Timeline;
 
 public class TimerPlayable : BasicPlayableBehaviour
 {
+    public override double duration => 1 / 300.0f;
     [Header("设置倒计时")]
     public ExposedReference<PhoneTimer> phoneTimer;
     public uint secondCount;

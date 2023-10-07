@@ -296,8 +296,8 @@ namespace TrashShooting
             if (musicUnity.State == Music.PlayState.Finished)
             {
                 // Music finished
-                money = Mathf.RoundToInt(hitNotes / 100);
-                positiveComment = 10 + hitNotes / noteCount / 5;//0-30
+                money = Mathf.Min(30, Mathf.RoundToInt(hitNotes / 5));
+                positiveComment = 10 + hitNotes / noteCount / 5;//10-30
                 result = (uint)Mathf.CeilToInt(hitNotes / noteCount / 20); //0-5 stars
                 IsFinished = true;
             }

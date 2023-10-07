@@ -6,6 +6,7 @@ using UnityEngine.Timeline;
 
 public class WaitForInputPlayable : BasicPlayableBehaviour
 {
+    public override double duration => 1 / 300.0f;
 
     [Header("等输入")]
     //public ExposedReference<CommonInputAction> input;

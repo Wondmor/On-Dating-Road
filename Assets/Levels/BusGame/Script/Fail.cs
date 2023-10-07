@@ -35,12 +35,12 @@ public class Fail : MonoBehaviour
             }
             case 4:
             {   
-                image.sprite = sprites[3];
+                image.sprite = sprites[4];
                 break;
             }
             case 5:
             {
-                image.sprite = sprites[3];
+                image.sprite = sprites[5];
                 break;
             }
 
