@@ -30,7 +30,7 @@ public enum EScene : int
     InGame          = Bridge + 1,
     TrashShooting   = InGame,
     Racing          = TrashShooting + 1,
-    BusGame         = RacingSelection + 1,
+    BusGame         = Racing + 1,
     Delivery        = BusGame + 1,
     Skewer          = Delivery + 1,
     InGameEnd       = Skewer,
