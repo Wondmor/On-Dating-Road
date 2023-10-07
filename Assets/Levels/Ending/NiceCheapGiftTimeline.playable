@@ -2856,8 +2856,6 @@ MonoBehaviour:
   - exposedName: 5dfffb5e643eb6745b3516f2c2a4a46c
     defaultValue: {fileID: 0}
   hideGos:
-  - exposedName: 4f89d72062ef3c84ea81c8fe8eb67af3
-    defaultValue: {fileID: 0}
   - exposedName: e55673eac3a02064e80ddbc0b6ba505b
     defaultValue: {fileID: 0}
 --- !u!114 &4873854556581746186

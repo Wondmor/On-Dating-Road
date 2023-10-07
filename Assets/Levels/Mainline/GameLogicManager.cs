@@ -320,7 +320,7 @@ public class GameLogicManager
         // TODO: shouldn't repeat but we don't have more than them for now.
         gamePool.Add(EScene.TrashShooting);
         gamePool.Add(EScene.Racing);
-        gamePool.Add(EScene.BusGame);
+        //gamePool.Add(EScene.BusGame);
         gamePool.Add(EScene.Delivery);
         gamePool.Add(EScene.Skewer);
 

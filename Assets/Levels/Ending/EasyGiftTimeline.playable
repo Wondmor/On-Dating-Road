@@ -1865,9 +1865,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dbfbc8b3c99aaff4a818ec6c4e1f3cad, type: 3}
   m_Name: HideObjectPlayable(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)
   m_EditorClassIdentifier: 
-  showGos:
-  - exposedName: ba94894dd37f5944fbe08b5561a60440
-    defaultValue: {fileID: 0}
+  showGos: []
   hideGos:
   - exposedName: 192a4196d5766f040ba1cb2a197a7cd7
     defaultValue: {fileID: 0}

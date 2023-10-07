@@ -30,6 +30,10 @@ MonoBehaviour:
     defaultValue: {fileID: 0}
   - exposedName: f145385192223a743b3fdaf5feed5c68
     defaultValue: {fileID: 0}
+  - exposedName: 9432fda296f0aa147abb135687e664f8
+    defaultValue: {fileID: 0}
+  - exposedName: 2cb1f8a0b0d0cdb40a677de9ddeec0a1
+    defaultValue: {fileID: 0}
 --- !u!114 &-8444741577793930167
 MonoBehaviour:
   m_ObjectHideFlags: 1

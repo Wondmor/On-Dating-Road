@@ -725,8 +725,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   showGos: []
   hideGos:
-  - exposedName: f245b5b888fb70d42a8283306b056efb
-    defaultValue: {fileID: 0}
   - exposedName: deab491fb342df94cb6335f53864b0e2
     defaultValue: {fileID: 0}
 --- !u!114 &-2564698389709081423

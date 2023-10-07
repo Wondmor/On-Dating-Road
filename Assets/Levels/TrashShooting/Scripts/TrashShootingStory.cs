@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Fungus;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -11,6 +12,7 @@ public class TrashShootingStory : MonoBehaviour
     [SerializeField] Image SubtitleBG = null;
     [SerializeField] TextMeshProUGUI text = null;
     [SerializeField] CommonSelection skipSelection = null;
+    [SerializeField] SaySubtitle saySubtitle = null;
 
     public delegate void OnFinished();
     public OnFinished onFinished= null;
@@ -52,7 +54,8 @@ public class TrashShootingStory : MonoBehaviour
         introduction.gameObject.SetActive(false);
         SubtitleBG.gameObject.SetActive(true);
         skipSelection.gameObject.SetActive(false);
-        text.text = lines[linesId];
+        //text.text = lines[linesId];
+        saySubtitle.Say("");
     }
 
     // Update is called once per frame
@@ -61,10 +64,13 @@ public class TrashShootingStory : MonoBehaviour
         switch (state)
         {
             case EState.Lines:
-                if(GameManager.Instance.CommonInputAction.enter.WasPerformedThisFrame())
+                if(GameManager.Instance.CommonInputAction.enter.WasPerformedThisFrame() || linesId == 0)
                 {
-                    if(linesId < lines.Length - 1)
-                        text.text = lines[++linesId];
+                    if(linesId < lines.Length)
+                    {
+                        //text.text = lines[++linesId];
+                        saySubtitle.Say(lines[linesId++]);
+                    }
                     else
                     {
                         SubtitleBG.gameObject.SetActive(false);
