@@ -43,7 +43,7 @@ public class RacingCountdown : MonoBehaviour
         }
         else
         {
-            timer.Add(() => { CountDown(); }, 1f);
+            timer.Add(() => { CountDown(); }, 0.9f);
         }
     }
 }

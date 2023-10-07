@@ -67,7 +67,7 @@ public class WalletFlowControl : MonoBehaviour
     {
         if(money)
         {
-            phoneMoneyText.text = "20\u5143";
+            phoneMoneyText.text = "29999\u5143";
             // show money
             flowchart.ExecuteIfHasBlock("Money");
         }
@@ -86,6 +86,6 @@ public class WalletFlowControl : MonoBehaviour
 
     public void EndWithMoney()
     {
-        GameLogicManager.Instance.OnCoinSkillFinished(2000, 0);
+        GameLogicManager.Instance.OnCoinSkillFinished(29999, 0);
     }
 }
