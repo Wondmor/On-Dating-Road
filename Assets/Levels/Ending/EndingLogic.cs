@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.Playables;
 using UnityEngine.Rendering;
 using static Shopping;
@@ -18,6 +19,10 @@ public class EndingLogic : MonoBehaviour
     [SerializeField] PlayableDirector NiceNormalGift = null;
     [SerializeField] PlayableDirector BadGoodGift = null;
     [SerializeField] PlayableDirector NiceGoodGift = null;
+    [SerializeField] AudioClip BeLateBGM = null;
+    [SerializeField] AudioClip NormalBGM = null;
+    [SerializeField] AudioMixerGroup audioMixerGroupBGM = null;
+    AudioSource BlendBGM = null;
 
     public struct GiftInfo
     {
@@ -42,6 +47,10 @@ public class EndingLogic : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        BlendBGM = gameObject.AddComponent<AudioSource>();
+        BlendBGM.outputAudioMixerGroup = audioMixerGroupBGM;
+        BlendBGM.loop = true;
+
         var endingData = GameLogicManager.Instance.endingData;
 
         //var dummyEndingData = new EndingData();
@@ -57,11 +66,15 @@ public class EndingLogic : MonoBehaviour
 
         if (endingData.eEnding == EEnding.BeLate)
         {
+            BlendBGM.clip = BeLateBGM;
+
             toPlay.Add(BeLate);
             BeLate.gameObject.SetActive(true);
         }
         else
         {
+            BlendBGM.clip = NormalBGM;
+
             giveGift.sprite = Resources.Load<Sprite>(String.Format("Shopping/Sprites/{0}", endingData.giftInfo.sprite));
             giveGift.name = endingData.giftInfo.giftname;
 
@@ -104,6 +117,8 @@ public class EndingLogic : MonoBehaviour
         }
 
         toPlay[0].stopped += OnTimelineStop;
+
+        BlendBGM.Play();
         toPlay[0].Play();
     }
 

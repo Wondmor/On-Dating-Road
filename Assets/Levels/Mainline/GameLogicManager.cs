@@ -228,22 +228,9 @@ public class GameLogicManager
         else
         {
             var _gameData = gameData;
-            _gameData.countDown = Mathf.Max(0, countDown);
-            gameData = _gameData;
-
-            OnMiniGameFinished(money, positiveComment);
-        }
-    }
-    public void OnMiniGameFinished(float money, float positiveComment)
-    {
-        if (bTestMode)
-            onTestFinished();
-        else
-        {
-            var _gameData = gameData;
             _gameData.money = Mathf.Max(0, money);
             _gameData.positiveComment = Mathf.Max(0, positiveComment);
-            _gameData.countDown = Mathf.Max(0, _gameData.countDown - c_StandardRoadDuration);
+            _gameData.countDown = Mathf.Max(0, countDown);
             gameData = _gameData;
 
             currentRoadMilestone++;
@@ -251,6 +238,10 @@ public class GameLogicManager
 
             datingRoadControl();
         }
+    }
+    public void OnMiniGameFinished(float money, float positiveComment)
+    {
+        OnMiniGameFinished(money, positiveComment, gameData.countDown - c_StandardRoadDuration);
     }
 
     public void OnCoinSkillFinished(float money, float positiveComment)

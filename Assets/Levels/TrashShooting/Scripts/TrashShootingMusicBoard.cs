@@ -37,6 +37,7 @@ namespace TrashShooting
         public float m_unitLength = 2.0f;// each bar
         public float m_UnitRange = 1.9f;
         public float m_PerfectRange = 1.5f;
+        private float[] HitNoteWeights = { 0.8f, 1.1f,1.5f };
 
         public bool IsFinished {  get; private set; }
 
@@ -56,6 +57,7 @@ namespace TrashShooting
         private uint result = 0;
         private float noteCount = 0;
         private float hitNotes = 0;
+        private float weightedHitNotes = 0;
         private float perfectNotes = 0;
         private float maxCombo = 0;
 
@@ -296,9 +298,9 @@ namespace TrashShooting
             if (musicUnity.State == Music.PlayState.Finished)
             {
                 // Music finished
-                money = Mathf.Min(30, Mathf.RoundToInt(hitNotes / 5));
-                positiveComment = 10 + hitNotes / noteCount / 5;//10-30
-                result = (uint)Mathf.CeilToInt(hitNotes / noteCount / 20); //0-5 stars
+                money = Mathf.Min(20, Mathf.RoundToInt(weightedHitNotes / 5)); //0-20
+                positiveComment = 5 + Mathf.Pow(Mathf.Clamp01(weightedHitNotes / noteCount), 0.6f) * 35.0f;//5-40
+                result = (uint)Mathf.CeilToInt(weightedHitNotes / noteCount * 5); //0-5 stars
                 IsFinished = true;
             }
             else if(musicUnity.State == Music.PlayState.Playing)
@@ -315,6 +317,7 @@ namespace TrashShooting
                     float maxCombo = statics.maxCombo;
                     noteCount += statics.notes;
                     hitNotes += statics.perfect + statics.normal;
+                    weightedHitNotes += (statics.perfect * 1.1f + statics.normal) * HitNoteWeights[(int)musicInfo.curDifficulty];
                     perfectNotes += statics.perfect;
                     this.maxCombo = Mathf.Max(maxCombo, this.maxCombo);
 

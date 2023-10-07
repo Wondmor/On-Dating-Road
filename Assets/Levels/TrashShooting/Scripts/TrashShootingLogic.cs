@@ -46,7 +46,6 @@ namespace TrashShooting
             }
         }
 
-        public AudioClip bgm = null;
         //MusicNotes musicNotes;
         public Queue<MusicNote> musicNotes = null;
         Queue<MusicPhase> musicPhaseQueue = null;
@@ -174,16 +173,6 @@ namespace TrashShooting
                     break;
             }
 
-        }
-
-        void Pause()
-        {
-            //thtodo
-        }
-
-        void Quit()
-        {
-            //thtodo
         }
     }
 }

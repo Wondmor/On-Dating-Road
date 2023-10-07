@@ -819,6 +819,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 261727677}
     m_Modifications:
+    - target: {fileID: 409217583304701480, guid: 56f5b4d6f02a3dd47b2b1352fc669c43, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 1696.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 409217583304701480, guid: 56f5b4d6f02a3dd47b2b1352fc669c43, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 67.5
+      objectReference: {fileID: 0}
     - target: {fileID: 563123837578447818, guid: 56f5b4d6f02a3dd47b2b1352fc669c43, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -1297,7 +1305,7 @@ PrefabInstance:
       objectReference: {fileID: 443103967}
     - target: {fileID: 4872075873651684149, guid: 56f5b4d6f02a3dd47b2b1352fc669c43, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4882963212830272692, guid: 56f5b4d6f02a3dd47b2b1352fc669c43, type: 3}
       propertyPath: m_IsActive
@@ -1403,6 +1411,10 @@ PrefabInstance:
       propertyPath: m_ExposedReferences.m_References.Array.data[17].second
       value: 
       objectReference: {fileID: 1717449644}
+    - target: {fileID: 6298591134331647682, guid: 56f5b4d6f02a3dd47b2b1352fc669c43, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 424fdf5db1720f04c846dfb07db70050, type: 3}
     - target: {fileID: 7137616377401827032, guid: 56f5b4d6f02a3dd47b2b1352fc669c43, type: 3}
       propertyPath: m_ExposedReferences.m_References.Array.data[0].second
       value: 
@@ -1591,6 +1603,18 @@ PrefabInstance:
       propertyPath: m_ExposedReferences.m_References.Array.data[60].second
       value: 
       objectReference: {fileID: 443103967}
+    - target: {fileID: 8270105694407847799, guid: 56f5b4d6f02a3dd47b2b1352fc669c43, type: 3}
+      propertyPath: BeLateBGM
+      value: 
+      objectReference: {fileID: 8300000, guid: 7b13a5525380bb34f8f86f561f4e9e5d, type: 3}
+    - target: {fileID: 8270105694407847799, guid: 56f5b4d6f02a3dd47b2b1352fc669c43, type: 3}
+      propertyPath: NormalBGM
+      value: 
+      objectReference: {fileID: 8300000, guid: 4e504863787086a43b7562ed81fc42dc, type: 3}
+    - target: {fileID: 8270105694407847799, guid: 56f5b4d6f02a3dd47b2b1352fc669c43, type: 3}
+      propertyPath: audioMixerGroupBGM
+      value: 
+      objectReference: {fileID: -8161454481818371149, guid: e5ba4036633a6de44a5a3575c4fa2572, type: 2}
     - target: {fileID: 8798504007407671375, guid: 56f5b4d6f02a3dd47b2b1352fc669c43, type: 3}
       propertyPath: m_ExposedReferences.m_References.Array.data[0].second
       value: 

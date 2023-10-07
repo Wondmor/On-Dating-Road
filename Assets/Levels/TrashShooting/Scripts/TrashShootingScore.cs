@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 using static TrashShooting.TrashShootingScore;
 using static UnityEngine.GraphicsBuffer;
 
@@ -14,6 +15,7 @@ namespace TrashShooting
         [SerializeField] AudioClip aPerfect = null;
         [SerializeField] AudioClip aNormal = null;
         [SerializeField] AudioClip aMiss = null;
+        [SerializeField] AudioMixerGroup audioMixerGroupSFX = null;
         AudioSource audioSource;
 
         const float c_UnitScore = 100.0f;
@@ -170,6 +172,7 @@ namespace TrashShooting
             scoreStatics = new List<ScoreStatic>();
 
             audioSource = gameObject.AddComponent<AudioSource>();
+            audioSource.outputAudioMixerGroup = audioMixerGroupSFX;
         }
 
         // Update is called once per frame
