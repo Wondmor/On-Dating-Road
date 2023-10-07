@@ -51,3 +51,28 @@ public void OnMiniGameFinished(float money, float positiveComment);
      GameLogicManager.Instance.GameData.countDown - GameLogicManager.c_StandardGameDuration * 1.1f);
 ~~~
     
+### 数值部分
+
+#### 分级
+
+玩家好评和金钱都分为5级，第5级为完美游戏，前4级是正常游戏
+
+#### 总数
+期望（玩家4级完成）
+金钱： 80
+好评： 96
+
+#### 分配
+|游戏|钱|好评|
+|-|-|-|
+|外卖| 30|          30|
+|公车| 20 |         40 |
+|捡垃圾| 20|        40|
+|共享单车| 20|      0|
+|串| 10       |    20|
+
+#### 比例
+从5级开始分别比例为
+|5|4|3|2|1|
+|-|-|-|-|-|
+|无限制|100%|80%|50%|10%|
