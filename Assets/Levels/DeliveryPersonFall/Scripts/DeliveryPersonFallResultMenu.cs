@@ -80,57 +80,55 @@ public class DeliveryPersonFallResultMenu : MonoBehaviour
     private void Awake()
     {
         continueAction = inputActionAsset.FindAction("Continue");
-        continueAction.performed += ctx => 
+    }
+
+    private void OnContinuePressed(InputAction.CallbackContext _)
+    {
+        switch (state)
         {
-            switch(state)
-            {
-                case State.WaitingShowBox:
-                    Sequence sequence = DOTween.Sequence();
-                    leftItemGOGroup.SetActive(false);
-                    rightItemGOGroup.SetActive(false);
-                    state = State.AnimatingShowResult;
-                    var centerResultTrans = catchExpensive ? goodImageGO.transform : badImageGO.transform;
-                    resultAudioSource = catchExpensive ? goodEndAS : badEndAS;
-                    resultAudioSource.Play();
-                    sequence.Append(centerResultTrans.transform.DOScale(Vector3.one, 1.5f));
-                    sequence.Join(centerResultTrans.transform.DOLocalRotate(new Vector3(0f, 0f, 3600f), 1.5f, RotateMode.FastBeyond360));
-                    sequence.AppendCallback(() =>
+            case State.WaitingShowBox:
+                Sequence sequence = DOTween.Sequence();
+                leftItemGOGroup.SetActive(false);
+                rightItemGOGroup.SetActive(false);
+                state = State.AnimatingShowResult;
+                var centerResultTrans = catchExpensive ? goodImageGO.transform : badImageGO.transform;
+                resultAudioSource = catchExpensive ? goodEndAS : badEndAS;
+                resultAudioSource.Play();
+                sequence.Append(centerResultTrans.transform.DOScale(Vector3.one, 1.5f));
+                sequence.Join(centerResultTrans.transform.DOLocalRotate(new Vector3(0f, 0f, 3600f), 1.5f, RotateMode.FastBeyond360));
+                sequence.AppendCallback(() =>
+                {
+                    state = State.WaitingResult;
+                });
+                break;
+            case State.WaitingResult:
+                if (catchExpensive)
+                {
+                    HideAndContinue();
+                }
+                else
+                {
+                    state = State.AnimatingHeartResult;
+                    int origHeartCount = heartCount + 1;
+                    for (int i = 0; i < heartList.Count; ++i)
                     {
-                        expensiveSuccessGO.SetActive(catchExpensive);
-                        expensiveFailGO.SetActive(!catchExpensive && !catchCargo);
-                        cheapFailGO.SetActive(!catchExpensive || !catchCargo);
-                        state = State.WaitingResult;
-                    });
-                    break;
-                case State.WaitingResult:
-                    if(catchExpensive)
+                        heartList[i].SetActive(i < origHeartCount);
+                    }
+                    Sequence heartSequence = DOTween.Sequence();
+                    heartSequence.Append(heartLoseCanvasGroup.DOFade(1f, 0.5f))
+                    .Append(heartList[heartCount].transform.DOShakeRotation(1f, new Vector3(0f, 0f, 90f)))
+                    .Insert(0.5f, heartList[heartCount].GetComponent<Image>().DOFade(0f, 0.5f))
+                    .AppendInterval(1f)
+                    .Append(heartLoseCanvasGroup.DOFade(0f, 0.5f))
+                    .AppendCallback(() =>
                     {
                         HideAndContinue();
-                    }
-                    else
-                    {
-                        state = State.AnimatingHeartResult;
-                        int origHeartCount = heartCount + 1; 
-                        for (int i = 0; i < heartList.Count; ++i)
-                        {
-                            heartList[i].SetActive(i < origHeartCount);
-                        }
-                        Sequence heartSequence = DOTween.Sequence();
-                        heartSequence.Append(heartLoseCanvasGroup.DOFade(1f, 0.5f))
-                        .Append(heartList[heartCount].transform.DOShakeRotation(1f, new Vector3(0f, 0f, 90f)))
-                        .Insert(0.5f, heartList[heartCount].GetComponent<Image>().DOFade(0f, 0.5f))
-                        .AppendInterval(1f)
-                        .Append(heartLoseCanvasGroup.DOFade(0f, 0.5f))
-                        .AppendCallback(() =>
-                        {
-                            HideAndContinue();
-                        });
-                    }
-                    break;
-                default:
-                    return;
-            }
-        };
+                    });
+                }
+                break;
+            default:
+                return;
+        }
     }
 
     private void HideAndContinue()
@@ -142,12 +140,14 @@ public class DeliveryPersonFallResultMenu : MonoBehaviour
     public void OnEnable()
     {
         continueAction.Enable();
+        continueAction.performed += OnContinuePressed;
     }
 
     public void OnDisable()
     {
         continueAction.Disable();
         resultAudioSource?.Stop();
+        continueAction.performed -= OnContinuePressed;
     }
 
     public void Show(bool _catchCargo, bool _catchExpensive, string levelName, bool yellow, int _heartCount)
@@ -197,8 +197,12 @@ public class DeliveryPersonFallResultMenu : MonoBehaviour
         Sequence sequence = DOTween.Sequence();
         sequence.Append(leftTicketTrans.DOLocalMove(leftTicketEndPos.localPosition, 0.5f).SetEase(Ease.Linear));
         sequence.Join(rightTicketTrans.DOLocalMove(rightTicketEndPos.localPosition, 0.5f).SetEase(Ease.Linear));
+        sequence.AppendInterval(1f);
         sequence.AppendCallback(() =>
         {
+            expensiveSuccessGO.SetActive(catchExpensive);
+            expensiveFailGO.SetActive(!catchExpensive && !catchCargo);
+            cheapFailGO.SetActive(!catchExpensive || !catchCargo);
             state = State.WaitingShowBox;
         });
         heartLoseCanvasGroup.alpha = 0f;

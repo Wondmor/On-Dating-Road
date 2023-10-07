@@ -30,7 +30,7 @@ public class DeliveryPersonFallGameManager : MonoBehaviour
     int curLevelIndex = 0;
     int cargoCatchCount = 0;
     bool yellow;
-    ReactiveProperty<int> heartCountProp = new(3);
+    ReactiveProperty<int> heartCountProp = new(6);
 
     private void Awake()
     {
@@ -63,6 +63,7 @@ public class DeliveryPersonFallGameManager : MonoBehaviour
             }
             resultMenu.Show(catchCargo, catchExpensiveCargo, levelNameList[curLevelIndex], yellow, heartCountProp.Value);
             audioSource.Stop();
+            hud.gameObject.SetActive(false);
         }).AddTo(this);
         resultMenu.OnHideFinished.Subscribe(async _ =>
         {
@@ -117,7 +118,7 @@ public class DeliveryPersonFallGameManager : MonoBehaviour
         commonSelection.gameObject.SetActive(false);
         if (help)
         {
-            heartCountProp.Value = 3;
+            heartCountProp.Value = 6;
             tutorialMenu.ShowMenu();
         }
         else
@@ -134,6 +135,7 @@ public class DeliveryPersonFallGameManager : MonoBehaviour
         await UniTask.Delay(TimeSpan.FromSeconds(1f));
         animator.SetTrigger("Play");
         audioSource.Play();
+        hud.gameObject.SetActive(true);
     }
 
     public void Launch()
