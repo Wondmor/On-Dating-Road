@@ -28,6 +28,11 @@ public class EndingLogic : MonoBehaviour
     [Header("礼物")]
     [SerializeField] GiftInfo[] gifts = null;
 
+    [SerializeField] Sprite arcade = null;
+    [SerializeField] Sprite candle = null;
+    [SerializeField] Sprite rooster = null;
+
+
     List<PlayableDirector> toPlay = new List<PlayableDirector>();
     GiftInfo getGift = new GiftInfo();
     GiftInfo giveGift = new GiftInfo();
@@ -39,15 +44,15 @@ public class EndingLogic : MonoBehaviour
     {
         var endingData = GameLogicManager.Instance.endingData;
 
-        var dummyEndingData = new EndingData();
-        dummyEndingData.eEnding = EEnding.BadCharacter;
-        dummyEndingData.eGift = EGift.Free;
-        var dummyGiftInfo = new ShopItem();
-        dummyGiftInfo.sprite = "19";
-        dummyGiftInfo.giftname = "传单折的千纸鹤";
-        dummyEndingData.giftInfo = dummyGiftInfo;
+        //var dummyEndingData = new EndingData();
+        //dummyEndingData.eEnding = EEnding.BadCharacter;
+        //dummyEndingData.eGift = EGift.Free;
+        //var dummyGiftInfo = new ShopItem();
+        //dummyGiftInfo.sprite = "19";
+        //dummyGiftInfo.giftname = "传单折的千纸鹤";
+        //dummyEndingData.giftInfo = dummyGiftInfo;
 
-        endingData = endingData;
+        //endingData = dummyEndingData;
 
 
         if (endingData.eEnding == EEnding.BeLate)
@@ -66,7 +71,7 @@ public class EndingLogic : MonoBehaviour
             {
                 case EGift.Free:
                     toPlay.Add(FreeGift);
-                    getGift.sprite = Resources.Load<Sprite>("Assets/Levels/Ending/Textures/礼物-限量版桌面mini街机.png");
+                    getGift.sprite = arcade;
                     getGift.name = "Taito Egret mini桌面游戏机套装";
                     break;
                 case EGift.Bad:
@@ -74,12 +79,12 @@ public class EndingLogic : MonoBehaviour
                         NiceCheapGift:BadCheapGift);
                     if(endingData.eEnding == EEnding.GoodCharacter)
                     {
-                        getGift.sprite = Resources.Load<Sprite>("Assets/Levels/Ending/Textures/礼物-高级香薰蜡烛.png");
+                        getGift.sprite = candle;
                         getGift.name = "高级香薰蜡烛";
                     }
                     else
                     {
-                        getGift.sprite = Resources.Load<Sprite>("Assets/Levels/Ending/Textures/礼物-铁皮小公鸡.png");
+                        getGift.sprite = rooster;
                         getGift.name = "铁皮小公鸡";
                     }
                     break;
@@ -92,29 +97,33 @@ public class EndingLogic : MonoBehaviour
                 case EGift.Good:
                     toPlay.Add(endingData.eEnding == EEnding.GoodCharacter ?
                         NiceGoodGift : BadGoodGift);
-                    getGift.sprite = Resources.Load<Sprite>("Assets/Levels/Ending/Textures/礼物-限量版桌面mini街机.png");
+                    getGift.sprite = arcade;
                     getGift.name = "Taito Egret mini桌面游戏机套装";
                     break;
             }
         }
 
-
+        toPlay[0].stopped += OnTimelineStop;
         toPlay[0].Play();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (playingTimelineIdx < toPlay.Count) 
+    }
+
+    public void OnTimelineStop(PlayableDirector _dir)
+    {
+        if (playingTimelineIdx < toPlay.Count)
         {
-            if (!toPlay[playingTimelineIdx].playableGraph.IsValid())
-            {
                 ++playingTimelineIdx;
                 if (playingTimelineIdx < toPlay.Count)
-                    toPlay[playingTimelineIdx].Play();
+            {
+                toPlay[playingTimelineIdx].stopped += OnTimelineStop;
+                toPlay[playingTimelineIdx].Play();
+            }
                 else
                     OnFinished();
-            }
         }
     }
 
@@ -135,7 +144,6 @@ public class EndingLogic : MonoBehaviour
 
     public void OnFinished()
     {
-        if (GameManager.Instance.CommonInputAction.enter.WasPerformedThisFrame())
             GameLogicManager.Instance.OnEndingFinished();
     }
 }

@@ -5,7 +5,7 @@ using UnityEngine.Events;
 using UnityEngine.Playables;
 using UnityEngine.Timeline;
 
-public class NextTimelinePlayable : BasicPlayableBehaviour
+public class DelegatePlayable : BasicPlayableBehaviour
 {
     public override double duration => 1 / 300.0f;
     [SerializeField] UnityEvent<string> OnTimelineFinish;

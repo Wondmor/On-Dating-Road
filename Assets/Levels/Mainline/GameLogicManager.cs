@@ -282,6 +282,11 @@ public class GameLogicManager
             yieldToScene(EScene.GameStart);
         }
     }
+
+    public void SetEndingDataForTest(EndingData _endingData)
+    {
+        endingData = _endingData;
+    }
     // Public Functions END///////////////////////////////////////////
 
     // Private FUnctions//////////////////////////////////////////////
