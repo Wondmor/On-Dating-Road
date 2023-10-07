@@ -470,6 +470,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 55108351291282631, guid: d3492bd4728ddb14c864a104f9592fbd, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: e4b2e16bd2fe87c4c88c22cd2bfbce15, type: 3}
     - target: {fileID: 160744965679058763, guid: d3492bd4728ddb14c864a104f9592fbd, type: 3}
       propertyPath: m_Camera
       value: 
@@ -518,10 +522,34 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4439704028200725036, guid: d3492bd4728ddb14c864a104f9592fbd, type: 3}
+      propertyPath: aMiss
+      value: 
+      objectReference: {fileID: 8300000, guid: d21ab268d5429244b827f30b59a92a05, type: 3}
+    - target: {fileID: 4439704028200725036, guid: d3492bd4728ddb14c864a104f9592fbd, type: 3}
+      propertyPath: aNormal
+      value: 
+      objectReference: {fileID: 8300000, guid: 8aa80afce008e53429f8ab34fb6c93fd, type: 3}
+    - target: {fileID: 4439704028200725036, guid: d3492bd4728ddb14c864a104f9592fbd, type: 3}
+      propertyPath: aPerfect
+      value: 
+      objectReference: {fileID: 8300000, guid: 1fea19787becc7242a9499150d5fd457, type: 3}
     - target: {fileID: 4902942327528959854, guid: d3492bd4728ddb14c864a104f9592fbd, type: 3}
       propertyPath: m_Name
       value: TrashShooting
       objectReference: {fileID: 0}
+    - target: {fileID: 5669758317572760170, guid: d3492bd4728ddb14c864a104f9592fbd, type: 3}
+      propertyPath: Miss
+      value: 
+      objectReference: {fileID: 8300000, guid: d21ab268d5429244b827f30b59a92a05, type: 3}
+    - target: {fileID: 5669758317572760170, guid: d3492bd4728ddb14c864a104f9592fbd, type: 3}
+      propertyPath: Normal
+      value: 
+      objectReference: {fileID: 8300000, guid: 8aa80afce008e53429f8ab34fb6c93fd, type: 3}
+    - target: {fileID: 5669758317572760170, guid: d3492bd4728ddb14c864a104f9592fbd, type: 3}
+      propertyPath: Perfect
+      value: 
+      objectReference: {fileID: 8300000, guid: 1fea19787becc7242a9499150d5fd457, type: 3}
     - target: {fileID: 6045102038496138087, guid: d3492bd4728ddb14c864a104f9592fbd, type: 3}
       propertyPath: m_IsActive
       value: 0
