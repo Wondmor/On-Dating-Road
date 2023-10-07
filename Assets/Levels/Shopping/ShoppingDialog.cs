@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -67,6 +67,6 @@ public class ShoppingDialog : MonoBehaviour
         notEnough.SetActive(false);
         buttonTrue.gameObject.SetActive(false);
         buttonFalse.gameObject.SetActive(false);
-        buyText.text = string.Format("�õ���{0}", name);
+        buyText.text = string.Format("µÃµ½ÁË{0}", name);
     }
 }

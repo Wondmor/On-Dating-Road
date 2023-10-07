@@ -1,4 +1,4 @@
-using Fungus;
+﻿using Fungus;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -26,6 +26,7 @@ public class Shopping : MonoBehaviour
     {
         public string name;
         public string description;
+        public string giftname;
         public string sprite;
         public float price;
         public int type;
@@ -88,7 +89,7 @@ public class Shopping : MonoBehaviour
         TextAsset shopListJson = Resources.Load<TextAsset>("Shopping/shoplist");
         shopInfo = JsonUtility.FromJson<ShopInfo>(shopListJson.text);
         finalMainPosition = main.transform.localPosition + Vector3.up * 260;
-        money = 128;
+        money = 0;
     }
     // Start is called before the first frame update
     void Start()
@@ -146,11 +147,23 @@ public class Shopping : MonoBehaviour
 
     public void ShoppingFinish(EGift gift = EGift.None)
     {
-        if(gift == EGift.None)
+        if (gift == EGift.None)
         {
-            gift = (EGift)shopInfo.items[currentItem].type;
+            var freeGift = new ShopItem();
+            freeGift.name = "千纸鹤";
+            freeGift.price = 0;
+            freeGift.sprite = "19";
+            freeGift.description = "";
+            freeGift.giftname = "宣传单折的千纸鹤";
+            freeGift.type = (int)EGift.Free;
+
+            gift = EGift.Free;
+            GameLogicManager.Instance.OnShoppingFinished(gift, freeGift);
         }
-        GameLogicManager.Instance.OnShoppingFinished(gift);
+        else
+        {
+            GameLogicManager.Instance.OnShoppingFinished(gift, shopInfo.items[currentItem]);
+        }
     }
 
     // Update is called once per frame

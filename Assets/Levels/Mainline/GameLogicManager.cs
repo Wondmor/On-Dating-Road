@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using static Shopping;
 
 
 public struct GameData
@@ -54,6 +55,7 @@ public enum EGift
     Bad,
     Normal,
     Good,
+    Free,
     None,
 }
 
@@ -68,6 +70,7 @@ public struct EndingData
 {
     public EGift eGift { get; set; }
     public EEnding eEnding { get; set; }
+    public ShopItem giftInfo { get; set; }
 }
 
 public class GameLogicManager
@@ -255,7 +258,7 @@ public class GameLogicManager
         }
     }
 
-    public void OnShoppingFinished(EGift gift)
+    public void OnShoppingFinished(EGift gift, ShopItem giftInfo)
     {
         if (bTestMode)
             onTestFinished();
@@ -267,7 +270,7 @@ public class GameLogicManager
 
             EEnding eEnding = gameData.positiveComment >= c_GoodCharacterEndingRequest ? EEnding.GoodCharacter : EEnding.BadCharacter;
 
-            endingControl(eEnding, gift);
+            endingControl(eEnding, gift, giftInfo);
         }
     }
     public void OnEndingFinished()
@@ -372,7 +375,7 @@ public class GameLogicManager
             if(eType == ECoinSkillType.Time)
             {
                 curState = EState.Ending;
-                endingControl(EEnding.BeLate, EGift.None);
+                endingControl(EEnding.BeLate, EGift.None, new ShopItem());
             }
             else
             {
@@ -389,7 +392,7 @@ public class GameLogicManager
         yieldToScene(EScene.Shopping);
     }
 
-    void endingControl(EEnding eEnding, EGift eGift)
+    void endingControl(EEnding eEnding, EGift eGift, ShopItem giftInfo)
     {
         if (curState != EState.Ending)
             throw new System.Exception("endingControl() during wrong state.");
@@ -397,6 +400,7 @@ public class GameLogicManager
         var _endingData = endingData;
         _endingData.eEnding = eEnding;
         _endingData.eGift = eGift;
+        _endingData.giftInfo = giftInfo;
         endingData = _endingData;
 
         yieldToScene(EScene.Ending);

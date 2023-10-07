@@ -26,8 +26,8 @@ public class GiftPlayable : BasicPlayableBehaviour
         string giftName = string.Empty;
         endingLogic.GetGiftInfo(bGet, ref sprite, ref giftName);
         text += giftName;
-        endingGift.SetGift(sprite, text);
         endingGift.gameObject.SetActive(true);
+        endingGift.SetGift(sprite, text);
     }
 
     public override void OnBehaviourPause(Playable playable, FrameData info)

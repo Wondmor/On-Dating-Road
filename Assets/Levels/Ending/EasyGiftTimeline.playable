@@ -711,75 +711,6 @@ MonoBehaviour:
     m_PreExtrapolationTime: 0
     m_DisplayName: HideObjectPlayable
   - m_Version: 1
-    m_Start: 0.35
-    m_ClipIn: 0
-    m_Asset: {fileID: 7699546231220425625}
-    m_Duration: 0.016666666666666666
-    m_TimeScale: 1
-    m_ParentTrack: {fileID: -4622242872429680242}
-    m_EaseInDuration: 0
-    m_EaseOutDuration: 0
-    m_BlendInDuration: -1
-    m_BlendOutDuration: -1
-    m_MixInCurve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 1
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    m_MixOutCurve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 1
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    m_BlendInCurveMode: 0
-    m_BlendOutCurveMode: 0
-    m_ExposedParameterNames: []
-    m_AnimationCurves: {fileID: 0}
-    m_Recordable: 0
-    m_PostExtrapolationMode: 0
-    m_PreExtrapolationMode: 0
-    m_PostExtrapolationTime: 0
-    m_PreExtrapolationTime: 0
-    m_DisplayName: TimelineEndPlayable
-  - m_Version: 1
     m_Start: 0.31666666666666665
     m_ClipIn: 0
     m_Asset: {fileID: -1745259554443679030}
@@ -2785,21 +2716,6 @@ MonoBehaviour:
   bGet: 1
   endingLogic: {fileID: 0}
   endingGift: {fileID: 0}
---- !u!114 &7699546231220425625
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8c5fb32de0360214190ca74e4db67a13, type: 3}
-  m_Name: TimelineEndPlayable
-  m_EditorClassIdentifier: 
-  timelineLogic:
-    exposedName: 717ab218e52c68d4b84f916e4e9bd3fa
-    defaultValue: {fileID: 0}
 --- !u!114 &8215986389319898578
 MonoBehaviour:
   m_ObjectHideFlags: 1
