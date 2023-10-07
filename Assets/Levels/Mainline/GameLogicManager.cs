@@ -17,7 +17,7 @@ public struct BridgeData
 {
     public bool bFadeIn { get; set; }
     public bool bLeft { get; set; }
-    public List<string> subtitles { get; set; }
+    public string subtitle { get; set; }
     public uint currentRoadMileStone { get; set; }
 }
 
@@ -31,7 +31,9 @@ public enum EScene : int
     TrashShooting   = InGame,
     Racing          = TrashShooting + 1,
     BusGame         = Racing + 1,
-    InGameEnd       = BusGame,
+    Delivery        = BusGame + 1,
+    Skewer          = Delivery + 1,
+    InGameEnd       = Skewer,
 
     CoinSkill       = InGameEnd + 1,
     Shopping        = CoinSkill + 1,
@@ -102,7 +104,7 @@ public class GameLogicManager
 
 
     
-    const uint c_RoadMilestoneCount = 5;
+    const uint c_RoadMilestoneCount = 4;
 
     public const float c_StandardGameDuration = 1200;
     const float c_StandardRoadDuration = 300;
@@ -122,11 +124,22 @@ public class GameLogicManager
             {EScene.TrashShooting, "TrashShooting"},
             {EScene.Racing, "Racing"},
             {EScene.BusGame, "BusGame"},
+            {EScene.Delivery, "DeliveryPersonFall"},
+            {EScene.Skewer, "Skewer"},
             {EScene.CoinSkill, "CoinSkill"},
 
             {EScene.Shopping, "Shopping"},
             {EScene.Ending, "Ending"},
             {EScene.Test, "TestMain"},
+    };
+
+    List<string> bridgeLines = new List<string> { 
+    "（左边那条路红灯有点多，右边是个陡坡，我走哪边呢？）",
+    "（左边还要上天桥过马路，右边是个窄巷子，我走哪边呢？）",
+    "（左边人行道被占用了，右边地上好多水啊，我走哪边呢？）",
+    "（左边绕远路了，右边会经过前女友的楼下，我走哪边呢？）",
+    "（左边那几个大哥感觉好可怕，右边小道阴森森的，我走哪边呢？）",
+    "（左边在修路到处都是灰尘，右边有狂吠的野狗，我走哪边呢？）"
     };
 
     // Variables END///////////////////////////////////////////
@@ -307,9 +320,9 @@ public class GameLogicManager
         gamePool.Add(EScene.TrashShooting);
         gamePool.Add(EScene.Racing);
         gamePool.Add(EScene.BusGame);
-        gamePool.Add(EScene.TrashShooting);
-        gamePool.Add(EScene.Racing);
-        gamePool.Add(EScene.BusGame);
+        gamePool.Add(EScene.Delivery);
+        gamePool.Add(EScene.Skewer);
+
 
 
         currentRoadMilestone = 0;
@@ -351,11 +364,15 @@ public class GameLogicManager
         {
             // Still on the road
 
+            int bridgeLineIdx = UnityEngine.Random.Range(0, bridgeLines.Count);
             BridgeData _bridgeData = new BridgeData();
             _bridgeData.bFadeIn = true;
             _bridgeData.bLeft = UnityEngine.Random.Range(0, 2) > 0;
-            _bridgeData.subtitles = new List<string>();
+            _bridgeData.subtitle = bridgeLines[bridgeLineIdx];
             _bridgeData.currentRoadMileStone = currentRoadMilestone;
+            bridgeData = _bridgeData;
+
+            bridgeLines.Remove(bridgeLines[bridgeLineIdx]);
 
             yieldToScene(EScene.Bridge);
         }

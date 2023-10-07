@@ -25,7 +25,9 @@ public class TrashShootingSummary : MonoBehaviour
     public void SetScore(uint result, float addMoney, float addPositiveComments, float passTimeRate)
     {
         
-        text.text = string.Format("{0} stars \n money +{1} \n positiveComment +{2} \n timeRate x{3}",
-            result, addMoney, addPositiveComments, passTimeRate);
+        //text.text = string.Format("{0} stars \n money +{1} \n positiveComment +{2} \n timeRate x{3}",
+        //    result, addMoney, addPositiveComments, passTimeRate);
+        
+        text.text = string.Format("{0}",Mathf.RoundToInt(addMoney));
     }
 }
