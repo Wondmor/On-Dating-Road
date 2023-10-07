@@ -122,13 +122,6 @@ public class SkewerGameController : MonoBehaviour
         {
             GetInput();
         }
-        else if (status == GameStatus.END)
-        {
-            if (GameManager.Instance.CommonInputAction.GetPerformedTypeThisFrame() == CommonInputAction.EType.Enter)
-            {
-                GameLogicManager.Instance.OnMiniGameFinished((float)totalNumber * 5 / 10, 0);
-            }
-        }
     }
 
     void GetInput()
@@ -213,7 +206,15 @@ public class SkewerGameController : MonoBehaviour
                 flowchart.ExecuteIfHasBlock("GameEnd");
                 break;
             case GameStatus.END:
-                GameLogicManager.Instance.OnMiniGameFinished(totalNumber * 5 / 10, 0);
+                float baseMoney = (float)totalNumber * 5 / 10;
+                float baseComment = 40;
+
+                if(totalNumber > 40)
+                {
+                    baseMoney *= 10;
+                }
+                GameLogicManager.Instance.OnMiniGameFinished(baseMoney, baseComment);
+
                 break;
             default:
                 Debug.Log("Wrong status?" + status.ToString());

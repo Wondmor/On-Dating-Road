@@ -14,13 +14,46 @@ public class RacingFinishControl : MonoBehaviour
     {
         bool finished = GameManager.Instance.RacingData.RaceTime == 2;
         flowchart.SetBooleanVariable("Finished", finished);
-        flowchart.SetStringVariable("Money", GetMoney().ToString() + "\u5143");
+        flowchart.SetStringVariable("Money", (GameManager.Instance.RacingData.Money - GetMoney()).ToString() + "\u5143");
     }
 
     int GetMoney()
     {
+        // get how many health do we have left
+        int health = GameManager.Instance.RacingData.RemainHealth;
         int timeUsed = GameManager.Instance.RacingData.TimeUsed;
-        return timeUsed * 20;
+
+        int level = 1;
+        float baseMoney = 20;
+
+        if (health == 6 && timeUsed < 30)
+        {
+            level = 5;
+            baseMoney *= 10;
+        }
+        else if(health >= 5 && timeUsed < 60)
+        {
+            level = 4;
+            baseMoney *= 1;
+        }
+        else if(health >= 3 && timeUsed < 70)
+        {
+            level = 3;
+            baseMoney *= 0.8f;
+        }
+        else if(health >= 2 && timeUsed < 90)
+        {
+            level = 2;
+            baseMoney *= 0.6f;
+        }
+        else
+        {
+            level = 1;
+            baseMoney *= 0.1f;
+        }
+
+
+        return (int)baseMoney;
     }
 
 
@@ -31,7 +64,7 @@ public class RacingFinishControl : MonoBehaviour
 
     public void FinishGame()
     {
-        GameLogicManager.Instance.OnMiniGameFinished(15, 0);
+        GameLogicManager.Instance.OnMiniGameFinished(GetMoney(), 0);
     }
 
 }
