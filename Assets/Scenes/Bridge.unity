@@ -1199,6 +1199,18 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3753628133337220483, guid: 7e47b3a3670f76a479777224faad563d, type: 3}
+      propertyPath: BGMSource
+      value: 
+      objectReference: {fileID: 1557987250}
+    - target: {fileID: 3753628133337220483, guid: 7e47b3a3670f76a479777224faad563d, type: 3}
+      propertyPath: SFXSource
+      value: 
+      objectReference: {fileID: 1509187521}
+    - target: {fileID: 3753628133337220483, guid: 7e47b3a3670f76a479777224faad563d, type: 3}
+      propertyPath: walkingClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 44f53e12dce61594b8049dca9038faee, type: 3}
+    - target: {fileID: 3753628133337220483, guid: 7e47b3a3670f76a479777224faad563d, type: 3}
       propertyPath: SpinningCoin
       value: 
       objectReference: {fileID: 1845694300278129503}
@@ -1281,6 +1293,10 @@ PrefabInstance:
     - target: {fileID: 8989260748748086709, guid: 7e47b3a3670f76a479777224faad563d, type: 3}
       propertyPath: bPlayAudio
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8989260748748086709, guid: 7e47b3a3670f76a479777224faad563d, type: 3}
+      propertyPath: lastInSecond
+      value: 0.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
