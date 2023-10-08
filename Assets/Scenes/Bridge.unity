@@ -1214,6 +1214,30 @@ PrefabInstance:
       propertyPath: SpinningCoin
       value: 
       objectReference: {fileID: 1845694300278129503}
+    - target: {fileID: 3753628133337220483, guid: 7e47b3a3670f76a479777224faad563d, type: 3}
+      propertyPath: afterRacingBG
+      value: 
+      objectReference: {fileID: 21300000, guid: 2f85fc91ce6300844b33355ce74067a3, type: 3}
+    - target: {fileID: 3753628133337220483, guid: 7e47b3a3670f76a479777224faad563d, type: 3}
+      propertyPath: afterSkewerBG
+      value: 
+      objectReference: {fileID: 21300000, guid: 1064f9fcc621b9343a40796c7c7ec42e, type: 3}
+    - target: {fileID: 3753628133337220483, guid: 7e47b3a3670f76a479777224faad563d, type: 3}
+      propertyPath: afterBusGameBG
+      value: 
+      objectReference: {fileID: 21300000, guid: 5c6a1048a03caa24d9decce68214a3d6, type: 3}
+    - target: {fileID: 3753628133337220483, guid: 7e47b3a3670f76a479777224faad563d, type: 3}
+      propertyPath: afterPreludeBG
+      value: 
+      objectReference: {fileID: 21300000, guid: ca140028e57ca914da73120433653120, type: 3}
+    - target: {fileID: 3753628133337220483, guid: 7e47b3a3670f76a479777224faad563d, type: 3}
+      propertyPath: afterDeliveryBG
+      value: 
+      objectReference: {fileID: 21300000, guid: 27db996cccb820448ac3281d65e4fa07, type: 3}
+    - target: {fileID: 3753628133337220483, guid: 7e47b3a3670f76a479777224faad563d, type: 3}
+      propertyPath: afterTrashshootingBG
+      value: 
+      objectReference: {fileID: 21300000, guid: 8dd2abeadfde8d54094f54cd1f27fc88, type: 3}
     - target: {fileID: 4256658008288989247, guid: 7e47b3a3670f76a479777224faad563d, type: 3}
       propertyPath: m_IsActive
       value: 0

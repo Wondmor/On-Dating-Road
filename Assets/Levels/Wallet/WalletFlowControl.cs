@@ -79,11 +79,12 @@ public class WalletFlowControl : MonoBehaviour
 
     public void EndWithCar()
     {
-        GameLogicManager.Instance.OnCoinSkillFinished(0, 20);
+        GameLogicManager.Instance.OnCoinSkillFinished(GameLogicManager.Instance.gameData.money, GameLogicManager.Instance.gameData.positiveComment + 20);
     }
 
     public void EndWithMoney()
     {
-        GameLogicManager.Instance.OnCoinSkillFinished(38888, 0);
+        GameLogicManager.Instance.OnCoinSkillFinished(GameLogicManager.Instance.gameData.money + 38888, GameLogicManager.Instance.gameData.positiveComment);
+    }
     }
 }

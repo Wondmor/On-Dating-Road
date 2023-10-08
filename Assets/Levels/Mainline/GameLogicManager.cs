@@ -19,6 +19,7 @@ public struct BridgeData
     public bool bLeft { get; set; }
     public string subtitle { get; set; }
     public uint currentRoadMileStone { get; set; }
+    public EScene prevGame { get; set; }
 }
 
 public enum EScene : int
@@ -99,6 +100,7 @@ public class GameLogicManager
     EState curState { get; set; }
     List<EScene> gamePool = null;
     List<EScene> finishedMiniGames = null;
+    EScene prevGame = EScene.Prelude;
     uint currentRoadMilestone = 0;
 
     // Unless Restart() is called from beginning
@@ -115,7 +117,7 @@ public class GameLogicManager
     const float c_CoinSkillRequest = 50; // Coin skill check
     const float c_CoinSkillMoneyAdd = 38888; // The number Musk'll give you in RMB (Maybe with alipay).
     
-    const float c_GoodCharacterEndingRequest = 75; // Ending check
+    const float c_GoodCharacterEndingRequest = 60; // Ending check
 
     public static readonly Dictionary<EScene, string> c_sceneNames = new Dictionary<EScene, string>
     {
@@ -211,6 +213,7 @@ public class GameLogicManager
 
             UnityEngine.Debug.Log(String.Format("Start MiniGame{0}", c_sceneNames[nextGame]));
             finishedMiniGames.Add(nextGame);
+            prevGame = nextGame;
             yieldToScene(nextGame);
         }
     }
@@ -324,7 +327,7 @@ public class GameLogicManager
 
         finishedMiniGames = new List<EScene>();
 
-
+        prevGame = EScene.Prelude;
         currentRoadMilestone = 0;
 
         curState = EState.Prelude;
@@ -371,6 +374,7 @@ public class GameLogicManager
             _bridgeData.bLeft = UnityEngine.Random.Range(0, 2) > 0;
             _bridgeData.subtitle = bridgeLines[bridgeLineIdx];
             _bridgeData.currentRoadMileStone = currentRoadMilestone;
+            _bridgeData.prevGame = prevGame;
             bridgeData = _bridgeData;
 
             bridgeLines.Remove(bridgeLines[bridgeLineIdx]);

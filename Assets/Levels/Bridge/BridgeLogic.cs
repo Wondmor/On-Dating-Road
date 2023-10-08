@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class BridgeLogic : MonoBehaviour
 {
@@ -14,10 +15,17 @@ public class BridgeLogic : MonoBehaviour
     [SerializeField] public AudioSource BGMSource = null;
     [SerializeField] public AudioSource SFXSource = null;
     [SerializeField] public AudioClip walkingClip = null;
+    [SerializeField] public Sprite afterPreludeBG = null;
+    [SerializeField] public Sprite afterBusGameBG = null;
+    [SerializeField] public Sprite afterTrashshootingBG = null;
+    [SerializeField] public Sprite afterSkewerBG = null;
+    [SerializeField] public Sprite afterRacingBG = null;
+    [SerializeField] public Sprite afterDeliveryBG = null;
 
     public bool bFadeIn = true;
     public bool bLeft = true;
     public uint currentRoadMileStone = 0;
+    public EScene prevGame = EScene.Prelude;
 
 
 
@@ -40,6 +48,7 @@ public class BridgeLogic : MonoBehaviour
         bFadeIn = GameLogicManager.Instance.bridgeData.bFadeIn;
         bLeft = GameLogicManager.Instance.bridgeData.bLeft;
         currentRoadMileStone = GameLogicManager.Instance.bridgeData.currentRoadMileStone;
+        prevGame = GameLogicManager.Instance.bridgeData.prevGame;
         //GetComponent<TimelineLogic>().OnTimelineFinish += ()=>{ GameLogicManager.Instance.OnBridgeFinished(); };
         GetComponent<TimelineLogic>().OnTimelineFinish += OnBridgeTimelineFinish;
     }
@@ -85,11 +94,19 @@ public class BridgeLogic : MonoBehaviour
         else
             CoinTextLeft.transform.position += new Vector3(10000, 10000, 0);
 
-        //TODO
-        //switch (ePos)
-        //{ 
-        
-        //}
+        Sprite bgSprite = null;
+        switch(prevGame)
+        {
+            case EScene.Prelude: bgSprite = afterPreludeBG;  break;
+            case EScene.BusGame: bgSprite = afterBusGameBG; break;
+            case EScene.TrashShooting: bgSprite = afterTrashshootingBG; break;
+            case EScene.Skewer: bgSprite = afterSkewerBG; break;
+            case EScene.Racing: bgSprite = afterRacingBG; break;
+            case EScene.Delivery: bgSprite = afterDeliveryBG; break;
+        }
+
+        if(bgSprite != null)
+            transform.Find("Canvas/BG").GetComponent<Image>().sprite = bgSprite;
 
         SpinningCoin.Play("SpinningCoin");
     }
