@@ -18,6 +18,7 @@ public class RacingSelectionFlowControl : MonoBehaviour
         }
         else
         {
+            FungusManager.Instance.MusicManager.StopMusic();
             GameLogicManager.Instance.OnMiniGameRefused();
         }
     }
