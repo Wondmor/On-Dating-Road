@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using static Shopping;
@@ -27,15 +28,15 @@ public enum EScene : int
     Prelude         = GameStart + 1,
     Bridge          = Prelude + 1,
 
-    InGame          = Bridge + 1,
-    TrashShooting   = InGame,
+    //InGame          = Bridge + 1,
+    TrashShooting   = Bridge + 1,
     Racing          = TrashShooting + 1,
     BusGame         = Racing + 1,
     Delivery        = BusGame + 1,
     Skewer          = Delivery + 1,
-    InGameEnd       = Skewer,
+    //InGameEnd       = Skewer,
 
-    CoinSkill       = InGameEnd + 1,
+    CoinSkill       = Skewer + 1,
     Shopping        = CoinSkill + 1,
     Ending          = Shopping + 1,
     Test            = Ending + 1,
@@ -73,6 +74,7 @@ public struct EndingData
     public EGift eGift { get; set; }
     public EEnding eEnding { get; set; }
     public ShopItem giftInfo { get; set; }
+    public List<EScene> finishedMiniGames { get; set; }
 }
 
 public class GameLogicManager
@@ -97,6 +99,7 @@ public class GameLogicManager
 
     EState curState { get; set; }
     List<EScene> gamePool = null;
+    List<EScene> finishedMiniGames = null;
     uint currentRoadMilestone = 0;
 
     // Unless Restart() is called from beginning
@@ -207,6 +210,7 @@ public class GameLogicManager
             EScene nextGame = gamePool[nextGameIdx];
             gamePool.RemoveAt(nextGameIdx);
 
+            finishedMiniGames.Add(nextGame);
             yieldToScene(nextGame);
         }
     }
@@ -217,7 +221,8 @@ public class GameLogicManager
             onTestFinished();
         else
         {
-            OnMiniGameFinished(gameData.money, gameData.positiveComment - c_RefuseToHelpPeopleCost);
+            finishedMiniGames.RemoveAt(finishedMiniGames.Count - 1);
+            OnMiniGameFinished(gameData.money, gameData.positiveComment - c_RefuseToHelpPeopleCost, gameData.countDown);
         }
     }
 
@@ -228,22 +233,9 @@ public class GameLogicManager
         else
         {
             var _gameData = gameData;
-            _gameData.countDown = Mathf.Max(0, countDown);
-            gameData = _gameData;
-
-            OnMiniGameFinished(money, positiveComment);
-        }
-    }
-    public void OnMiniGameFinished(float money, float positiveComment)
-    {
-        if (bTestMode)
-            onTestFinished();
-        else
-        {
-            var _gameData = gameData;
             _gameData.money = Mathf.Max(0, money);
             _gameData.positiveComment = Mathf.Max(0, positiveComment);
-            _gameData.countDown = Mathf.Max(0, _gameData.countDown - c_StandardRoadDuration);
+            _gameData.countDown = Mathf.Max(0, countDown);
             gameData = _gameData;
 
             currentRoadMilestone++;
@@ -251,6 +243,10 @@ public class GameLogicManager
 
             datingRoadControl();
         }
+    }
+    public void OnMiniGameFinished(float money, float positiveComment)
+    {
+        OnMiniGameFinished(money, positiveComment, gameData.countDown - c_StandardRoadDuration);
     }
 
     public void OnCoinSkillFinished(float money, float positiveComment)
@@ -297,7 +293,7 @@ public class GameLogicManager
         }
     }
 
-    public void SetEndingDataForTest(EndingData _endingData)
+    public void SetEndingDataForTesting(EndingData _endingData)
     {
         endingData = _endingData;
     }
@@ -317,13 +313,13 @@ public class GameLogicManager
 
         gamePool = new List<EScene>();
 
-        // TODO: shouldn't repeat but we don't have more than them for now.
         gamePool.Add(EScene.TrashShooting);
         gamePool.Add(EScene.Racing);
-        gamePool.Add(EScene.BusGame);
+        //gamePool.Add(EScene.BusGame);
         gamePool.Add(EScene.Delivery);
         gamePool.Add(EScene.Skewer);
 
+        finishedMiniGames = new List<EScene>();
 
 
         currentRoadMilestone = 0;
@@ -331,6 +327,7 @@ public class GameLogicManager
         curState = EState.Prelude;
         EndingData _endingData = new EndingData();
         _endingData.eGift = EGift.None;
+        _endingData.finishedMiniGames = new List<EScene>();
         this.endingData = _endingData;
     }
 
@@ -391,6 +388,7 @@ public class GameLogicManager
             CoinSkillData _coinSkillData = new CoinSkillData();
             _coinSkillData.eType = eType;
             coinSkillData = _coinSkillData;
+            finishedMiniGames.Add(EScene.CoinSkill);
             yieldToScene(EScene.CoinSkill);
         }
         else 
@@ -415,6 +413,7 @@ public class GameLogicManager
         yieldToScene(EScene.Shopping);
     }
 
+
     void endingControl(EEnding eEnding, EGift eGift, ShopItem giftInfo)
     {
         if (curState != EState.Ending)
@@ -424,6 +423,7 @@ public class GameLogicManager
         _endingData.eEnding = eEnding;
         _endingData.eGift = eGift;
         _endingData.giftInfo = giftInfo;
+        _endingData.finishedMiniGames = finishedMiniGames;
         endingData = _endingData;
 
         yieldToScene(EScene.Ending);
