@@ -65,6 +65,8 @@ public class DeliveryPersonFallResultMenu : MonoBehaviour
 
     public AudioSource goodEndAS;
     public AudioSource badEndAS;
+    public AudioSource goodEndVoiceAS;
+    public AudioSource badEndVoiceAS;
     public AudioSource paperAS;
 
     public IObservable<Unit> OnHideFinished => onHideFinished;
@@ -75,6 +77,7 @@ public class DeliveryPersonFallResultMenu : MonoBehaviour
     bool catchExpensive;
     bool catchCargo;
     int heartCount;
+    private AudioSource resultAudioVoiceSource;
     private AudioSource resultAudioSource;
 
     private void Awake()
@@ -92,12 +95,12 @@ public class DeliveryPersonFallResultMenu : MonoBehaviour
                 rightItemGOGroup.SetActive(false);
                 state = State.AnimatingShowResult;
                 var centerResultTrans = catchExpensive ? goodImageGO.transform : badImageGO.transform;
-                resultAudioSource = catchExpensive ? goodEndAS : badEndAS;
-                resultAudioSource.Play();
                 sequence.Append(centerResultTrans.transform.DOScale(Vector3.one, 1.5f));
                 sequence.Join(centerResultTrans.transform.DOLocalRotate(new Vector3(0f, 0f, 3600f), 1.5f, RotateMode.FastBeyond360));
                 sequence.AppendCallback(() =>
                 {
+                    resultAudioVoiceSource = catchExpensive ? goodEndVoiceAS : badEndVoiceAS;
+                    resultAudioVoiceSource.Play();
                     state = State.WaitingResult;
                 });
                 break;
@@ -146,6 +149,7 @@ public class DeliveryPersonFallResultMenu : MonoBehaviour
     public void OnDisable()
     {
         continueAction.Disable();
+        resultAudioVoiceSource?.Stop();
         resultAudioSource?.Stop();
         continueAction.performed -= OnContinuePressed;
     }
@@ -194,6 +198,8 @@ public class DeliveryPersonFallResultMenu : MonoBehaviour
         goodImageGO.transform.eulerAngles = Vector3.zero;
         badImageGO.transform.eulerAngles = Vector3.zero;
         paperAS.Play();
+        resultAudioSource = catchExpensive ? goodEndAS : badEndAS;
+        resultAudioSource.Play();
         Sequence sequence = DOTween.Sequence();
         sequence.Append(leftTicketTrans.DOLocalMove(leftTicketEndPos.localPosition, 0.5f).SetEase(Ease.Linear));
         sequence.Join(rightTicketTrans.DOLocalMove(rightTicketEndPos.localPosition, 0.5f).SetEase(Ease.Linear));
