@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.Playables;
@@ -19,6 +20,7 @@ public class EndingLogic : MonoBehaviour
     [SerializeField] PlayableDirector NiceNormalGift = null;
     [SerializeField] PlayableDirector BadGoodGift = null;
     [SerializeField] PlayableDirector NiceGoodGift = null;
+    [SerializeField] PlayableDirector NicePart = null;
     [SerializeField] AudioClip BeLateBGM = null;
     [SerializeField] AudioClip NormalBGM = null;
     [SerializeField] AudioMixerGroup audioMixerGroupBGM = null;
@@ -30,8 +32,6 @@ public class EndingLogic : MonoBehaviour
         public Sprite sprite;
     }
 
-    [Header("礼物")]
-    [SerializeField] GiftInfo[] gifts = null;
 
     [SerializeField] Sprite arcade = null;
     [SerializeField] Sprite candle = null;
@@ -47,9 +47,31 @@ public class EndingLogic : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        BlendBGM = gameObject.AddComponent<AudioSource>();
+        BlendBGM = gameObject.GetComponent<AudioSource>();
         BlendBGM.outputAudioMixerGroup = audioMixerGroupBGM;
         BlendBGM.loop = true;
+
+
+        //List<PlayableDirector> timelines = new List<PlayableDirector>
+        //{ 
+        //    BeLate,
+        //    JustArrived,
+        //    FreeGift,
+        //    BadCheapGift,
+        //    NiceCheapGift,
+        //    BadNormalGift,
+        //    NiceNormalGift,
+        //    BadGoodGift,
+        //    NiceGoodGift,
+        //    NicePart
+        //};
+        
+        //foreach(var tl in timelines)
+        //{
+        //    tl.Stop();
+        //    tl.time = 0;
+        //    tl.Evaluate();
+        //}
 
         var endingData = GameLogicManager.Instance.endingData;
 
@@ -92,6 +114,7 @@ public class EndingLogic : MonoBehaviour
                         NiceCheapGift:BadCheapGift);
                     if(endingData.eEnding == EEnding.GoodCharacter)
                     {
+                        toPlay.Add(NicePart);
                         getGift.sprite = candle;
                         getGift.name = "高级香薰蜡烛";
                     }
@@ -104,22 +127,30 @@ public class EndingLogic : MonoBehaviour
                 case EGift.Normal:
                     toPlay.Add(endingData.eEnding == EEnding.GoodCharacter ?
                         NiceNormalGift : BadNormalGift);
-                    getGift.sprite = giveGift.sprite;
+                        if (endingData.eEnding == EEnding.GoodCharacter)
+                        {
+                            toPlay.Add(NicePart);
+                        }
+                        getGift.sprite = giveGift.sprite;
                     getGift.name = giveGift.name;
                     break;
                 case EGift.Good:
                     toPlay.Add(endingData.eEnding == EEnding.GoodCharacter ?
                         NiceGoodGift : BadGoodGift);
+                    if (endingData.eEnding == EEnding.GoodCharacter)
+                    {
+                        toPlay.Add(NicePart);
+                    }
                     getGift.sprite = arcade;
                     getGift.name = "Taito Egret mini桌面游戏机套装";
                     break;
             }
         }
 
-        toPlay[0].stopped += OnTimelineStop;
+        toPlay[playingTimelineIdx].stopped += OnTimelineStop;
 
         BlendBGM.Play();
-        toPlay[0].Play();
+        toPlay[playingTimelineIdx].Play();
     }
 
     // Update is called once per frame

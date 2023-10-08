@@ -6,7 +6,7 @@ AudioMixerGroupController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Music
+  m_Name: BGM
   m_AudioMixer: {fileID: 24100000}
   m_GroupID: 48951079fb5a7f94b9b7045afca951a8
   m_Children: []
@@ -28,8 +28,7 @@ AudioMixerGroupController:
   m_Name: SFX
   m_AudioMixer: {fileID: 24100000}
   m_GroupID: 6364e45d5b434c84fb76eab22ebb8195
-  m_Children:
-  - {fileID: -8161454481818371149}
+  m_Children: []
   m_Volume: e9637cac4d552624ea402ecb6d03b328
   m_Pitch: 0363904dd4ec181468993c2db6e0ae4d
   m_Send: 00000000000000000000000000000000
@@ -49,6 +48,39 @@ AudioMixerEffectController:
   m_EffectID: 479f61c7a34bcbd4795acc96e5d0cd1f
   m_EffectName: Attenuation
   m_MixLevel: c2e0951c7c921874cab66f366e1c5e64
+  m_Parameters: []
+  m_SendTarget: {fileID: 0}
+  m_EnableWetMix: 0
+  m_Bypass: 0
+--- !u!243 &-2865096501088959238
+AudioMixerGroupController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: NPCBGM
+  m_AudioMixer: {fileID: 24100000}
+  m_GroupID: 4b314c736c1b2454d809e5050090ed1b
+  m_Children: []
+  m_Volume: 2e2738e793e509d44b0e987fbc435d5e
+  m_Pitch: f6add4f4ecfc45e418e7006a393728dd
+  m_Send: 00000000000000000000000000000000
+  m_Effects:
+  - {fileID: -700025648147236688}
+  m_UserColorIndex: 0
+  m_Mute: 0
+  m_Solo: 0
+  m_BypassEffects: 0
+--- !u!244 &-700025648147236688
+AudioMixerEffectController:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_EffectID: 13e1d2248500a984e90c67113710ab07
+  m_EffectName: Attenuation
+  m_MixLevel: f8d629ca6a20a804295c925e0292da84
   m_Parameters: []
   m_SendTarget: {fileID: 0}
   m_EnableWetMix: 0
@@ -78,16 +110,22 @@ AudioMixerController:
   m_MasterGroup: {fileID: 24300002}
   m_Snapshots:
   - {fileID: 24500006}
+  - {fileID: 1769508152262217267}
   m_StartSnapshot: {fileID: 24500006}
   m_SuspendThreshold: -80
   m_EnableSuspend: 1
   m_UpdateMode: 0
-  m_ExposedParameters: []
+  m_ExposedParameters:
+  - guid: 49f84efe7d7bd4e49ae9451f759b1458
+    name: BGMVolume
+  - guid: 2e2738e793e509d44b0e987fbc435d5e
+    name: NPCBGMVolume
   m_AudioMixerGroupViews:
   - guids:
     - 1b2dba246131d674b93a2d7e85142cc4
     - 6364e45d5b434c84fb76eab22ebb8195
     - 48951079fb5a7f94b9b7045afca951a8
+    - 4b314c736c1b2454d809e5050090ed1b
     name: View
   m_CurrentViewIndex: 0
   m_TargetSnapshot: {fileID: 24500006}
@@ -101,6 +139,8 @@ AudioMixerGroupController:
   m_AudioMixer: {fileID: 24100000}
   m_GroupID: 1b2dba246131d674b93a2d7e85142cc4
   m_Children:
+  - {fileID: -8161454481818371149}
+  - {fileID: -2865096501088959238}
   - {fileID: -7527330131693912383}
   m_Volume: fc9bbd4e0be804b40b970cc86f2b7e8c
   m_Pitch: 7724a8b06ab5bef40bb59e4308d1aaff
@@ -131,9 +171,22 @@ AudioMixerSnapshotController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Snapshot
+  m_Name: Main
   m_AudioMixer: {fileID: 24100000}
   m_SnapshotID: e01abb40bc7c91244ab9934831773bff
   m_FloatValues:
+    fc9bbd4e0be804b40b970cc86f2b7e8c: -0.025776558
+  m_TransitionOverrides: {}
+--- !u!245 &1769508152262217267
+AudioMixerSnapshotController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: IntroduceNPC
+  m_AudioMixer: {fileID: 24100000}
+  m_SnapshotID: 8bf1360f2db40b44394faf9ffa9df767
+  m_FloatValues:
+    2e2738e793e509d44b0e987fbc435d5e: 0
     fc9bbd4e0be804b40b970cc86f2b7e8c: -0.025776558
   m_TransitionOverrides: {}

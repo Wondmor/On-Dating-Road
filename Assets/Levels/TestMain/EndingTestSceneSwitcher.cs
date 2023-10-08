@@ -106,7 +106,8 @@ public class EndingTestSceneSwitcher : MonoBehaviour
 
         giftInfo.type = (int)data.eGift;
         data.giftInfo = giftInfo;
-        GameLogicManager.Instance.SetEndingDataForTest(data);
+        data.finishedMiniGames = new List<EScene> { EScene.BusGame, EScene.TrashShooting, EScene.Racing, EScene.Delivery, EScene.CoinSkill };
+        GameLogicManager.Instance.SetEndingDataForTesting(data);
         SceneManager.LoadScene(transform.Find("Text").GetComponent<TextMeshProUGUI>().text);
     }
 

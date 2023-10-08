@@ -24,7 +24,6 @@ public override void OnGraphStart(Playable playable)
 public override void OnBehaviourPlay(Playable playable, FrameData info)
 {
     _subtitleBG.gameObject.SetActive(true);
-    Sprite sprite = null;
     string line = GameLogicManager.Instance.bridgeData.subtitle;
     _subtitleBG.Say(String.Format(text, line));
 }

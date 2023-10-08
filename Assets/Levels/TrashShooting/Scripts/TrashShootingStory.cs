@@ -10,7 +10,6 @@ public class TrashShootingStory : MonoBehaviour
     [SerializeField] Image introduction = null;
     [SerializeField] Image storyBG = null;
     [SerializeField] Image SubtitleBG = null;
-    [SerializeField] TextMeshProUGUI text = null;
     [SerializeField] CommonSelection skipSelection = null;
     [SerializeField] SaySubtitle saySubtitle = null;
 
@@ -54,7 +53,6 @@ public class TrashShootingStory : MonoBehaviour
         introduction.gameObject.SetActive(false);
         SubtitleBG.gameObject.SetActive(true);
         skipSelection.gameObject.SetActive(false);
-        //text.text = lines[linesId];
         saySubtitle.Say("");
     }
 
@@ -68,7 +66,6 @@ public class TrashShootingStory : MonoBehaviour
                 {
                     if(linesId < lines.Length)
                     {
-                        //text.text = lines[++linesId];
                         saySubtitle.Say(lines[linesId++]);
                     }
                     else
