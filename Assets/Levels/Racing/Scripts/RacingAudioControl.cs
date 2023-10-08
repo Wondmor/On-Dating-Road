@@ -41,7 +41,6 @@ public class RacingAudioControl : MonoBehaviour
 
     public void PlayDrive(bool onGrass)
     {
-        Debug.Log("PLAY");
         if (onGrass)
         {
             driveAudio.clip = driveGrass;
