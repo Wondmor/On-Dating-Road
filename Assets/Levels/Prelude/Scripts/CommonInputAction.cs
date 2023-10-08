@@ -21,9 +21,9 @@ public class CommonInputAction : MonoBehaviour
     public void Awake()
     {
         // assign a callback for the "jump" action.
-        enter.performed += ctx => { Debug.LogFormat("enterPerformed"); };
-        cancel.performed += ctx => { Debug.LogFormat("cancelPerformed"); };
-        directions.performed += ctx => { Debug.LogFormat("directionsPerformed"); };
+        //enter.performed += ctx => { Debug.LogFormat("enterPerformed"); };
+        //cancel.performed += ctx => { Debug.LogFormat("cancelPerformed"); };
+        //directions.performed += ctx => { Debug.LogFormat("directionsPerformed"); };
     }
 
     public void OnEnable()

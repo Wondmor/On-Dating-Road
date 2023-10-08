@@ -299,8 +299,10 @@ namespace TrashShooting
             {
                 // Music finished
                 money = Mathf.Min(20, Mathf.RoundToInt(weightedHitNotes / 5)); //0-20
-                positiveComment = 5 + Mathf.Pow(Mathf.Clamp01(weightedHitNotes / noteCount), 0.6f) * 35.0f;//5-40
+                var resultInPercent = Mathf.Pow(Mathf.Clamp01(weightedHitNotes / noteCount), 0.6f);
+                positiveComment = 5 + resultInPercent * 35.0f;//5-40
                 result = (uint)Mathf.CeilToInt(weightedHitNotes / noteCount * 5); //0-5 stars
+                timeRate = Mathf.Lerp(1.2f, 0.7f, resultInPercent);
                 IsFinished = true;
             }
             else if(musicUnity.State == Music.PlayState.Playing)

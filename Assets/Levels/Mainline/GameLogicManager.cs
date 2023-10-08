@@ -109,11 +109,11 @@ public class GameLogicManager
     const uint c_RoadMilestoneCount = 4;
 
     public const float c_StandardGameDuration = 1200;
-    const float c_StandardRoadDuration = 300;
-    const float c_RefuseToHelpPeopleCost = 10;
+    const float c_StandardRoadDuration = 600;
+    const float c_RefuseToHelpPeopleCost = 5;
 
     const float c_CoinSkillRequest = 50; // Coin skill check
-    const float c_CoinSkillMoneyAdd = 50000; // The number Musk'll give you in RMB (Maybe with alipay).
+    const float c_CoinSkillMoneyAdd = 38888; // The number Musk'll give you in RMB (Maybe with alipay).
     
     const float c_GoodCharacterEndingRequest = 75; // Ending check
 
@@ -209,6 +209,7 @@ public class GameLogicManager
             EScene nextGame = gamePool[nextGameIdx];
             gamePool.RemoveAt(nextGameIdx);
 
+            UnityEngine.Debug.Log(String.Format("Start MiniGame{0}", c_sceneNames[nextGame]));
             finishedMiniGames.Add(nextGame);
             yieldToScene(nextGame);
         }
@@ -220,9 +221,14 @@ public class GameLogicManager
             onTestFinished();
         else
         {
+            UnityEngine.Debug.Log(String.Format("Game Refused"));
             finishedMiniGames.RemoveAt(finishedMiniGames.Count - 1);
             OnMiniGameFinished(gameData.money, gameData.positiveComment - c_RefuseToHelpPeopleCost, gameData.countDown);
         }
+    }
+    public void OnMiniGameFinished(float money, float positiveComment)
+    {
+        OnMiniGameFinished(money, positiveComment, gameData.countDown - c_StandardRoadDuration);
     }
 
     public void OnMiniGameFinished(float money, float positiveComment, float countDown)
@@ -239,13 +245,11 @@ public class GameLogicManager
 
             currentRoadMilestone++;
 
+            UnityEngine.Debug.Log(String.Format("Round={0} money={1} positiveComment={2} countDown={3}", 
+                currentRoadMilestone, gameData.money, gameData.positiveComment, gameData.countDown));
 
             datingRoadControl();
         }
-    }
-    public void OnMiniGameFinished(float money, float positiveComment)
-    {
-        OnMiniGameFinished(money, positiveComment, gameData.countDown - c_StandardRoadDuration);
     }
 
     public void OnCoinSkillFinished(float money, float positiveComment)
