@@ -213,7 +213,13 @@ public class SkewerGameController : MonoBehaviour
                 {
                     baseMoney *= 10;
                 }
-                GameLogicManager.Instance.OnMiniGameFinished(baseMoney, baseComment);
+
+                float timeRatio = 0.8f + (totalNumber / 10) * 0.05f;
+
+                GameLogicManager.Instance.OnMiniGameFinished(
+                    GameLogicManager.Instance.gameData.money + baseMoney,
+                    GameLogicManager.Instance.gameData.positiveComment + baseComment,
+                    GameLogicManager.Instance.gameData.countDown - GameLogicManager.c_StandardGameDuration * timeRatio);
 
                 break;
             default:

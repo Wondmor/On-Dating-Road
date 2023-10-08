@@ -159,7 +159,7 @@ public class Shopping : MonoBehaviour
 
     public void ShoppingFinish(EGift gift = EGift.None)
     {
-        if (gift == EGift.None)
+        if (gift == EGift.Free)
         {
             var freeGift = new ShopItem();
             freeGift.name = "千纸鹤";
