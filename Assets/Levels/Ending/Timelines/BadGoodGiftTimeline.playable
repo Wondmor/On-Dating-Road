@@ -32,22 +32,6 @@ MonoBehaviour:
   hideGos:
   - exposedName: fbbab8e4a27c2fd4e8fe1711a3be1d69
     defaultValue: {fileID: 0}
---- !u!114 &-8764620349897540622
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1dc8cd00213411a449babb568d92c6a3, type: 3}
-  m_Name: WaitForInputPlayable(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)
-  m_EditorClassIdentifier: 
-  eAction: 0
-  timelineLogic:
-    exposedName: b8eba7e2a2fe831479df8f0de085b4f1
-    defaultValue: {fileID: 0}
 --- !u!114 &-7853973194591438321
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -454,39 +438,6 @@ MonoBehaviour:
     m_Start: 0.25
     m_ClipIn: 0
     m_Asset: {fileID: 5937578988746388842}
-    m_Duration: 0.016666666666666666
-    m_TimeScale: 1
-    m_ParentTrack: {fileID: -7060121827745590633}
-    m_EaseInDuration: 0
-    m_EaseOutDuration: 0
-    m_BlendInDuration: -1
-    m_BlendOutDuration: -1
-    m_MixInCurve:
-      serializedVersion: 2
-      m_Curve: []
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    m_MixOutCurve:
-      serializedVersion: 2
-      m_Curve: []
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    m_BlendInCurveMode: 0
-    m_BlendOutCurveMode: 0
-    m_ExposedParameterNames: []
-    m_AnimationCurves: {fileID: 0}
-    m_Recordable: 0
-    m_PostExtrapolationMode: 0
-    m_PreExtrapolationMode: 0
-    m_PostExtrapolationTime: 0
-    m_PreExtrapolationTime: 0
-    m_DisplayName: WaitForInputPlayable
-  - m_Version: 1
-    m_Start: 0.28333333333333327
-    m_ClipIn: 0
-    m_Asset: {fileID: -8764620349897540622}
     m_Duration: 0.016666666666666666
     m_TimeScale: 1
     m_ParentTrack: {fileID: -7060121827745590633}
@@ -1013,9 +964,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dbfbc8b3c99aaff4a818ec6c4e1f3cad, type: 3}
   m_Name: HideObjectPlayable(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)
   m_EditorClassIdentifier: 
-  showGos:
-  - exposedName: 8f6b3891646638f4d8de68b51056d761
-    defaultValue: {fileID: 0}
+  showGos: []
   hideGos:
   - exposedName: 884a3b2876e17e642abd98515b2006cb
     defaultValue: {fileID: 0}
@@ -1925,24 +1874,6 @@ MonoBehaviour:
     exposedName: f2e866c00304ff2468c176a147cab095
     defaultValue: {fileID: 0}
   text: "\u201C\u554A\u90A3\u6211\u7ED9\u4F60\u7684\u793C\u7269\uFF0C\u6211\u611F\u89C9\u62FF\u4E0D\u51FA\u624B\u4E86\u2026\u201D"
---- !u!114 &2693049042963716541
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1c9511801f6b6ba46bce6bf3d07c2e4e, type: 3}
-  m_Name: SwitchPicturePlayable(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)
-  m_EditorClassIdentifier: 
-  target:
-    exposedName: da7304bc92fda3a40a163954da806fb7
-    defaultValue: {fileID: 0}
-  sprite: {fileID: 21300000, guid: 16ce5bbe0eea0b549a7746b5483071ca, type: 3}
-  targets: []
-  sprites: []
 --- !u!114 &2799616628014743882
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2657,75 +2588,6 @@ MonoBehaviour:
     m_Start: 0.2
     m_ClipIn: 0
     m_Asset: {fileID: -7688252590146740310}
-    m_Duration: 0.016666666666666666
-    m_TimeScale: 1
-    m_ParentTrack: {fileID: 7507633617014397350}
-    m_EaseInDuration: 0
-    m_EaseOutDuration: 0
-    m_BlendInDuration: -1
-    m_BlendOutDuration: -1
-    m_MixInCurve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 1
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    m_MixOutCurve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 1
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    m_BlendInCurveMode: 0
-    m_BlendOutCurveMode: 0
-    m_ExposedParameterNames: []
-    m_AnimationCurves: {fileID: 0}
-    m_Recordable: 0
-    m_PostExtrapolationMode: 0
-    m_PreExtrapolationMode: 0
-    m_PostExtrapolationTime: 0
-    m_PreExtrapolationTime: 0
-    m_DisplayName: SwitchPicturePlayable
-  - m_Version: 1
-    m_Start: 0.26666666666666666
-    m_ClipIn: 0
-    m_Asset: {fileID: 2693049042963716541}
     m_Duration: 0.016666666666666666
     m_TimeScale: 1
     m_ParentTrack: {fileID: 7507633617014397350}
