@@ -143,6 +143,7 @@ public class TimelineLogic : MonoBehaviour
                     }
                     else
                     {
+
                         writer.OnNextLineEvent();
                         eWaitingInput = EWait.WaitingWriterStop;
                         eType = CommonInputAction.EType.None;

@@ -11,6 +11,9 @@ public class BridgeLogic : MonoBehaviour
     [SerializeField] public GameObject CoinTextRight = null;
     [SerializeField] public GameObject Pos = null;
     [SerializeField] public Animator SpinningCoin = null;
+    [SerializeField] public AudioSource BGMSource = null;
+    [SerializeField] public AudioSource SFXSource = null;
+    [SerializeField] public AudioClip walkingClip = null;
 
     public bool bFadeIn = true;
     public bool bLeft = true;
@@ -37,7 +40,26 @@ public class BridgeLogic : MonoBehaviour
         bFadeIn = GameLogicManager.Instance.bridgeData.bFadeIn;
         bLeft = GameLogicManager.Instance.bridgeData.bLeft;
         currentRoadMileStone = GameLogicManager.Instance.bridgeData.currentRoadMileStone;
-        GetComponent<TimelineLogic>().OnTimelineFinish += ()=>{ GameLogicManager.Instance.OnBridgeFinished(); };
+        //GetComponent<TimelineLogic>().OnTimelineFinish += ()=>{ GameLogicManager.Instance.OnBridgeFinished(); };
+        GetComponent<TimelineLogic>().OnTimelineFinish += OnBridgeTimelineFinish;
+    }
+
+    internal void OnBridgeTimelineFinish()
+    {
+        //
+        SFXSource.clip = walkingClip;
+        SFXSource.loop = false;
+        SFXSource.Play();
+        StartCoroutine(OnWalkingSFXEnd(walkingClip.length));
+    }
+
+    protected IEnumerator OnWalkingSFXEnd(float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
+
+        BGMSource.Stop();
+        SFXSource.Stop();
+        GameLogicManager.Instance.OnBridgeFinished();
     }
 
     // Start is called before the first frame update
@@ -71,6 +93,8 @@ public class BridgeLogic : MonoBehaviour
 
         SpinningCoin.Play("SpinningCoin");
     }
+
+
 
     // Update is called once per frame
     void Update()
