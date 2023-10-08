@@ -2382,7 +2382,6 @@ GameObject:
   - component: {fileID: 953656520}
   - component: {fileID: 953656523}
   - component: {fileID: 953656525}
-  - component: {fileID: 953656524}
   m_Layer: 0
   m_Name: Flowchart
   m_TagString: Untagged
@@ -2503,7 +2502,6 @@ MonoBehaviour:
   eventHandler: {fileID: 953656414}
   commandList:
   - {fileID: 953656525}
-  - {fileID: 953656524}
   - {fileID: 953656521}
   - {fileID: 953656523}
   - {fileID: 953656522}
@@ -2633,7 +2631,7 @@ MonoBehaviour:
   selectedBlocks:
   - {fileID: 953656415}
   selectedCommands:
-  - {fileID: 953656524}
+  - {fileID: 953656521}
   variables:
   - {fileID: 953656405}
   - {fileID: 953656399}
@@ -5528,7 +5526,7 @@ MonoBehaviour:
   durationOLD: 0
 --- !u!114 &953656520
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -5548,7 +5546,7 @@ MonoBehaviour:
   fadeTweenType: 4
 --- !u!114 &953656521
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -5568,7 +5566,7 @@ MonoBehaviour:
   fadeTweenType: 4
 --- !u!114 &953656522
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -5589,7 +5587,7 @@ MonoBehaviour:
   targetGameObjectOLD: {fileID: 0}
 --- !u!114 &953656523
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -5608,36 +5606,9 @@ MonoBehaviour:
     booleanRef: {fileID: 0}
     booleanVal: 0
   targetGameObjectOLD: {fileID: 0}
---- !u!114 &953656524
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 953656396}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ec422cd568a9c4a31ad7c36d0572b9da, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  itemId: 262
-  indentLevel: 0
-  storyText: "\u8D76\u7D27\u8FDB\u53BB\u8D2D\u7269\u5427\uFF0C\u4ECA\u5929\u80FD\u4E70\u5230\u4EC0\u4E48\u793C\u7269\u5462\uFF1F"
-  description: 
-  character: {fileID: 0}
-  portrait: {fileID: 0}
-  voiceOverClip: {fileID: 0}
-  showAlways: 1
-  showCount: 1
-  extendPrevious: 0
-  fadeWhenDone: 1
-  waitForClick: 1
-  stopVoiceover: 1
-  waitForVO: 0
-  setSayDialog: {fileID: 348740903}
 --- !u!114 &953656525
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -5649,7 +5620,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemId: 261
   indentLevel: 0
-  storyText: "\u7EC8\u4E8E\u6765\u5230\u5546\u5E97\u4E86"
+  storyText: "\uFF08\u5230\u5546\u5E97\u4E86\uFF01\u8D76\u7D27\u7ED9\u5973\u670B\u53CB\u51C6\u5907\u4E2A\u793C\u7269\uFF09"
   description: 
   character: {fileID: 0}
   portrait: {fileID: 0}
@@ -6435,7 +6406,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: b9e033cb74950a54da52e5d9a686ca46, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c24843146d3c04a4fa9b8db77beeff33, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using static Shopping;
@@ -315,7 +314,7 @@ public class GameLogicManager
 
         gamePool.Add(EScene.TrashShooting);
         gamePool.Add(EScene.Racing);
-        //gamePool.Add(EScene.BusGame);
+        gamePool.Add(EScene.BusGame);
         gamePool.Add(EScene.Delivery);
         gamePool.Add(EScene.Skewer);
 
