@@ -4,12 +4,7 @@ using UnityEngine;
 
 public class Score : MonoBehaviour
 {
-    public static int playerScore;
-
-    public void start()
-    {
-        playerScore = 0;
-    }
+    public static int playerScore = 0;
 
     public void displayScore()
     {
