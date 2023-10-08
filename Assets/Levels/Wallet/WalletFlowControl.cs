@@ -1,4 +1,4 @@
-using Fungus;
+﻿using Fungus;
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection.Emit;
@@ -68,6 +68,5 @@ public class WalletFlowControl : MonoBehaviour
     public void EndWithMoney()
     {
         GameLogicManager.Instance.OnCoinSkillFinished(GameLogicManager.Instance.gameData.money + 38888, GameLogicManager.Instance.gameData.positiveComment);
-    }
     }
 }
