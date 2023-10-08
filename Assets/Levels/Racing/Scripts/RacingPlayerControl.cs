@@ -47,6 +47,10 @@ public class RacingPlayerControl : MonoBehaviour
     bool speedup = false;
     bool crossingLine = false;
 
+    float movementIncrementOverTime = 0;
+    [SerializeField] int inputSensitivity = 100;
+
+
     // controllers
     RacingMoney moneyControl;
     RacingProgressDot progressControl;
@@ -109,23 +113,40 @@ public class RacingPlayerControl : MonoBehaviour
         {
             // get direction and speed
             Vector3 currentPos = transform.localPosition;
-            float axis = Input.GetAxis("Horizontal");
-            currentPos.x += axis * horizontalSpeed * Time.deltaTime;
+            float moveInput = GameManager.Instance.CommonInputAction.directions.ReadValue<Vector2>().x;
+            switch (moveInput)
+            {
+                case 1:
+                    moveInput = Mathf.Lerp(0, moveInput, movementIncrementOverTime);
+                    movementIncrementOverTime += (0.05f * inputSensitivity) * Time.deltaTime;
+                    break;
+
+                case -1:
+                    moveInput = Mathf.Lerp(0, moveInput, movementIncrementOverTime);
+                    movementIncrementOverTime += (0.05f * inputSensitivity) * Time.deltaTime;
+                    break;
+
+                default:
+                    break;
+            } 
+
+            currentPos.x += moveInput * horizontalSpeed * Time.deltaTime;
             currentPos.x = Mathf.Clamp(currentPos.x, MIN_X, MAX_X);
             transform.localPosition = currentPos;
 
             // skill trigger?
-            if(GameManager.Instance.CommonInputAction.GetPerformedTypeThisFrame() == CommonInputAction.EType.Enter)
+            if(GameManager.Instance.CommonInputAction.GetPerformedTypeThisFrame() == CommonInputAction.EType.Enter ||
+                GameManager.Instance.CommonInputAction.GetPerformedTypeThisFrame() == CommonInputAction.EType.Cancel)
             {
                 TriggerSpeedUp();
             }
 
             // tilt?
-            if (axis > 0)
+            if (moveInput > 0)
             {
                 bike.transform.rotation = Quaternion.AngleAxis(-5.0f, Vector3.forward);
             }
-            else if (axis < 0)
+            else if (moveInput < 0)
             {
                 bike.transform.rotation = Quaternion.AngleAxis(5.0f, Vector3.forward);
             }

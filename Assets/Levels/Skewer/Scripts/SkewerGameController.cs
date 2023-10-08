@@ -81,9 +81,9 @@ public class SkewerGameController : MonoBehaviour
         {
             var stick = Instantiate(stickPrefab, playGround.transform).GetComponent<SkewerStick>();
             stick.transform.localPosition = new Vector3(0 - i * margin, -1, 0);
-            if (i > 6)
+            if (i > 4)
             {
-                if (Random.value < 0.9)
+                if (Random.value < 0.8)
                 {
                     stick.SetupStick(SkewerStick.StickType.NORMAL);
                 }
@@ -264,7 +264,7 @@ public class SkewerGameController : MonoBehaviour
     void AddStick(SkewerStick stick)
     {
         stick.transform.localPosition = sticks.Last.Value.transform.position + Vector3.left * margin;
-        if (Random.value < 0.9)
+        if (Random.value < 0.8)
         {
             stick.SetupStick(SkewerStick.StickType.NORMAL);
         }

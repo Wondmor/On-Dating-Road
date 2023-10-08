@@ -41,7 +41,6 @@ public class RacingAudioControl : MonoBehaviour
 
     public void PlayDrive(bool onGrass)
     {
-        Debug.Log("PLAY");
         if (onGrass)
         {
             driveAudio.clip = driveGrass;
@@ -107,11 +106,11 @@ public class RacingAudioControl : MonoBehaviour
         sfx.Play();
     }
 
-    public void BGMVolumeDown(float time = 2.0f)
+    public void BGMVolumeDown(float time = 1.0f)
     {
         iTween.ValueTo(gameObject, iTween.Hash(
                     "from", 0.8f,
-                    "to", 0.2f,
+                    "to", 0.0f,
                     "time", time,
                     "onupdate", "UpdateBGMToLow",
                     "onupdatetarget", gameObject,

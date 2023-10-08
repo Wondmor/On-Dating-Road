@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class Shopping : MonoBehaviour
@@ -62,6 +63,12 @@ public class Shopping : MonoBehaviour
 
     [SerializeField]
     Sprite posterSprite, giftSprite;
+
+    [SerializeField]
+    EventSystem eventSystem;
+
+    [SerializeField]
+    GameObject trueButton, falseButton;
 
     GameObject[] items;
 
@@ -245,28 +252,33 @@ public class Shopping : MonoBehaviour
             {
                 dialog.Setup(items[currentItem].GetComponent<Image>().sprite, shopInfo.items[currentItem].price);
                 pause = true;
+                flowchart.SetFloatVariable("Price", shopInfo.items[currentItem].price);
+                flowchart.SetFloatVariable("CurrentMoney", money);
                 flowchart.ExecuteIfHasBlock("ShowBuy");
             }
         }
         else if (status == Status.BUYING)
         {
+            if (performed == CommonInputAction.EType.Directions)
+            {
+                Vector2 vec2 = GameManager.Instance.CommonInputAction.directions.ReadValue<Vector2>();
+                Debug.Log(vec2);
+                if (vec2.x < 0)
+                {
+                    eventSystem.SetSelectedGameObject(trueButton);
+                }
+                else if (vec2.x > 0)
+                {
+                    eventSystem.SetSelectedGameObject(falseButton);
+                }
+            }
             if (performed == CommonInputAction.EType.Enter)
             {
-                flowchart.SetFloatVariable("CurrentMoney", money);
-                flowchart.SetFloatVariable("Price", shopInfo.items[currentItem].price);
-                flowchart.SetBooleanVariable("Buy", true);
-                flowchart.ExecuteIfHasBlock("BuyTest");
-                pause = true;
-            }
-            else if (performed == CommonInputAction.EType.Cancel)
-            {
-                flowchart.SetFloatVariable("CurrentMoney", money);
-                flowchart.SetFloatVariable("Price", shopInfo.items[currentItem].price);
-                flowchart.SetBooleanVariable("Buy", false);
-                flowchart.ExecuteIfHasBlock("BuyTest");
-                pause = true;
+                if(!eventSystem.alreadySelecting)
+                {
+                    eventSystem.SetSelectedGameObject(trueButton);
+                }
             }
         }
-
     }
 }
