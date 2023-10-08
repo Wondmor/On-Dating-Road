@@ -127,25 +127,7 @@ MonoBehaviour:
       m_RotationOrder: 4
     m_MixOutCurve:
       serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 1
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
+      m_Curve: []
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
@@ -467,6 +449,126 @@ MonoBehaviour:
         weightedMode: 0
         inWeight: 0
         outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    m_MixOutCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    m_BlendInCurveMode: 0
+    m_BlendOutCurveMode: 0
+    m_ExposedParameterNames: []
+    m_AnimationCurves: {fileID: 0}
+    m_Recordable: 0
+    m_PostExtrapolationMode: 0
+    m_PreExtrapolationMode: 0
+    m_PostExtrapolationTime: 0
+    m_PreExtrapolationTime: 0
+    m_DisplayName: AudioSourceControlPlayable
+  - m_Version: 1
+    m_Start: 0.15
+    m_ClipIn: 0
+    m_Asset: {fileID: 1376062305704111812}
+    m_Duration: 0.016666666666666666
+    m_TimeScale: 1
+    m_ParentTrack: {fileID: -9178152022726427795}
+    m_EaseInDuration: 0
+    m_EaseOutDuration: 0
+    m_BlendInDuration: -1
+    m_BlendOutDuration: -1
+    m_MixInCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    m_MixOutCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    m_BlendInCurveMode: 0
+    m_BlendOutCurveMode: 0
+    m_ExposedParameterNames: []
+    m_AnimationCurves: {fileID: 0}
+    m_Recordable: 0
+    m_PostExtrapolationMode: 0
+    m_PreExtrapolationMode: 0
+    m_PostExtrapolationTime: 0
+    m_PreExtrapolationTime: 0
+    m_DisplayName: AudioSourceControlPlayable
+  - m_Version: 1
+    m_Start: 0.6000000000000001
+    m_ClipIn: 0
+    m_Asset: {fileID: -3256691181245635619}
+    m_Duration: 0.016666666666666666
+    m_TimeScale: 1
+    m_ParentTrack: {fileID: -9178152022726427795}
+    m_EaseInDuration: 0
+    m_EaseOutDuration: 0
+    m_BlendInDuration: -1
+    m_BlendOutDuration: -1
+    m_MixInCurve:
+      serializedVersion: 2
+      m_Curve: []
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
@@ -1993,6 +2095,29 @@ MonoBehaviour:
   - exposedName: 77a9e1204541b07459229e4261382421
     defaultValue: {fileID: 0}
   hideGos: []
+--- !u!114 &-3256691181245635619
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e471d9cce74e71f449010fcd9c5bc17a, type: 3}
+  m_Name: AudioSourceControlPlayable(Clone)(Clone)(Clone)(Clone)
+  m_EditorClassIdentifier: 
+  audioSource:
+    exposedName: 42da043ff4e2a7e4d8ced31cd3ea7cc5
+    defaultValue: {fileID: 0}
+  audioClip:
+    exposedName: fc72647b9afffc24fb35b529d1da91d1
+    defaultValue: {fileID: 8300000, guid: 5f5dfcf62f9967b40b36b65d482e5e12, type: 3}
+  bStart: 0
+  bStop: 1
+  bLoop: 1
+  bVolume: 0
+  volume: 1
 --- !u!114 &-2909508991312700216
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3035,6 +3160,29 @@ MonoBehaviour:
     exposedName: 013f9376ca126a84c94e68e92f5b8bc7
     defaultValue: {fileID: 0}
   text: "\u201C\u4E8C\u4E2A\u5C0F\u65F6\u4E4B\u540E\u8001\u5730\u65B9\u89C1\u54E6\u201D"
+--- !u!114 &1376062305704111812
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e471d9cce74e71f449010fcd9c5bc17a, type: 3}
+  m_Name: AudioSourceControlPlayable(Clone)(Clone)
+  m_EditorClassIdentifier: 
+  audioSource:
+    exposedName: 35b7970e37a522b46a3c877a6264e62a
+    defaultValue: {fileID: 0}
+  audioClip:
+    exposedName: d32c7922f08b0264c988b16f9b9bba87
+    defaultValue: {fileID: 8300000, guid: 5f5dfcf62f9967b40b36b65d482e5e12, type: 3}
+  bStart: 1
+  bStop: 0
+  bLoop: 1
+  bVolume: 0
+  volume: 1
 --- !u!114 &1468623365262362209
 MonoBehaviour:
   m_ObjectHideFlags: 1

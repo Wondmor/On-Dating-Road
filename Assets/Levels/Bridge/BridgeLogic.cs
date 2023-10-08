@@ -50,7 +50,7 @@ public class BridgeLogic : MonoBehaviour
         SFXSource.clip = walkingClip;
         SFXSource.loop = false;
         SFXSource.Play();
-        StartCoroutine(OnWalkingSFXEnd(walkingClip.length));
+        StartCoroutine(OnWalkingSFXEnd(Mathf.Min(3.0f, walkingClip.length)));
     }
 
     protected IEnumerator OnWalkingSFXEnd(float seconds)

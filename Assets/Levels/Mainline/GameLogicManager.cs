@@ -109,11 +109,11 @@ public class GameLogicManager
     const uint c_RoadMilestoneCount = 4;
 
     public const float c_StandardGameDuration = 1200;
-    const float c_StandardRoadDuration = 300;
-    const float c_RefuseToHelpPeopleCost = 10;
+    const float c_StandardRoadDuration = 450;
+    const float c_RefuseToHelpPeopleCost = 1;
 
     const float c_CoinSkillRequest = 50; // Coin skill check
-    const float c_CoinSkillMoneyAdd = 50000; // The number Musk'll give you in RMB (Maybe with alipay).
+    const float c_CoinSkillMoneyAdd = 38888; // The number Musk'll give you in RMB (Maybe with alipay).
     
     const float c_GoodCharacterEndingRequest = 75; // Ending check
 
