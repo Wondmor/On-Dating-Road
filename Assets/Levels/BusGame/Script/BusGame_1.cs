@@ -8,6 +8,7 @@ using UnityEngine.InputSystem;
 
 public class BusGame_1 : MonoBehaviour
 {
+
     public DialogBoxController dialogBoxController;
     public LevelLoader levelLoader;
     public Flowchart flowchart;
@@ -45,6 +46,7 @@ public class BusGame_1 : MonoBehaviour
     void Awake()
     {
         //StartCoroutine(Plot_1());
+
         pass = true;
         currentTime = totalTime;
 
