@@ -293,18 +293,10 @@ public class BusGame_1 : MonoBehaviour
 
         if(tryTime <= 0)
         {
-            if(Score.playerScore >= 4)
-            {
-                pass = false;
-                string targetSceneName = "BusGame_Success";
-                StartCoroutine(levelLoader.LoadLevelByName(targetSceneName));
-            }
-            else if(Score.playerScore < 4)
-            {
-                string targetSceneName = "BusGame_Fail";
-                StartCoroutine(levelLoader.LoadLevelByName(targetSceneName));
-            }
-        }
+            pass = false;
+            string targetSceneName = "BusGame_Success";
+            StartCoroutine(levelLoader.LoadLevelByName(targetSceneName));
+       }
 
 
     }
@@ -328,17 +320,9 @@ public class BusGame_1 : MonoBehaviour
 
         if(tryTime <= 0)
         {
-            if(Score.playerScore >= 4)
-            {
-                pass = false;
-                string targetSceneName = "BusGame_Success";
-                StartCoroutine(levelLoader.LoadLevelByName(targetSceneName));
-            }
-            else if(Score.playerScore < 4)
-            {
-                string targetSceneName = "BusGame_Fail";
-                StartCoroutine(levelLoader.LoadLevelByName(targetSceneName));
-            }
+            pass = false;
+            string targetSceneName = "BusGame_Success";
+            StartCoroutine(levelLoader.LoadLevelByName(targetSceneName));
         }
 
     }
