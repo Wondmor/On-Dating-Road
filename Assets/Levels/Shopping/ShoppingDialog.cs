@@ -13,9 +13,6 @@ public class ShoppingDialog : MonoBehaviour
     TextMeshProUGUI moneyText, buyText;
 
     [SerializeField]
-    Sprite button, buttonDown;
-
-    [SerializeField]
     GameObject canvas, notEnough;
 
 
@@ -30,8 +27,6 @@ public class ShoppingDialog : MonoBehaviour
         item.sprite = sprite;
         moneyText.text = string.Format("\uFFE5{0}", price);
         canvas.SetActive(true);
-        buttonTrue.sprite = button;
-        buttonFalse.sprite = button;
         notEnough.SetActive(false);
     }
 
@@ -39,11 +34,9 @@ public class ShoppingDialog : MonoBehaviour
     {
         if(buy)
         {
-            buttonTrue.sprite = buttonDown;
         }
         if (!buy)
         {
-            buttonFalse.sprite = buttonDown;
         }
 
     }
@@ -65,8 +58,6 @@ public class ShoppingDialog : MonoBehaviour
         moneyText.text = "";
         canvas.SetActive(true);
         notEnough.SetActive(false);
-        buttonTrue.gameObject.SetActive(false);
-        buttonFalse.gameObject.SetActive(false);
-        buyText.text = string.Format("µÃµ½ÁË{0}", name);
+        buyText.text = string.Format("得到了{0}", name);
     }
 }

@@ -85,7 +85,7 @@
             "sprite": "11",
             "description": "这款商品是\n小猫抱郁金香亚克力发卡\n仅售58！\n",
             "giftname": "小猫抱郁金香亚克力发卡",
-            "price": 38.0,
+            "price": 48.0,
             "type": 1
         },
         {
@@ -102,7 +102,7 @@
             "description": "粉色洗澡拖鞋26元",
             "giftname": "粉色洗澡拖鞋",
             "price": 26.0,
-            "type": 1
+            "type": 0
         },
         {
             "name": "锁",
