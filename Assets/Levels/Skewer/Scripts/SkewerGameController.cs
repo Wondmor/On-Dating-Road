@@ -171,6 +171,7 @@ public class SkewerGameController : MonoBehaviour
         }
         else
         {
+            FungusManager.Instance.MusicManager.StopMusic();
             GameLogicManager.Instance.OnMiniGameRefused();
         }
     }

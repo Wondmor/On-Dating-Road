@@ -127,7 +127,7 @@ public class GameLogicManager
 
             {EScene.TrashShooting, "TrashShooting"},
             {EScene.Racing, "RacingSelection"},
-            {EScene.BusGame, "BusGame"},
+            {EScene.BusGame, "BusGame_Start"},
             {EScene.CoinSkill, "CoinSkill"},
             {EScene.Delivery, "DeliveryPersonFall"},
             {EScene.Skewer, "Skewer"},

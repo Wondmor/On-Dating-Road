@@ -159,6 +159,7 @@ public class Shopping : MonoBehaviour
 
     public void ShoppingFinish(EGift gift = EGift.None)
     {
+        FungusManager.Instance.MusicManager.StopMusic();
         if (gift == EGift.Free)
         {
             var freeGift = new ShopItem();

@@ -12,7 +12,7 @@ public class WalletFlowControl : MonoBehaviour
     GameObject mainGame, preGame, postGame;
 
     [SerializeField]
-    CommonSelection preChoice, finishChoice;
+    CommonSelection finishChoice;
 
     [SerializeField]
     TextMeshProUGUI phoneMoneyText;
@@ -29,23 +29,6 @@ public class WalletFlowControl : MonoBehaviour
     void Update()
     {
         
-    }
-
-    public void StartGame(bool start)
-    {
-        if(start)
-        {
-            flowchart.ExecuteIfHasBlock("StartGame");
-        }
-        else
-        {
-            GameLogicManager.Instance.OnMiniGameRefused();
-        }
-    }
-
-    public void ShowChoice()
-    {
-        preChoice.ShowChoice();
     }
 
     public void FinishGame()
