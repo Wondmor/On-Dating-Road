@@ -160,7 +160,8 @@ public class Shopping : MonoBehaviour
     public void ShoppingFinish(EGift gift = EGift.None)
     {
         FungusManager.Instance.MusicManager.StopMusic();
-        if (gift == EGift.Free)
+        //gift doesn't work here
+        if (GameLogicManager.Instance.gameData.money < 1.0f)
         {
             var freeGift = new ShopItem();
             freeGift.name = "千纸鹤";
@@ -170,12 +171,11 @@ public class Shopping : MonoBehaviour
             freeGift.giftname = "宣传单折的千纸鹤";
             freeGift.type = (int)EGift.Free;
 
-            gift = EGift.Free;
-            GameLogicManager.Instance.OnShoppingFinished(gift, freeGift);
+            GameLogicManager.Instance.OnShoppingFinished(EGift.Free, freeGift);
         }
         else
         {
-            GameLogicManager.Instance.OnShoppingFinished(gift, shopInfo.items[currentItem]);
+            GameLogicManager.Instance.OnShoppingFinished((EGift)shopInfo.items[currentItem].type, shopInfo.items[currentItem]);
         }
     }
 
