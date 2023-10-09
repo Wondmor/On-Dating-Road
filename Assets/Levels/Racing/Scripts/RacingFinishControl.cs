@@ -25,22 +25,22 @@ public class RacingFinishControl : MonoBehaviour
 
         float baseMoney = 20;
 
-        if (health == 6 && timeUsed < 30)
+        if (health == 12 && timeUsed < 50)
         {
             level = 5;
             baseMoney *= 10;
         }
-        else if (health >= 5 && timeUsed < 60)
+        else if (health >= 9 && timeUsed < 80)
         {
             level = 4;
             baseMoney *= 1;
         }
-        else if (health >= 3 && timeUsed < 70)
+        else if (health >= 5 && timeUsed < 100)
         {
             level = 3;
             baseMoney *= 0.8f;
         }
-        else if (health >= 2 && timeUsed < 90)
+        else if (health >= 3 && timeUsed < 120)
         {
             level = 2;
             baseMoney *= 0.6f;
@@ -65,6 +65,7 @@ public class RacingFinishControl : MonoBehaviour
     {
         int level;
         float money = GetMoney(out level);
+        GameManager.Instance.RacingData.Reset();
         GameLogicManager.Instance.OnMiniGameFinished(
             GameLogicManager.Instance.gameData.money + money, 
             GameLogicManager.Instance.gameData.positiveComment, 
