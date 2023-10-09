@@ -140,7 +140,7 @@ public class GameLogicManager
             {EScene.Test, "TestMain"},
     };
 
-    List<string> bridgeLines = new List<string> { 
+    static readonly List<string> c_bridgeLines = new List<string> {
     "（左边那条路红灯有点多，右边是个陡坡，我走哪边呢？）",
     "（左边还要上天桥过马路，右边是个窄巷子，我走哪边呢？）",
     "（左边人行道被占用了，右边地上好多水啊，我走哪边呢？）",
@@ -148,6 +148,8 @@ public class GameLogicManager
     "（左边那几个大哥感觉好可怕，右边小道阴森森的，我走哪边呢？）",
     "（左边在修路到处都是灰尘，右边有狂吠的野狗，我走哪边呢？）"
     };
+
+    List<string> bridgeLines = null;
 
     // Variables END///////////////////////////////////////////
 
@@ -247,18 +249,25 @@ public class GameLogicManager
             onTestFinished();
         else
         {
-            var _gameData = gameData;
-            _gameData.money = Mathf.Max(0, money);
-            _gameData.positiveComment = Mathf.Max(0, positiveComment);
-            _gameData.countDown = Mathf.Max(0, countDown);
-            gameData = _gameData;
+            try
+            {
+                var _gameData = gameData;
+                _gameData.money = Mathf.Max(0, money);
+                _gameData.positiveComment = Mathf.Max(0, positiveComment);
+                _gameData.countDown = Mathf.Max(0, countDown);
+                gameData = _gameData;
 
-            currentRoadMilestone++;
+                currentRoadMilestone++;
 
-            UnityEngine.Debug.Log(String.Format("Round={0} money={1} positiveComment={2} countDown={3}", 
-                currentRoadMilestone, gameData.money, gameData.positiveComment, gameData.countDown));
+                UnityEngine.Debug.Log(String.Format("Round={0} money={1} positiveComment={2} countDown={3}",
+                    currentRoadMilestone, gameData.money, gameData.positiveComment, gameData.countDown));
 
-            datingRoadControl();
+                datingRoadControl();
+            }
+            catch (Exception e)
+            {
+                Debug.LogError(String.Format("{1},{0}", e.StackTrace, e.Message));
+            }
         }
     }
 
@@ -330,6 +339,12 @@ public class GameLogicManager
         _gameData.positiveComment = 0;
         _gameData.countDown = 7200; // 2h
         this.gameData = _gameData;
+
+        bridgeLines = new List<string>();
+        foreach (var line in c_bridgeLines)
+        {
+            bridgeLines.Add(line);
+        }
 
 
         gamePool = new List<EScene>();
