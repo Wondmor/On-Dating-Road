@@ -8,10 +8,12 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using DG.Tweening;
+using TMPro;
 
 public class DeliveryPersonFallGameResultMenu : MonoBehaviour
 {
     public InputActionAsset inputActionAsset;
+    public TextMeshProUGUI transactionPriceTxt;
 
     private InputAction continueAction;
     Subject<Unit> onHideFinished = new();
@@ -21,12 +23,6 @@ public class DeliveryPersonFallGameResultMenu : MonoBehaviour
     private void Awake()
     {
         continueAction = inputActionAsset.FindAction("Continue");
-    }
-
-    private void HideAndContinue(InputAction.CallbackContext _)
-    {
-        gameObject.SetActive(false);
-        onHideFinished.OnNext(Unit.Default);
     }
 
     public void OnEnable()
@@ -39,5 +35,17 @@ public class DeliveryPersonFallGameResultMenu : MonoBehaviour
     {
         continueAction.Disable();
         continueAction.performed -= HideAndContinue;
+    }
+
+    private void HideAndContinue(InputAction.CallbackContext _)
+    {
+        gameObject.SetActive(false);
+        onHideFinished.OnNext(Unit.Default);
+    }
+
+    public void Show(float _value)
+    {
+        transactionPriceTxt.text = $"+{_value}元";
+        gameObject.SetActive(true);
     }
 }
