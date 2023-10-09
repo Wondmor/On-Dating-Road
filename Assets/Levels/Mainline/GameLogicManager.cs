@@ -112,12 +112,14 @@ public class GameLogicManager
 
     public const float c_StandardGameDuration = 1200;
     const float c_StandardRoadDuration = 600;
-    const float c_RefuseToHelpPeopleCost = 5;
+    public const float c_CoinSkillSaveTime = 301;
+    public const float c_ShoppingDuration = 300; // Must be smaller than c_CoinSkillSaveTime
+    const float c_RefuseToHelpPeopleCost = 10;
 
     const float c_CoinSkillRequest = 50; // Coin skill check
     const float c_CoinSkillMoneyAdd = 38888; // The number Musk'll give you in RMB (Maybe with alipay).
     
-    const float c_GoodCharacterEndingRequest = 60; // Ending check
+    const float c_GoodCharacterEndingRequest = 75; // Ending check
 
     public static readonly Dictionary<EScene, string> c_sceneNames = new Dictionary<EScene, string>
     {
@@ -201,11 +203,16 @@ public class GameLogicManager
             onTestFinished();
         else
         {
-            if (curState != EState.DatingRoad)
-                throw new System.Exception("OnBridgeFinished() during wrong state.");
+            //if (curState != EState.DatingRoad)
+            //    throw new System.Exception("OnBridgeFinished() during wrong state.");
 
-            if (gamePool.Count <= 0)
-                throw new System.Exception("Not enough game in gamePool.");
+            //if (gamePool.Count <= 0)
+            //    throw new System.Exception("Not enough game in gamePool.");
+
+            var tempGameData = gameData;
+            // Never run out time on road
+            tempGameData.countDown -= c_StandardRoadDuration;
+            gameData = tempGameData;
 
             var nextGameIdx = UnityEngine.Random.Range(0, gamePool.Count);
             EScene nextGame = gamePool[nextGameIdx];
@@ -255,7 +262,7 @@ public class GameLogicManager
         }
     }
 
-    public void OnCoinSkillFinished(float money, float positiveComment)
+    public void OnCoinSkillFinished(float money, float positiveComment, float countDown)
     {
         if (bTestMode)
             onTestFinished();
@@ -264,11 +271,12 @@ public class GameLogicManager
             var _gameData = gameData;
             _gameData.money = Mathf.Max(0, money);
             _gameData.positiveComment = Mathf.Max(0, positiveComment);
+            _gameData.countDown = countDown;
             gameData = _gameData;
 
 
-            if (curState != EState.CoinSkill)
-                throw new System.Exception("OnCoinSkillFinished() during wrong state.");
+            //if (curState != EState.CoinSkill)
+            //    throw new System.Exception("OnCoinSkillFinished() during wrong state.");
             curState = EState.Shopping;
             shoppingControl();
         }
@@ -280,11 +288,18 @@ public class GameLogicManager
             onTestFinished();
         else
         {
-            if (curState != EState.Shopping)
-                throw new System.Exception("OnShoppingFinished() during wrong state.");
+            //if (curState != EState.Shopping)
+            //    throw new System.Exception("OnShoppingFinished() during wrong state.");
             curState = EState.Ending;
 
+            // Consume time
+            var _gameData = gameData;
+            _gameData.countDown -= c_ShoppingDuration;
+            gameData = _gameData;
+
             EEnding eEnding = gameData.positiveComment >= c_GoodCharacterEndingRequest ? EEnding.GoodCharacter : EEnding.BadCharacter;
+            if (gameData.countDown <= 0)
+                eEnding = EEnding.BeLate;
 
             endingControl(eEnding, gift, giftInfo);
         }
@@ -335,6 +350,18 @@ public class GameLogicManager
         _endingData.eGift = EGift.None;
         _endingData.finishedMiniGames = new List<EScene>();
         this.endingData = _endingData;
+
+
+        //// Test data
+        //_gameData.money = 40000;
+        //_gameData.positiveComment = 75;
+        //_gameData.countDown = 7200; // 2h
+        //this.gameData = _gameData;
+        //finishedMiniGames.Add(EScene.Skewer);
+        //finishedMiniGames.Add(EScene.TrashShooting);
+        //finishedMiniGames.Add(EScene.BusGame);
+        //finishedMiniGames.Add(EScene.Racing);
+        //currentRoadMilestone = 4;
     }
 
     void yieldToScene(EScene eScene)
@@ -349,8 +376,8 @@ public class GameLogicManager
 
     void datingRoadControl()
     {
-        if (curState != EState.DatingRoad)
-            throw new System.Exception("roadControl() during wrong state.");
+        //if (curState != EState.DatingRoad)
+        //    throw new System.Exception("roadControl() during wrong state.");
 
         if (currentRoadMilestone >= c_RoadMilestoneCount) // Arrive?
         {
@@ -385,8 +412,8 @@ public class GameLogicManager
 
     void coinSkillControl(ECoinSkillType eType)
     {
-        if (curState != EState.CoinSkill)
-            throw new System.Exception("coinSkillControl() during wrong state.");
+        //if (curState != EState.CoinSkill)
+        //    throw new System.Exception("coinSkillControl() during wrong state.");
 
         bool bCoinSkill = gameData.positiveComment >= c_CoinSkillRequest;
 
@@ -423,8 +450,8 @@ public class GameLogicManager
 
     void endingControl(EEnding eEnding, EGift eGift, ShopItem giftInfo)
     {
-        if (curState != EState.Ending)
-            throw new System.Exception("endingControl() during wrong state.");
+        //if (curState != EState.Ending)
+        //    throw new System.Exception("endingControl() during wrong state.");
 
         var _endingData = endingData;
         _endingData.eEnding = eEnding;
