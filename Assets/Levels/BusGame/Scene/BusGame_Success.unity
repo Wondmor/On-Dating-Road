@@ -166,11 +166,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   version: 1
-  scrollPos: {x: 211.5, y: 337.5}
+  scrollPos: {x: 291.8556, y: 136.12796}
   variablesScrollPos: {x: 0, y: 0}
   variablesExpanded: 1
   blockViewHeight: 571
-  zoom: 1
+  zoom: 0.5800004
   scrollViewRect:
     serializedVersion: 2
     x: -343
@@ -180,7 +180,7 @@ MonoBehaviour:
   selectedBlocks:
   - {fileID: 7680714}
   selectedCommands:
-  - {fileID: 7680726}
+  - {fileID: 7680724}
   variables:
   - {fileID: 7680722}
   - {fileID: 7680723}
@@ -236,8 +236,8 @@ MonoBehaviour:
   nodeRect:
     serializedVersion: 2
     x: 199
-    y: 89
-    width: 111
+    y: 106.24136
+    width: 112.068924
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -246,9 +246,9 @@ MonoBehaviour:
   description: 
   eventHandler: {fileID: 7680716}
   commandList:
+  - {fileID: 7680724}
   - {fileID: 7680725}
   - {fileID: 7680715}
-  - {fileID: 7680724}
   - {fileID: 7680721}
   - {fileID: 7680713}
   - {fileID: 7680720}
@@ -405,7 +405,7 @@ MonoBehaviour:
           gameObjectVal: {fileID: 0}
         integerData:
           integerRef: {fileID: 0}
-          integerVal: 3
+          integerVal: 4
         materialData:
           materialRef: {fileID: 0}
           materialVal: {fileID: 0}
@@ -611,9 +611,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: afb91b566ceda411bad1e9d3c3243ecc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scope: 0
+  scope: 1
   key: Score
-  value: 5
+  value: 3
 --- !u!114 &7680723
 MonoBehaviour:
   m_ObjectHideFlags: 2
@@ -1344,7 +1344,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "20\u5143"
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: e179f0948fe542249bad340d4de8c860, type: 2}
   m_sharedMaterial: {fileID: 192943970804806596, guid: e179f0948fe542249bad340d4de8c860, type: 2}
@@ -1881,7 +1881,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 5a2aaefce1393994bbfc891863b088bd, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 2883c2d0bbe233644b66a368a370d95e, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

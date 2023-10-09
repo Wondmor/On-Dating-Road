@@ -92,8 +92,9 @@ public class RacingFlowControl : MonoBehaviour
                 break;
             case GAME_STATUS.STOP:
                 GameManager.Instance.RacingData.Money = moneyControl.GetMoney();
-                GameManager.Instance.RacingData.TimeUsed = timerControl.GetTime();
+                GameManager.Instance.RacingData.TimeUsed += timerControl.GetTime();
                 GameManager.Instance.RacingData.RaceTime++;
+                GameManager.Instance.RacingData.RemainHealth += healthControl.GetHealth();
                 fade = Instantiate(fadePrefab).GetComponent<FadeInOutScene>();
                 fade.fadeType = FadeInOutScene.EType.FadeOut;
                 fade.lastInSecond = 1f;
@@ -106,7 +107,7 @@ public class RacingFlowControl : MonoBehaviour
             case GAME_STATUS.DEAD:
                 // when dead set time and money into racing data
                 GameManager.Instance.RacingData.Money = moneyControl.GetMoney();
-                GameManager.Instance.RacingData.TimeUsed = timerControl.GetTime();
+                GameManager.Instance.RacingData.TimeUsed += timerControl.GetTime();
                 audioControl.BGMVolumeDown();
                 fade = Instantiate(fadePrefab).GetComponent<FadeInOutScene>();
                 fade.fadeType = FadeInOutScene.EType.FadeOut;

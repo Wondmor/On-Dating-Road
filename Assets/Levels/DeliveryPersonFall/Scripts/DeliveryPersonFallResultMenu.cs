@@ -187,10 +187,10 @@ public class DeliveryPersonFallResultMenu : MonoBehaviour
         cheapFailGO.SetActive(false);
         leftDesc.text = cargoInfo.expensiveDesc;
         leftSmallPrice.text = $"{cargoInfo.expensivePrice:0.00}";
-        leftBigPrice.text = cargoInfo.expensivePrice == 0 ? "‘˘∆∑" : $"{cargoInfo.expensivePrice:0.00}";
+        leftBigPrice.text = cargoInfo.expensivePrice == 0 ? "Ëµ†ÂìÅ" : $"{cargoInfo.expensivePrice:0.00}";
         rightDesc.text = cargoInfo.cheapDesc;
         rightSmallPrice.text = $"{cargoInfo.cheapPrice:0.00}";
-        rightBigPrice.text = cargoInfo.cheapPrice == 0 ? "‘˘∆∑": $"{cargoInfo.cheapPrice:0.00}";
+        rightBigPrice.text = cargoInfo.cheapPrice == 0 ? "Ëµ†ÂìÅ": $"{cargoInfo.cheapPrice:0.00}";
         leftTicketTrans.localPosition = leftTicketStartPos.localPosition;
         rightTicketTrans.localPosition = rightTicketStartPos.localPosition;
         goodImageGO.transform.localScale = Vector3.zero;

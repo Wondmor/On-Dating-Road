@@ -15,4 +15,13 @@ public class RacingData
     public int Money { get => money; set => money = value; }
     public int RaceTime { get => raceTime; set => raceTime = value; }
     public int RemainHealth { get => remainHealth; set => remainHealth = value; }
+
+    public void Reset()
+    {
+        bikeType = RacingPlayerControl.BIKE_TYPE.FIRE;
+        timeUsed = 0;
+        money = 0;
+        raceTime = 0;
+        remainHealth = 0;
+    }
 }

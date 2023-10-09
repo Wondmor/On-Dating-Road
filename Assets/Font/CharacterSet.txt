@@ -516,3 +516,4 @@ NPC出现
 0123456789:：
 abcdefghijklmnopqrstuvwxyz
 ABCDEFGHIJKLMNOPQRSTUVWXYZ
+元
