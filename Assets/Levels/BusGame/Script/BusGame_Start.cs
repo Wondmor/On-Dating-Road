@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Fungus;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -11,10 +12,11 @@ public class BusGame_Start : MonoBehaviour
 
     public GameObject background;
     public GameObject guide;
+    public Flowchart flowchart;
 
     void Start()
     {
-        commonSelection.ShowChoice();
+        StartCoroutine(Plot());
 
     }
 
@@ -48,5 +50,23 @@ public class BusGame_Start : MonoBehaviour
         {
 
         }
+    }
+
+    IEnumerator Plot()
+    {
+        yield return new WaitForSeconds(1f);
+        flowchart.ExecuteBlock("Plot");
+        bool anyKeyPressed = false;
+        while (!anyKeyPressed)
+        {
+            // 检测是否有任意键被按下
+            if (Input.anyKeyDown)
+            {
+                anyKeyPressed = true;
+            }
+
+            yield return null; // 等待下一帧
+        }
+        commonSelection.ShowChoice();
     }
 }
