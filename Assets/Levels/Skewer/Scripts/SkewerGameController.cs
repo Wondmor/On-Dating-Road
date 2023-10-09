@@ -189,6 +189,24 @@ public class SkewerGameController : MonoBehaviour
         }
     }
 
+    public void SetEndGame()
+    {
+        float baseMoney = (float)totalNumber * 5 / 10;
+        float baseComment = 40;
+
+        if (totalNumber > 40)
+        {
+            baseMoney *= 10;
+        }
+
+        float timeRatio = 0.8f + (totalNumber / 10) * 0.05f;
+
+        GameLogicManager.Instance.OnMiniGameFinished(
+            GameLogicManager.Instance.gameData.money + baseMoney,
+            GameLogicManager.Instance.gameData.positiveComment + baseComment,
+            GameLogicManager.Instance.gameData.countDown - GameLogicManager.c_StandardGameDuration * timeRatio);
+    }
+
     public void SetGameStatus(GameStatus status)
     {
         this.status = status;
@@ -207,21 +225,6 @@ public class SkewerGameController : MonoBehaviour
                 flowchart.ExecuteIfHasBlock("GameEnd");
                 break;
             case GameStatus.END:
-                float baseMoney = (float)totalNumber * 5 / 10;
-                float baseComment = 40;
-
-                if(totalNumber > 40)
-                {
-                    baseMoney *= 10;
-                }
-
-                float timeRatio = 0.8f + (totalNumber / 10) * 0.05f;
-
-                GameLogicManager.Instance.OnMiniGameFinished(
-                    GameLogicManager.Instance.gameData.money + baseMoney,
-                    GameLogicManager.Instance.gameData.positiveComment + baseComment,
-                    GameLogicManager.Instance.gameData.countDown - GameLogicManager.c_StandardGameDuration * timeRatio);
-
                 break;
             default:
                 Debug.Log("Wrong status?" + status.ToString());
