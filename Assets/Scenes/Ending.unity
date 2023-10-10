@@ -177,14 +177,12 @@ VideoPlayer:
   m_TimeUpdateMode: 2
   m_PlaybackSpeed: 1
   m_AudioOutputMode: 1
-  m_TargetAudioSources:
-  - {fileID: 1004358904}
-  m_DirectAudioVolumes:
-  - 1
+  m_TargetAudioSources: []
+  m_DirectAudioVolumes: []
   m_Url: 
-  m_EnabledAudioTracks: 01
-  m_DirectAudioMutes: 00
-  m_ControlledAudioTrackCount: 1
+  m_EnabledAudioTracks: 
+  m_DirectAudioMutes: 
+  m_ControlledAudioTrackCount: 0
   m_PlayOnAwake: 0
   m_SkipOnDrop: 0
   m_Looping: 0
@@ -1216,6 +1214,10 @@ PrefabInstance:
       value: 1077
       objectReference: {fileID: 0}
     - target: {fileID: 3310691406197628571, guid: 56f5b4d6f02a3dd47b2b1352fc669c43, type: 3}
+      propertyPath: m_ExposedReferences.m_References.Array.data[0].second
+      value: 
+      objectReference: {fileID: 1234883745390221736}
+    - target: {fileID: 3310691406197628571, guid: 56f5b4d6f02a3dd47b2b1352fc669c43, type: 3}
       propertyPath: m_ExposedReferences.m_References.Array.data[5].second
       value: 
       objectReference: {fileID: 0}
@@ -1381,6 +1383,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 56f5b4d6f02a3dd47b2b1352fc669c43, type: 3}
+--- !u!114 &1234883745390221736 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3384624500872430973, guid: 56f5b4d6f02a3dd47b2b1352fc669c43, type: 3}
+  m_PrefabInstance: {fileID: 1234883745390221735}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a019d1ec7e5d4548b3da9f2f0a09b8b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
