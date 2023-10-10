@@ -24,9 +24,9 @@ public class ButtonEffect : MonoBehaviour
 
     public AudioSource selectAudio;
 
-    private bool pastSelection;
+    int pastSelection;
 
-    bool currentSelection = true;
+    int currentSelection = 2;
 
     void Start()
     {
@@ -34,26 +34,57 @@ public class ButtonEffect : MonoBehaviour
         
     }
 
+    void OnEnable()
+    {
+        currentSelection = 2;
+    }
+
     public void Update()
     {
+        //Debug.Log("currentSelection"+currentSelection);
         Vector3 mouseScreenPosition = Input.mousePosition;
 
         Vector3 mouseWorldPosition = mainCamera.ScreenToWorldPoint(mouseScreenPosition);
 
         if(Input.GetAxis("Horizontal") < 0)
         {
-            currentSelection = false;
+            currentSelection = 0;
+            
         }
         if(Input.GetAxis("Horizontal") > 0)
         {
-            currentSelection = true;
+            currentSelection = 1;
+            
         }
 
+        if(currentSelection == 2)
+        {
+            if (yesRectTransform != null)
+            {
+                float newWidth = 75f;
+                float newHeight = 135f;
+                Vector2 sizeDelta = yesRectTransform.sizeDelta;
+                sizeDelta.x = newWidth;
+                sizeDelta.y = newHeight;
+                yesRectTransform.sizeDelta = sizeDelta;
 
+                yesImage.sprite = yesBefore;
+            }
+            if (noRectTransform != null)
+            {
+                float newWidth = 75f;
+                float newHeight = 175f;
+                Vector2 sizeDelta = noRectTransform.sizeDelta;
+                sizeDelta.x = newWidth;
+                sizeDelta.y = newHeight;
+                noRectTransform.sizeDelta = sizeDelta;
 
+                noImage.sprite = noBefore;
+            }
+        }
 
         
-        if(currentSelection == true)
+        if(currentSelection == 1)
         {
             
             
@@ -82,7 +113,7 @@ public class ButtonEffect : MonoBehaviour
             }
         }
 
-        if(currentSelection == false)
+        if(currentSelection == 0)
         {
             
             if (yesRectTransform != null)
@@ -110,11 +141,11 @@ public class ButtonEffect : MonoBehaviour
         }
 
 
-        if(currentSelection == true && pastSelection == false)
+        if(currentSelection == 1 && pastSelection == 0)
         {
             selectAudio.Play();
         }
-        if(currentSelection == false && pastSelection == true)
+        if(currentSelection == 0 && pastSelection == 1)
         {
             selectAudio.Play();
         }
