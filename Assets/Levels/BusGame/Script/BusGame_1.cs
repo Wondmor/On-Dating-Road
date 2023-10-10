@@ -40,7 +40,7 @@ public class BusGame_1 : MonoBehaviour
     bool isMoving = false;
 
     bool choiceExecuting = false;
-    bool currentSelection = true;
+    int currentSelection = 2;
     
 
     void Awake()
@@ -67,12 +67,26 @@ public class BusGame_1 : MonoBehaviour
 
     void Update()
     {
+        Debug.Log("currentSelection"+currentSelection);
+        //Debug.Log("currentTime"+currentTime);
+        //Debug.Log("pass"+pass);
         currentTime -= Time.deltaTime;
 
         if(currentTime<=0 && choiceExecuting == false)
         {
             choiceExecuting = true;
-            No();
+            if(currentSelection == 0)
+            {
+                No();
+            }
+            else if(currentSelection == 1)
+            {
+                Yes();
+            }
+            else if(currentSelection == 2)
+            {
+                No();
+            }
             StartCoroutine(ResetChoice());
             
         }
@@ -80,6 +94,7 @@ public class BusGame_1 : MonoBehaviour
         {
             currentTime = totalTime;
             pass = false;
+            
             level = GetUniqueRandomNumber();
             switch (level)
             {
@@ -117,26 +132,33 @@ public class BusGame_1 : MonoBehaviour
         }
 
         
-        if(Input.GetAxis("Horizontal") < 0)
+        if((Input.GetAxis("Horizontal") < 0 && currentSelection == 2)||(Input.GetAxis("Horizontal") < 0 && currentSelection == 1))
         {
-            currentSelection = false;
+            currentSelection = 0;
+            Debug.Log("<-");
         }
-        if(Input.GetAxis("Horizontal") > 0)
+        if((Input.GetAxis("Horizontal") > 0 && currentSelection == 2)||(Input.GetAxis("Horizontal") > 0 && currentSelection == 0))
         {
-            currentSelection = true;
+            currentSelection = 1;
+            Debug.Log("->");
         }
         
         if(Input.GetButtonUp("Submit") && choiceExecuting == false)
         {
             choiceExecuting = true;
-            if(currentSelection == false)
+            if(currentSelection == 0)
             {
                 No();
             }
-            if(currentSelection == true)
+            if(currentSelection == 1)
             {
                 Yes();
             }
+            if(currentSelection == 2)
+            {
+                Debug.Log("请选择");
+            }
+            
             StartCoroutine(ResetChoice());
         }
 
@@ -171,8 +193,7 @@ public class BusGame_1 : MonoBehaviour
         countAudio.Play();
 
     }
-
-     IEnumerator Plot_2()
+    IEnumerator Plot_2()
      {
         yield return new WaitForSeconds(1f);
         
@@ -223,7 +244,7 @@ public class BusGame_1 : MonoBehaviour
             
         
      }
-     IEnumerator Plot_3()
+    IEnumerator Plot_3()
      {
         yield return new WaitForSeconds(1f);
 
@@ -235,7 +256,7 @@ public class BusGame_1 : MonoBehaviour
         choice.SetActive(true);
         countAudio.Play();
      }
-     IEnumerator Plot_4()
+    IEnumerator Plot_4()
      {
         yield return new WaitForSeconds(1f);
 
@@ -247,7 +268,7 @@ public class BusGame_1 : MonoBehaviour
         choice.SetActive(true);
         countAudio.Play();
      }
-     IEnumerator Plot_5()
+    IEnumerator Plot_5()
      {
         yield return new WaitForSeconds(1f);
 
@@ -259,7 +280,7 @@ public class BusGame_1 : MonoBehaviour
         choice.SetActive(true);
         countAudio.Play();
      }
-     IEnumerator Plot_6()
+    IEnumerator Plot_6()
      {
         yield return new WaitForSeconds(1f);
 
@@ -275,7 +296,7 @@ public class BusGame_1 : MonoBehaviour
     
     public void Yes()
     {
-
+        currentSelection = 2;
         Debug.Log("Yes");
 
         tryTime -= 1;
@@ -302,7 +323,7 @@ public class BusGame_1 : MonoBehaviour
     }
     public void No()
     {
-        
+        currentSelection = 2;
         Debug.Log("No");
 
         tryTime -= 1;
@@ -348,8 +369,10 @@ public class BusGame_1 : MonoBehaviour
 
      IEnumerator ResetChoice()
      {
+        
         yield return new WaitForSeconds(1f);
-        currentTime = 3f;
+        currentTime = 4f;
+        
         choiceExecuting = false;
      }
 }
