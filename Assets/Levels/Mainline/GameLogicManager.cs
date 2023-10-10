@@ -400,9 +400,13 @@ public class GameLogicManager
             curState = EState.CoinSkill;
             coinSkillControl(ECoinSkillType.Money);
         }
-        else if (gameData.countDown < c_StandardGameDuration) // Will be late?
+        else if (gameData.countDown <= c_StandardRoadDuration) // Will be late?
         {
             // Will be late
+            var tempGameData = gameData;
+            tempGameData.countDown -= c_StandardRoadDuration;
+            gameData = tempGameData;
+
             curState = EState.CoinSkill;
             coinSkillControl(ECoinSkillType.Time);
         }
