@@ -14,6 +14,8 @@ public class CoinSkillLogic : MonoBehaviour
     void Update()
     {
         if (GameManager.Instance.CommonInputAction.enter.WasPerformedThisFrame())
-            GameLogicManager.Instance.OnCoinSkillFinished(GameLogicManager.Instance.gameData.money, GameLogicManager.Instance.gameData.positiveComment);
+            GameLogicManager.Instance.OnCoinSkillFinished(GameLogicManager.Instance.gameData.money, 
+                GameLogicManager.Instance.gameData.positiveComment,
+                GameLogicManager.Instance.gameData.countDown);
     }
 }

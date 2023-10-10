@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Fungus;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -7,6 +8,7 @@ using UnityEngine.Audio;
 using UnityEngine.Playables;
 using UnityEngine.Rendering;
 using UnityEngine.UI;
+using UnityEngine.Video;
 using static Shopping;
 
 public class EndingLogic : MonoBehaviour
@@ -39,6 +41,8 @@ public class EndingLogic : MonoBehaviour
     [SerializeField] Sprite candle = null;
     [SerializeField] Sprite rooster = null;
 
+    [SerializeField] VideoPlayer player;
+    [SerializeField] Flowchart flowchart;
 
     List<PlayableDirector> toPlay = new List<PlayableDirector>();
     GiftInfo getGift = new GiftInfo();
@@ -106,11 +110,11 @@ public class EndingLogic : MonoBehaviour
                 case EGift.Normal:
                     toPlay.Add(endingData.eEnding == EEnding.GoodCharacter ?
                         NiceNormalGift : BadNormalGift);
-                        if (endingData.eEnding == EEnding.GoodCharacter)
-                        {
-                            toPlay.Add(NicePart);
-                        }
-                        getGift.sprite = giveGift.sprite;
+                    if (endingData.eEnding == EEnding.GoodCharacter)
+                    {
+                        toPlay.Add(NicePart);
+                    }
+                    getGift.sprite = giveGift.sprite;
                     getGift.name = giveGift.name;
                     break;
                 case EGift.Good:
@@ -141,14 +145,14 @@ public class EndingLogic : MonoBehaviour
     {
         if (playingTimelineIdx < toPlay.Count)
         {
-                ++playingTimelineIdx;
-                if (playingTimelineIdx < toPlay.Count)
+            ++playingTimelineIdx;
+            if (playingTimelineIdx < toPlay.Count)
             {
                 toPlay[playingTimelineIdx].stopped += OnTimelineStop;
                 toPlay[playingTimelineIdx].Play();
             }
-                else
-                    OnFinished();
+            else
+                OnFinished();
         }
     }
 
@@ -169,8 +173,22 @@ public class EndingLogic : MonoBehaviour
 
     public void OnFinished()
     {
-        toBeContinue.gameObject.SetActive(true);
-        //toBeContinue.SetBG(transform.Find("BG").GetComponent<Image>().sprite);
-        //gameObject.SetActive(false);
+        flowchart.ExecuteIfHasBlock("Video");
+    }
+
+    public void VideoPlay()
+    {
+        player.Play();
+        player.loopPointReached += (vp) =>
+        {
+            Debug.Log("Play stop");
+            FungusManager.Instance.MusicManager.SetAudioVolume(0, 2f, () =>
+            {
+                FungusManager.Instance.MusicManager.StopMusic();
+                gameObject.SetActive(true);
+                toBeContinue.gameObject.SetActive(true);
+            });
+        };
+        gameObject.SetActive(false);
     }
 }

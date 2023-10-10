@@ -501,12 +501,28 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4439704028200725036, guid: d3492bd4728ddb14c864a104f9592fbd, type: 3}
+      propertyPath: aMiss
+      value: 
+      objectReference: {fileID: 8300000, guid: d21ab268d5429244b827f30b59a92a05, type: 3}
+    - target: {fileID: 4439704028200725036, guid: d3492bd4728ddb14c864a104f9592fbd, type: 3}
+      propertyPath: aPerfect
+      value: 
+      objectReference: {fileID: 8300000, guid: 1fea19787becc7242a9499150d5fd457, type: 3}
+    - target: {fileID: 4439704028200725036, guid: d3492bd4728ddb14c864a104f9592fbd, type: 3}
       propertyPath: audioMixerGroupSFX
       value: 
       objectReference: {fileID: 1104714393079160070, guid: 3c29c3229e6cab745b47c58d5b97aca0, type: 2}
     - target: {fileID: 4902942327528959854, guid: d3492bd4728ddb14c864a104f9592fbd, type: 3}
       propertyPath: m_Name
       value: TrashShooting
+      objectReference: {fileID: 0}
+    - target: {fileID: 5669758317572760170, guid: d3492bd4728ddb14c864a104f9592fbd, type: 3}
+      propertyPath: m_PerfectRange
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8902882908004615391, guid: d3492bd4728ddb14c864a104f9592fbd, type: 3}
+      propertyPath: Loop
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8986033958804868211, guid: d3492bd4728ddb14c864a104f9592fbd, type: 3}
       propertyPath: m_Camera

@@ -5139,7 +5139,7 @@ MonoBehaviour:
   selectedBlocks:
   - {fileID: 829810184}
   selectedCommands:
-  - {fileID: 836547578}
+  - {fileID: 836547550}
   variables:
   - {fileID: 86762877}
   - {fileID: 86762876}
@@ -5366,7 +5366,7 @@ MonoBehaviour:
   musicClip: {fileID: 8300000, guid: 1107aa2895ef92b48982e41ff2727e49, type: 3}
   atTime: 0
   loop: 1
-  fadeDuration: 1
+  fadeDuration: 0
 --- !u!114 &836547552
 MonoBehaviour:
   m_ObjectHideFlags: 2
