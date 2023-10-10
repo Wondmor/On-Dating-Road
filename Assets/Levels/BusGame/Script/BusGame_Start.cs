@@ -48,7 +48,7 @@ public class BusGame_Start : MonoBehaviour
         }
         else
         {
-
+            GameLogicManager.Instance.OnMiniGameRefused();
         }
     }
 

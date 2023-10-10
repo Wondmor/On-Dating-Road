@@ -7,6 +7,7 @@ using System;
 
 public class DeliveryPersonFallGameManager : MonoBehaviour
 {
+    private const int INITIAL_LIFE_VALUE = 6;
     public List<string> levelNameList;
 
     public DeliveryPersonFallHand hand;
@@ -30,7 +31,7 @@ public class DeliveryPersonFallGameManager : MonoBehaviour
     int curLevelIndex = 0;
     int cargoCatchCount = 0;
     bool yellow;
-    ReactiveProperty<int> heartCountProp = new(6);
+    ReactiveProperty<int> heartCountProp = new(INITIAL_LIFE_VALUE);
 
     private void Awake()
     {
@@ -70,7 +71,7 @@ public class DeliveryPersonFallGameManager : MonoBehaviour
             Reset();
             if (heartCountProp.Value == 0 || curLevelIndex == levelNameList.Count - 1)
             {
-                gameResultMenu.gameObject.SetActive(true);
+                gameResultMenu.Show(GetMoney());
             }
             else
             {
@@ -118,12 +119,13 @@ public class DeliveryPersonFallGameManager : MonoBehaviour
         commonSelection.gameObject.SetActive(false);
         if (help)
         {
-            heartCountProp.Value = 6;
+            heartCountProp.Value = INITIAL_LIFE_VALUE;
             tutorialMenu.ShowMenu();
         }
         else
         {
-            GameFinished();
+            GameLogicManager gameLogicMgrInstance = GameLogicManager.Instance;
+            gameLogicMgrInstance.OnMiniGameRefused();
         }
     }
 
@@ -158,7 +160,35 @@ public class DeliveryPersonFallGameManager : MonoBehaviour
 
     void GameFinished()
     {
-        GameLogicManager gameLogicMgrInstance = GameLogicManager.Instance;
-        gameLogicMgrInstance.OnMiniGameFinished(gameLogicMgrInstance.gameData.money, gameLogicMgrInstance.gameData.positiveComment + cargoCatchCount);
+        GameLogicManager glmIns = GameLogicManager.Instance;
+        Debug.Log($"result: Money {GetMoney()}, Positive {GetPositiveComment()}, CountDown {GetCountDown()}");
+        glmIns.OnMiniGameFinished(glmIns.gameData.money + GetMoney(), glmIns.gameData.positiveComment + GetPositiveComment(), glmIns.gameData.countDown - GameLogicManager.c_StandardGameDuration * GetCountDown());
+        
     }
+
+    float GetMoney()
+    {
+        return Mathf.RoundToInt(Mathf.Lerp(0, 30, GetFactor()));
+    }
+
+    float GetPositiveComment()
+    {
+        return Mathf.RoundToInt(Mathf.Lerp(0, 30, GetFactor()));
+    }
+
+    float GetCountDown()
+    {
+        return Mathf.Lerp(1.2f, 0.7f, GetFactor());
+    }
+
+    float GetFactor()
+    {
+        return resultList[cargoCatchCount];
+    }
+    
+    List<float> resultList = new()
+    {
+        0, 0.2f, 0.4f, 0.5f, 0.55f, 0.6f, 0.65f, 0.7f, 0.75f, 0.8f, 0.9f, 1f
+    };
+  
 }
