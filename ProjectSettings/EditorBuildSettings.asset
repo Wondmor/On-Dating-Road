@@ -15,6 +15,9 @@ EditorBuildSettings:
     path: Assets/Scenes/GameStart.unity
     guid: 6a126e8bc67b9a24dab659e9da928e17
   - enabled: 1
+    path: Assets/Scenes/Ending.unity
+    guid: f83f4461731718a4c803e5d2a96400b6
+  - enabled: 1
     path: Assets/Scenes/TrashShooting.unity
     guid: 8534ec6d5bad6d7489822e3537e9e974
   - enabled: 1
@@ -50,9 +53,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/CoinSkill.unity
     guid: 2c904d23ff349ec449333929a8284e44
-  - enabled: 1
-    path: Assets/Scenes/Ending.unity
-    guid: f83f4461731718a4c803e5d2a96400b6
   - enabled: 1
     path: Assets/Levels/DeliveryPersonFall/DeliveryPersonFall.unity
     guid: 42d45a71f7d100b42b482399a36616bf

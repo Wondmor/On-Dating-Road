@@ -178,6 +178,7 @@ public class EndingLogic : MonoBehaviour
 
     public void VideoPlay()
     {
+        player.url = System.IO.Path.Combine(Application.streamingAssetsPath, "ending.mp4");
         player.Play();
         player.loopPointReached += (vp) =>
         {

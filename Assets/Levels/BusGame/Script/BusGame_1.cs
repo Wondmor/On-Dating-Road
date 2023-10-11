@@ -131,16 +131,20 @@ public class BusGame_1 : MonoBehaviour
             }
         }
 
-        
-        if((Input.GetAxis("Horizontal") < 0 && currentSelection == 2)||(Input.GetAxis("Horizontal") < 0 && currentSelection == 1))
+
+        if (GameManager.Instance.CommonInputAction.GetPerformedTypeThisFrame() == CommonInputAction.EType.Directions)
         {
-            currentSelection = 0;
-            Debug.Log("<-");
-        }
-        if((Input.GetAxis("Horizontal") > 0 && currentSelection == 2)||(Input.GetAxis("Horizontal") > 0 && currentSelection == 0))
-        {
-            currentSelection = 1;
-            Debug.Log("->");
+            float axis = GameManager.Instance.CommonInputAction.directions.ReadValue<Vector2>().x;
+            if ((axis < 0 && currentSelection == 2) || (axis < 0 && currentSelection == 1))
+            {
+                currentSelection = 0;
+                Debug.Log("<-");
+            }
+            if ( (axis> 0 && currentSelection == 2) || (axis > 0 && currentSelection == 0))
+            {
+                currentSelection = 1;
+                Debug.Log("->");
+            }
         }
         
         if(Input.GetButtonUp("Submit") && choiceExecuting == false)
