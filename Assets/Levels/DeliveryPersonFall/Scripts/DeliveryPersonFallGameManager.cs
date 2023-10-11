@@ -188,7 +188,7 @@ public class DeliveryPersonFallGameManager : MonoBehaviour
     
     List<float> resultList = new()
     {
-        0, 0.2f, 0.4f, 0.5f, 0.55f, 0.6f, 0.65f, 0.7f, 0.75f, 0.8f, 0.9f, 1f
+        0, 0.2f, 0.4f, 0.5f, 0.55f, 0.6f, 0.65f, 0.7f, 0.75f, 0.8f, 0.85f, 0.9f, 1f
     };
   
 }
