@@ -555,8 +555,8 @@ Camera:
   m_GameObject: {fileID: 606398640}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -1684,6 +1684,7 @@ MonoBehaviour:
   horizontalSpeed: 8
   grassSpeedDownRatio: 0.5
   baseVerticalSpeed: 10
+  inputSensitivity: 100
   bikePrefabs:
   - {fileID: 1147205343073147143, guid: 4284219742e7687448b12ce7a852cabe, type: 3}
   - {fileID: 1147205343073147143, guid: 974360e9c8b091d42aace22be1653932, type: 3}

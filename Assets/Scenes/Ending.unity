@@ -172,7 +172,7 @@ VideoPlayer:
   m_TargetMaterialRenderer: {fileID: 0}
   m_TargetMaterialProperty: <noninit>
   m_RenderMode: 0
-  m_AspectRatio: 2
+  m_AspectRatio: 1
   m_DataSource: 1
   m_TimeUpdateMode: 2
   m_PlaybackSpeed: 1
@@ -317,8 +317,8 @@ MonoBehaviour:
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 1920, y: 1080}
-  m_ScreenMatchMode: 1
-  m_MatchWidthOrHeight: 0
+  m_ScreenMatchMode: 0
+  m_MatchWidthOrHeight: 1
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
@@ -753,8 +753,8 @@ Camera:
   m_GameObject: {fileID: 925200399}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -1007,6 +1007,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1062035281271991200, guid: a770bbf06d98f2f43bc324222b770b04, type: 3}
+      propertyPath: m_ScreenMatchMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1062035281271991200, guid: a770bbf06d98f2f43bc324222b770b04, type: 3}
+      propertyPath: m_MatchWidthOrHeight
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6237121784911812180, guid: a770bbf06d98f2f43bc324222b770b04, type: 3}
       propertyPath: m_Name
       value: ToBeContinue
@@ -1264,6 +1272,22 @@ PrefabInstance:
     - target: {fileID: 5120886394997946483, guid: 56f5b4d6f02a3dd47b2b1352fc669c43, type: 3}
       propertyPath: m_ExposedReferences.m_References.Array.data[12].second
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5747975782671606391, guid: 56f5b4d6f02a3dd47b2b1352fc669c43, type: 3}
+      propertyPath: m_UiScaleMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5747975782671606391, guid: 56f5b4d6f02a3dd47b2b1352fc669c43, type: 3}
+      propertyPath: m_MatchWidthOrHeight
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5747975782671606391, guid: 56f5b4d6f02a3dd47b2b1352fc669c43, type: 3}
+      propertyPath: m_ReferenceResolution.x
+      value: 1920
+      objectReference: {fileID: 0}
+    - target: {fileID: 5747975782671606391, guid: 56f5b4d6f02a3dd47b2b1352fc669c43, type: 3}
+      propertyPath: m_ReferenceResolution.y
+      value: 1080
       objectReference: {fileID: 0}
     - target: {fileID: 7081199348548181429, guid: 56f5b4d6f02a3dd47b2b1352fc669c43, type: 3}
       propertyPath: m_ExposedReferences.m_References.Array.size
