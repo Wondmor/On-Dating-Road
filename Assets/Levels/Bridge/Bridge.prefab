@@ -226,11 +226,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
-  m_ScreenMatchMode: 0
+  m_ReferenceResolution: {x: 1920, y: 1080}
+  m_ScreenMatchMode: 1
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
@@ -768,9 +768,19 @@ MonoBehaviour:
   CoinTextRight: {fileID: 710029735510389895}
   Pos: {fileID: 8816010457635762248}
   SpinningCoin: {fileID: 0}
+  BGMSource: {fileID: 0}
+  SFXSource: {fileID: 0}
+  walkingClip: {fileID: 0}
+  afterPreludeBG: {fileID: 0}
+  afterBusGameBG: {fileID: 0}
+  afterTrashshootingBG: {fileID: 0}
+  afterSkewerBG: {fileID: 0}
+  afterRacingBG: {fileID: 0}
+  afterDeliveryBG: {fileID: 0}
   bFadeIn: 1
   bLeft: 1
   currentRoadMileStone: 0
+  prevGame: 1
   ePos: 1
 --- !u!114 &2224166929562396516
 MonoBehaviour:

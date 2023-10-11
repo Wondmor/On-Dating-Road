@@ -520,6 +520,22 @@ PrefabInstance:
       propertyPath: m_PerfectRange
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8150620244043581817, guid: d3492bd4728ddb14c864a104f9592fbd, type: 3}
+      propertyPath: m_UiScaleMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8150620244043581817, guid: d3492bd4728ddb14c864a104f9592fbd, type: 3}
+      propertyPath: m_ScreenMatchMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8150620244043581817, guid: d3492bd4728ddb14c864a104f9592fbd, type: 3}
+      propertyPath: m_ReferenceResolution.x
+      value: 1920
+      objectReference: {fileID: 0}
+    - target: {fileID: 8150620244043581817, guid: d3492bd4728ddb14c864a104f9592fbd, type: 3}
+      propertyPath: m_ReferenceResolution.y
+      value: 1080
+      objectReference: {fileID: 0}
     - target: {fileID: 8902882908004615391, guid: d3492bd4728ddb14c864a104f9592fbd, type: 3}
       propertyPath: Loop
       value: 1
@@ -528,6 +544,22 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 473905409}
+    - target: {fileID: 9015589039428458475, guid: d3492bd4728ddb14c864a104f9592fbd, type: 3}
+      propertyPath: m_UiScaleMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9015589039428458475, guid: d3492bd4728ddb14c864a104f9592fbd, type: 3}
+      propertyPath: m_ScreenMatchMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9015589039428458475, guid: d3492bd4728ddb14c864a104f9592fbd, type: 3}
+      propertyPath: m_ReferenceResolution.x
+      value: 1920
+      objectReference: {fileID: 0}
+    - target: {fileID: 9015589039428458475, guid: d3492bd4728ddb14c864a104f9592fbd, type: 3}
+      propertyPath: m_ReferenceResolution.y
+      value: 1080
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
