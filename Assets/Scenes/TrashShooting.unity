@@ -336,6 +336,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 116720163572134906, guid: d3492bd4728ddb14c864a104f9592fbd, type: 3}
+      propertyPath: m_UiScaleMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 116720163572134906, guid: d3492bd4728ddb14c864a104f9592fbd, type: 3}
+      propertyPath: m_ScreenMatchMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 116720163572134906, guid: d3492bd4728ddb14c864a104f9592fbd, type: 3}
+      propertyPath: m_ReferenceResolution.x
+      value: 1920
+      objectReference: {fileID: 0}
+    - target: {fileID: 116720163572134906, guid: d3492bd4728ddb14c864a104f9592fbd, type: 3}
+      propertyPath: m_ReferenceResolution.y
+      value: 1080
+      objectReference: {fileID: 0}
     - target: {fileID: 160744965679058763, guid: d3492bd4728ddb14c864a104f9592fbd, type: 3}
       propertyPath: m_Camera
       value: 
@@ -519,6 +535,30 @@ PrefabInstance:
     - target: {fileID: 5669758317572760170, guid: d3492bd4728ddb14c864a104f9592fbd, type: 3}
       propertyPath: m_PerfectRange
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6045102038496138087, guid: d3492bd4728ddb14c864a104f9592fbd, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6279844159011691103, guid: d3492bd4728ddb14c864a104f9592fbd, type: 3}
+      propertyPath: m_fontSize
+      value: 65
+      objectReference: {fileID: 0}
+    - target: {fileID: 6279844159011691103, guid: d3492bd4728ddb14c864a104f9592fbd, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: e179f0948fe542249bad340d4de8c860, type: 2}
+    - target: {fileID: 6279844159011691103, guid: d3492bd4728ddb14c864a104f9592fbd, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 192943970804806596, guid: e179f0948fe542249bad340d4de8c860, type: 2}
+    - target: {fileID: 6279844159011691103, guid: d3492bd4728ddb14c864a104f9592fbd, type: 3}
+      propertyPath: m_enableAutoSizing
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6279844159011691103, guid: d3492bd4728ddb14c864a104f9592fbd, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8150620244043581817, guid: d3492bd4728ddb14c864a104f9592fbd, type: 3}
       propertyPath: m_UiScaleMode
