@@ -59,6 +59,7 @@ public class BusGameEnding : MonoBehaviour
         int money, comment;
         float time;
         GetMoneyCommentTime(out money, out comment, out time);
+        Score.playerScore = 0;
         GameLogicManager.Instance.OnMiniGameFinished(
            GameLogicManager.Instance.gameData.money + money,
            GameLogicManager.Instance.gameData.positiveComment + comment,
