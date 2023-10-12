@@ -98,6 +98,7 @@ public class RacingFlowControl : MonoBehaviour
                 fade = Instantiate(fadePrefab).GetComponent<FadeInOutScene>();
                 fade.fadeType = FadeInOutScene.EType.FadeOut;
                 fade.lastInSecond = 1f;
+                iTween.Stop();
                 fade.FadeOut("RacingFinish");
                 break;
             case GAME_STATUS.START:
@@ -112,6 +113,7 @@ public class RacingFlowControl : MonoBehaviour
                 fade = Instantiate(fadePrefab).GetComponent<FadeInOutScene>();
                 fade.fadeType = FadeInOutScene.EType.FadeOut;
                 fade.lastInSecond = 1f;
+                iTween.Stop();
                 fade.FadeOut("RacingSelection");
                 break;
             case GAME_STATUS.CROSS_LINE:
