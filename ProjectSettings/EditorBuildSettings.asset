@@ -8,7 +8,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Levels/EdgeJumping/SampleScene.unity
     guid: 8c9cfa26abfee488c85f1582747f6a02
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/TestMain.unity
     guid: 449f7ec605b3c46489f2df7e1638c391
   - enabled: 1

@@ -192,11 +192,16 @@ public class SkewerGameController : MonoBehaviour
     public void SetEndGame()
     {
         float baseMoney = (float)totalNumber * 5 / 10;
-        float baseComment = 40;
+        float baseComment = 10;
 
         if (totalNumber > 40)
         {
             baseMoney *= 10;
+        }
+
+        if(totalNumber > 20)
+        {
+            baseComment = 20;
         }
 
         float timeRatio = 1.0f + (totalNumber / 10) * 0.05f;

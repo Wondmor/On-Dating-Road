@@ -253,7 +253,7 @@ public class GameLogicManager
             {
                 var _gameData = gameData;
                 _gameData.money = Mathf.Max(0, money);
-                _gameData.positiveComment = Mathf.Max(0, positiveComment);
+                _gameData.positiveComment = positiveComment;
                 _gameData.countDown = Mathf.Max(0, countDown);
                 gameData = _gameData;
 
@@ -279,7 +279,7 @@ public class GameLogicManager
         {
             var _gameData = gameData;
             _gameData.money = Mathf.Max(0, money);
-            _gameData.positiveComment = Mathf.Max(0, positiveComment);
+            _gameData.positiveComment = positiveComment;
             _gameData.countDown = countDown;
             gameData = _gameData;
 
