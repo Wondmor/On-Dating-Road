@@ -10,11 +10,13 @@ public class StartLogic : MonoBehaviour
     {
     }
 
+    bool bPerformed = false;
     // Update is called once per frame
     void Update()
     {
-        if(GameManager.Instance.CommonInputAction.enter.WasPerformedThisFrame())
+        if(GameManager.Instance.CommonInputAction.enter.WasPerformedThisFrame() && bPerformed == false)
         {
+            bPerformed = true;
             if (transform.Find("CanvasFadeOut") && transform.Find("CanvasFadeOut").GetComponent<FadeInOutScene>())
             {
                 var fadeOut = transform.Find("CanvasFadeOut").GetComponent<FadeInOutScene>();
@@ -24,8 +26,6 @@ public class StartLogic : MonoBehaviour
             else
             {
                 InvokeOnFadeoutFinish();
-                //SceneManager.LoadScene(sceneName);
-
             }
 
 

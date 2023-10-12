@@ -381,6 +381,8 @@ public class GameLogicManager
 
     void yieldToScene(EScene eScene)
     {
+        iTween.Stop();
+        UnityEngine.Debug.Log(String.Format("LoadScene {0}", c_sceneNames[eScene]));
         SceneManager.LoadScene(c_sceneNames[eScene]);
     }
 

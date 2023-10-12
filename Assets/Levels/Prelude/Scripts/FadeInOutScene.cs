@@ -21,31 +21,8 @@ public class FadeInOutScene : MonoBehaviour
     [SerializeField] public Image blackScreen = null;
     [SerializeField] public float lastInSecond = 2.0f;
 
-    [Header("同期播放音频")]
-    [SerializeField] bool bPlayAudio = false;
-    AudioSource audioSource = null;
-    [SerializeField] AudioClip audioClip = null;
-    [SerializeField] bool bLoop = false;
-
     private string sceneName = "";
 
-    internal void OnMusicComplete()
-    {
-        audioSource.Stop();
-    }
-
-    void StartAudio()
-    {
-        audioSource.loop = bLoop;
-        audioSource.clip = audioClip;
-        audioSource.Play();
-        iTween.AudioTo(gameObject, iTween.Hash(
-            "time", lastInSecond,
-            "oncomplete", "OnComplete",
-            "oncompletetarget", gameObject
-        ));
-
-    }
     public void FadeOut(string sceneName)
     {
         GetBlackScreen().gameObject.SetActive(true);
@@ -60,11 +37,6 @@ public class FadeInOutScene : MonoBehaviour
             "oncompletetarget", gameObject,
             "easetype", iTween.EaseType.linear
         ));
-
-        if(bPlayAudio)
-        {
-            StartAudio();
-        }
     }
     public void FadeOut(GameObject onCompleteTarget, string onComplete)
     {
@@ -79,11 +51,6 @@ public class FadeInOutScene : MonoBehaviour
             "oncompletetarget", onCompleteTarget,
             "easetype", iTween.EaseType.linear
         ));
-
-        if (bPlayAudio)
-        {
-            StartAudio();
-        }
     }
 
     void FadeIn()
@@ -94,11 +61,19 @@ public class FadeInOutScene : MonoBehaviour
             "to", 0.0f,
             "onupdate", "UpdateValue",
             "onupdatetarget", gameObject,
+            "oncomplete", "OnFadeInComplete",
+            "oncompletetarget", gameObject,
             "time", lastInSecond,
             "easetype", iTween.EaseType.linear
         ));
+    }
 
-        Destroy(this.gameObject, lastInSecond + 0.001f);
+    internal void OnFadeInComplete()
+    {
+        if(this != null)
+        {
+            Destroy(this.gameObject);
+        }
     }
 
     void UpdateValue(float newValue)
@@ -133,9 +108,6 @@ public class FadeInOutScene : MonoBehaviour
         {
             UpdateValue(0.0f);
         }
-
-        if (bPlayAudio)
-            audioSource = gameObject.AddComponent<AudioSource>();
     }
 
     // Update is called once per frame
