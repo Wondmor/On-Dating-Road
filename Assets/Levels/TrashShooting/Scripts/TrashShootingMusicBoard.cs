@@ -334,6 +334,9 @@ namespace TrashShooting
                         nextDifficulty--;
                     }
 
+                    GameManager.Instance.LogManager.Log("trash_phase", "missRate", missRate, "hitRate", hitRate, "maxCombo", maxCombo,
+                        "diff", musicInfo.curDifficulty, "nextDiff", nextDifficulty); 
+
                     SetNextPhase(nextDifficulty);
                 }
 

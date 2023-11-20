@@ -7,7 +7,7 @@ using System;
 
 public class DeliveryPersonFallGameManager : MonoBehaviour
 {
-    private const int INITIAL_LIFE_VALUE = 6;
+    private const int INITIAL_LIFE_VALUE = 4;
     public List<string> levelNameList;
 
     public DeliveryPersonFallHand hand;
@@ -160,6 +160,8 @@ public class DeliveryPersonFallGameManager : MonoBehaviour
 
     void GameFinished()
     {
+        GameManager.Instance.LogManager.Log("dpf_cargo", "count", cargoCatchCount);
+
         GameLogicManager glmIns = GameLogicManager.Instance;
         Debug.Log($"result: Money {GetMoney()}, Positive {GetPositiveComment()}, CountDown {GetCountDown()}");
         glmIns.OnMiniGameFinished(glmIns.gameData.money + GetMoney(), glmIns.gameData.positiveComment + GetPositiveComment(), glmIns.gameData.countDown - GameLogicManager.c_StandardGameDuration * GetCountDown());

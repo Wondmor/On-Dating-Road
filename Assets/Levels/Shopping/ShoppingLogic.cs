@@ -221,7 +221,6 @@ public class Shopping : MonoBehaviour
                 int currentRow = currentItem % 6;
                 int currentLine = currentItem / 6;
                 Vector2 vec2 = GameManager.Instance.CommonInputAction.directions.ReadValue<Vector2>();
-                Debug.Log(vec2);
                 if (vec2.x > 0)
                 {
                     currentRow++;

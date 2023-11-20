@@ -67,7 +67,6 @@ public class BusGame_1 : MonoBehaviour
 
     void Update()
     {
-        Debug.Log("currentSelection"+currentSelection);
         //Debug.Log("currentTime"+currentTime);
         //Debug.Log("pass"+pass);
         currentTime -= Time.deltaTime;

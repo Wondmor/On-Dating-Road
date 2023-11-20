@@ -206,6 +206,8 @@ public class SkewerGameController : MonoBehaviour
 
         float timeRatio = 1.0f + (totalNumber / 10) * 0.05f;
 
+        GameManager.Instance.LogManager.Log("skewer_count", "count", totalNumber);
+
         GameLogicManager.Instance.OnMiniGameFinished(
             GameLogicManager.Instance.gameData.money + baseMoney,
             GameLogicManager.Instance.gameData.positiveComment + baseComment,

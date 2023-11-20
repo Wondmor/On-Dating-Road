@@ -110,7 +110,7 @@ public class GameLogicManager
     
     const uint c_RoadMilestoneCount = 4;
 
-    public const float c_StandardGameDuration = 1200;
+    public const float c_StandardGameDuration = 1500;
     const float c_StandardRoadDuration = 600;
     public const float c_CoinSkillSaveTime = 301;
     public const float c_ShoppingDuration = 300; // Must be smaller than c_CoinSkillSaveTime
@@ -179,6 +179,8 @@ public class GameLogicManager
         Init();
         bTestMode = false;
 
+        GameManager.Instance.LogManager.GameStart(c_StandardGameDuration);
+
         yieldToScene(EScene.Prelude);
     }
 
@@ -221,6 +223,9 @@ public class GameLogicManager
             gamePool.RemoveAt(nextGameIdx);
 
             UnityEngine.Debug.Log(String.Format("Start MiniGame{0}", c_sceneNames[nextGame]));
+
+            GameManager.Instance.LogManager.MiniGameStart(c_sceneNames[nextGame], gameData.money, gameData.positiveComment, gameData.countDown);
+
             finishedMiniGames.Add(nextGame);
             prevGame = nextGame;
             yieldToScene(nextGame);
@@ -234,6 +239,7 @@ public class GameLogicManager
         else
         {
             UnityEngine.Debug.Log(String.Format("Game Refused"));
+            GameManager.Instance.LogManager.MiniGameRefused(c_sceneNames[prevGame]);
             finishedMiniGames.RemoveAt(finishedMiniGames.Count - 1);
             OnMiniGameFinished(gameData.money, gameData.positiveComment - c_RefuseToHelpPeopleCost, gameData.countDown);
         }
@@ -261,6 +267,7 @@ public class GameLogicManager
 
                 UnityEngine.Debug.Log(String.Format("Round={0} money={1} positiveComment={2} countDown={3}",
                     currentRoadMilestone, gameData.money, gameData.positiveComment, gameData.countDown));
+                GameManager.Instance.LogManager.MiniGameFinished(c_sceneNames[prevGame], gameData.money, gameData.positiveComment, gameData.countDown);
 
                 datingRoadControl();
             }
@@ -283,6 +290,7 @@ public class GameLogicManager
             _gameData.countDown = countDown;
             gameData = _gameData;
 
+            GameManager.Instance.LogManager.CoinskillEnd(gameData.money, gameData.positiveComment, gameData.countDown);
 
             //if (curState != EState.CoinSkill)
             //    throw new System.Exception("OnCoinSkillFinished() during wrong state.");
@@ -444,10 +452,12 @@ public class GameLogicManager
             _coinSkillData.eType = eType;
             coinSkillData = _coinSkillData;
             finishedMiniGames.Add(EScene.CoinSkill);
+            GameManager.Instance.LogManager.CoinskillEnter(true, gameData.money, gameData.positiveComment, gameData.countDown);
             yieldToScene(EScene.CoinSkill);
         }
         else 
         {
+            GameManager.Instance.LogManager.CoinskillEnter(false, gameData.money, gameData.positiveComment, gameData.countDown);
             if(eType == ECoinSkillType.Time)
             {
                 curState = EState.Ending;
@@ -465,6 +475,7 @@ public class GameLogicManager
 
     void shoppingControl()
     {
+        GameManager.Instance.LogManager.ShoppingEnter(gameData.money, gameData.positiveComment, gameData.countDown);
         yieldToScene(EScene.Shopping);
     }
 
@@ -480,6 +491,8 @@ public class GameLogicManager
         _endingData.giftInfo = giftInfo;
         _endingData.finishedMiniGames = finishedMiniGames;
         endingData = _endingData;
+
+        GameManager.Instance.LogManager.GameEnd(eEnding, eGift, finishedMiniGames.Count);
 
         yieldToScene(EScene.Ending);
     }

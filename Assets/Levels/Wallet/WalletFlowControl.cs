@@ -62,6 +62,7 @@ public class WalletFlowControl : MonoBehaviour
 
     public void EndWithCar()
     {
+        GameManager.Instance.LogManager.Log("coinskill_choose", "choose", "car");
         GameLogicManager.Instance.OnCoinSkillFinished(GameLogicManager.Instance.gameData.money, 
             GameLogicManager.Instance.gameData.positiveComment,
             Mathf.Max( GameLogicManager.Instance.gameData.countDown, 0) + GameLogicManager.c_CoinSkillSaveTime); // Force no late
@@ -69,6 +70,7 @@ public class WalletFlowControl : MonoBehaviour
 
     public void EndWithMoney()
     {
+        GameManager.Instance.LogManager.Log("coinskill_choose", "choose", "money");
         GameLogicManager.Instance.OnCoinSkillFinished(GameLogicManager.Instance.gameData.money + 38888, 
             GameLogicManager.Instance.gameData.positiveComment,
             GameLogicManager.Instance.gameData.countDown);

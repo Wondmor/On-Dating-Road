@@ -55,4 +55,18 @@ public class GameManager{
             return m_RacingData;
         }
     }
+
+    private static LogManager m_LogManager;
+    public LogManager LogManager
+    {
+        get
+        {
+            if (m_LogManager == null)
+            {
+                m_LogManager = new LogManager();
+            }
+            return m_LogManager;
+        }
+    }
+
 }

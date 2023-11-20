@@ -65,6 +65,8 @@ public class RacingFinishControl : MonoBehaviour
     {
         int level;
         float money = GetMoney(out level);
+        GameManager.Instance.LogManager.Log("racing_result", "time", GameManager.Instance.RacingData.TimeUsed,
+                                            "health", GameManager.Instance.RacingData.RemainHealth);
         GameManager.Instance.RacingData.Reset();
         GameLogicManager.Instance.OnMiniGameFinished(
             GameLogicManager.Instance.gameData.money + money, 
